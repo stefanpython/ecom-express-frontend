@@ -21,16 +21,16 @@ const Navbar = () => {
           <div className="text-black text-lg font-bold">Ecom Express</div>
         </div>
 
-        <div className="flex space-x-4 flex-grow justify-center pt-3 sm:pt-0 sm:flex-grow-0">
+        <div className="flex space-x-4 flex-grow justify-center pt-3 sm:pt-0 ">
           <input
             type="text"
             placeholder="Search products"
-            className="bg-white-700 text-white p-2 rounded items-center w-full"
+            className="bg-white-700 text-white p-2 rounded items-center w-auto md:w-96"
           />
         </div>
 
         <div className="flex space-x-2 flex-grow justify-between pt-5 sm:pt-0 sm:flex-grow-0">
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 pl-1 sm:pl-0">
             <button className="text-black cursor-pointer">
               <img className="w-6 h-6" src="./cart.png" alt="cart" />
               <span className="bg-red-500 text-white rounded-full  w-5 h-5 absolute  -mt-8 ml-4 flex items-center justify-center">

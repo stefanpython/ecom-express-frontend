@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white-800 p-3 shadow bg-slate-100">
+    <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
         <div className="flex items-center space-x-4 justify-center flex-grow mr-4 sm:justify-start sm:mr-0 sm:flex-grow-0">
           <div className="text-black text-lg font-bold">Ecom Express</div>

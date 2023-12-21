@@ -1,7 +1,7 @@
 const Homepage = () => {
   return (
     <div className="container mx-auto px-4">
-      <div className="grid grid-cols-1 sm:grid-cols-5 sm:grid-rows-6 gap-4 py-4">
+      <div className="grid grid-cols-1 sm:grid-cols-5 sm:grid-rows-5 gap-4 pt-3 sm:-mb-40">
         <div className="bg-blue-500 text-white p-4 sm:col-start-1 sm:col-end-2 h-60 sm:h-auto sm:row-start-1 sm:row-end-3">
           Box 1
         </div>

@@ -2,3 +2,21 @@
   margin: 0 auto;
   text-align: center;
 }
+
+@media (min-height: 1024px) {
+  .footer {
+    margin-top: 40px !important;
+  }
+}
+
+@media (min-height: 1180px) {
+  .footer {
+    margin-top: 200px !important;
+  }
+}
+
+@media (min-height: 1366px) {
+  .footer {
+    margin-top: 393px !important;
+  }
+}

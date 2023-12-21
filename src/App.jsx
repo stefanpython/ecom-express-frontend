@@ -2,6 +2,7 @@ import "./App.css";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Homepage from "./components/Homepage";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
         </Routes>
+        <Footer />
       </HashRouter>
     </div>
   );

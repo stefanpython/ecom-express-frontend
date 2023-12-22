@@ -1,0 +1,8 @@
+TODO list:
+
+Interface:
+-- Login page 
+-- Signup page 
+-- User Dashboard
+-- Shop page 
+-- Individual product page

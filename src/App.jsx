@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Homepage from "./components/Homepage";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
       </HashRouter>

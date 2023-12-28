@@ -19,7 +19,9 @@ const Navbar = () => {
     <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
         <div className="flex items-center space-x-4 justify-center flex-grow mr-4 sm:justify-start sm:mr-0 sm:flex-grow-0">
-          <div className="text-black text-lg font-bold">Ecom Express</div>
+          <div className="text-black text-lg font-bold">
+            <Link to="/">Ecom Express</Link>
+          </div>
         </div>
 
         <div className="flex space-x-4 flex-grow justify-center pt-3 sm:pt-0 ">

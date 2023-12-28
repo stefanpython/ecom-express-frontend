@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -14,6 +14,22 @@ const Navbar = () => {
     setIsUserLoggedIn(false);
     setIsDropdownOpen(false);
   };
+
+  // Add event listener when the component mounts
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (isDropdownOpen && !event.target.closest(".dropdown-container")) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isDropdownOpen]);
 
   return (
     <nav className="p-3 shadow bg-slate-100">
@@ -46,7 +62,7 @@ const Navbar = () => {
             <button className="text-black cursor-pointer">Shop</button>
           </div>
 
-          <div className="relative">
+          <div className="relative dropdown-container">
             <button
               onClick={handleDropdownToggle}
               className="text-black cursor-pointer"
@@ -65,7 +81,7 @@ const Navbar = () => {
                   </>
                 ) : (
                   <>
-                    <div>
+                    <div className="text-left">
                       <Link to="/login"> Login</Link>
                     </div>
                     <div>Sign Up</div>

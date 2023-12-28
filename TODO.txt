@@ -1,8 +1,8 @@
 TODO list:
 
 Interface:
--- Login page 
 -- Signup page 
+-- Login page 
 -- User Dashboard
 -- Shop page 
 -- Individual product page

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -62,7 +63,9 @@ const Navbar = () => {
                   </>
                 ) : (
                   <>
-                    <div>Login</div>
+                    <div>
+                      <Link to="/login"> Login</Link>
+                    </div>
                     <div>Sign Up</div>
                   </>
                 )}

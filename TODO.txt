@@ -1,9 +1,17 @@
 TODO list:
 
 Interface:
--- Signup page 
+-- Signup page - Done
+~ Input client-side validation
+
 -- Login page - Done
--- Forgot password page
+~ Input client-side validation - Done
+
+-- Forgot password page - Done
+~ Input client-side validation
+        
 -- User Dashboard
+
 -- Shop page 
+
 -- Individual product page

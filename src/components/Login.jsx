@@ -42,7 +42,7 @@ const Login = () => {
     <div className="flex items-center justify-center min-h-[879px]">
       <div className="-mt-48">
         <div className="bg-white p-8 rounded shadow-custom w-full sm:w-96">
-          <h1 className="text-2xl font-bold mb-6">Login</h1>
+          <h1 className="text-2xl font-medium mb-6 text-left">Login</h1>
           <form>
             <div className="mb-4">
               <label

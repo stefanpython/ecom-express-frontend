@@ -2,7 +2,7 @@ TODO list:
 
 Interface:
 -- Signup page - Done
-~ Input client-side validation
+~ Input client-side validation - Done
 
 -- Login page - Done
 ~ Input client-side validation - Done

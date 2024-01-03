@@ -23,7 +23,7 @@ const Dashboard = () => {
           value={selectedTab}
           className="w-full py-2 border border-gray-300 bg-white"
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             Select an option
           </option>
           <option value="accountDetails">Account Details</option>

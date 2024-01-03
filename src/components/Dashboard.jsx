@@ -1,4 +1,7 @@
 import { useState } from "react";
+import AccountDetails from "./dashboard/AccountDetails";
+import Address from "./dashboard/Address";
+import Orders from "./dashboard/Orders";
 
 const Dashboard = () => {
   const [selectedTab, setSelectedTab] = useState("");
@@ -66,9 +69,9 @@ const Dashboard = () => {
       {/* Right Content Area */}
       <div className="flex-1 p-4">
         {/* Render the selected form based on the selectedTab */}
-        {/* {selectedTab === "address" && <AddressForm />}
-    {selectedTab === "accountDetails" && <AccountDetailsForm />}
-    {selectedTab === "orders" && <OrdersTab />} */}
+        {selectedTab === "address" && <Address />}
+        {selectedTab === "accountDetails" && <AccountDetails />}
+        {selectedTab === "orders" && <Orders />}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleDropdownToggle = () => {
@@ -74,7 +74,7 @@ const Navbar = () => {
               <div className="absolute top-10 right-0 bg-white p-4 rounded shadow">
                 {isUserLoggedIn ? (
                   <>
-                    <div>Dashboard</div>
+                    <Link to="/dashboard">Dashboard</Link>
                     <div className="cursor-pointer" onClick={handleSignOut}>
                       Sign Out
                     </div>

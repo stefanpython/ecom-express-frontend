@@ -13,7 +13,7 @@ const Dashboard = () => {
   return (
     <div className="grid h-max sm:flex sm:min-h-[875px] ">
       {/* Left Sidebar with Tabs */}
-      <div className="h-25 sm:h-auto w-auto bg-gray-200 p-4 lg:hidden sm:mb-44">
+      <div className="h-25 sm:h-auto w-auto  bg-slate-100 p-4 lg:hidden sm:mb-44">
         {/* Collapsible Menu for Small Screens */}
 
         <h1 className="text-xl mb-2 font-medium">Account</h1>
@@ -33,7 +33,7 @@ const Dashboard = () => {
       </div>
 
       {/* Left Sidebar with Tabs (Visible on Larger Screens) */}
-      <div className="w-fit bg-gray-200 p-4 hidden lg:block mb-44">
+      <div className="w-fit  bg-slate-100 p-4 hidden lg:block mb-44">
         <h1 className="text-xl mb-6 font-medium">Account</h1>
 
         <button

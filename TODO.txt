@@ -12,7 +12,11 @@ Interface:
         
 -- User Dashboard
 
--- Shop page 
+-- Individual order page
+
+-- Order confirmation page
+
+-- Shop page all products
 
 -- Individual product page
 

@@ -59,7 +59,9 @@ const Navbar = () => {
           </div>
 
           <div className="flex justify-end flex-grow pl-2">
-            <button className="text-black cursor-pointer">Shop</button>
+            <Link to="/shop" className="text-black cursor-pointer">
+              Shop
+            </Link>
           </div>
 
           <div className="relative dropdown-container">

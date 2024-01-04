@@ -20,3 +20,8 @@
     margin-top: 393px !important;
   }
 }
+
+.pagination li:first-child,
+.pagination li:last-child {
+  display: none;
+}

@@ -10,7 +10,7 @@ Interface:
 -- Forgot password page - DONE
 ~ Input client-side validation - DONE
         
--- User Dashboard
+-- User Dashboard - DONE
 
 -- Individual order page
 
@@ -23,3 +23,5 @@ Interface:
 -- Cart page
 
 -- Search page
+
+

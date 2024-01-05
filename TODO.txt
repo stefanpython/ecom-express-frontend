@@ -16,7 +16,7 @@ Interface:
 
 -- Order confirmation page
 
--- Shop page all products
+-- Shop page all products - DONE
 
 -- Individual product page
 

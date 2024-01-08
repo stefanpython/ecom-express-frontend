@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Cart from "./Cart";
 
 const Navbar = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -13,6 +15,10 @@ const Navbar = () => {
     // Add your sign-out logic here
     setIsUserLoggedIn(false);
     setIsDropdownOpen(false);
+  };
+
+  const handleCartToggle = () => {
+    setIsCartOpen(!isCartOpen);
   };
 
   // Add event listener when the component mounts
@@ -30,6 +36,8 @@ const Navbar = () => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [isDropdownOpen]);
+
+  console.log(isCartOpen);
 
   return (
     <nav className="p-3 shadow bg-slate-100">
@@ -50,7 +58,10 @@ const Navbar = () => {
 
         <div className="flex space-x-2 flex-grow justify-between pt-5 sm:pt-0 sm:flex-grow-0">
           <div className="flex space-x-4 pl-1 sm:pl-0">
-            <button className="text-black cursor-pointer">
+            <button
+              className="text-black cursor-pointer"
+              onClick={handleCartToggle}
+            >
               <img className="w-6 h-6" src="./cart.png" alt="cart" />
               <span className="bg-red-500 text-white rounded-full  w-5 h-5 absolute  -mt-8 ml-4 flex items-center justify-center">
                 3
@@ -95,6 +106,8 @@ const Navbar = () => {
             )}
           </div>
         </div>
+
+        {isCartOpen && <Cart onClose={() => setIsCartOpen(false)} />}
       </div>
     </nav>
   );

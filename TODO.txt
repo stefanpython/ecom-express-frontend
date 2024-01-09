@@ -20,7 +20,7 @@ Interface:
 
 -- Individual product page
 
--- Cart page
+-- Cart page - DONE
 
 -- Search page
 

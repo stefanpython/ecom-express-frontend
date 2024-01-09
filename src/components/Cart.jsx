@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Cart = ({ onClose, isCartOpen }) => {
   // Dummy data for items in the cart
   const cartItems = [
@@ -68,12 +70,17 @@ const Cart = ({ onClose, isCartOpen }) => {
       </div>
 
       <div className="p-4">
-        <button
-          className="w-full bg-blue-500 text-white p-2 rounded"
-          onClick={handlePlaceOrder}
-        >
-          Place Order
-        </button>
+        <Link to="/order">
+          <button
+            className="w-full bg-blue-500 text-white p-2 rounded"
+            onClick={() => {
+              handlePlaceOrder;
+              onClose();
+            }}
+          >
+            Place Order
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -22,7 +22,8 @@ const Homepage = () => {
         </div>
 
         <div className=" text-white p-4 sm:col-start-2 sm:col-end-5 h-60 sm:h-auto sm:row-start-1 sm:row-end-4 mb-16 sm:mb-0">
-          <Carousel showThumbs={false} infiniteLoop={true} autoPlay={true}>
+          {/* <Carousel showThumbs={false} infiniteLoop={true} autoPlay={true}> */}
+          <Carousel showThumbs={false}>
             <img
               src="./sale1.jpg"
               alt="Image 3"

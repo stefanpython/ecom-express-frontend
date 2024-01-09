@@ -37,8 +37,6 @@ const Navbar = () => {
     };
   }, [isDropdownOpen]);
 
-  console.log(isCartOpen);
-
   return (
     <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
@@ -107,7 +105,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {isCartOpen && <Cart onClose={() => setIsCartOpen(false)} />}
+        <Cart onClose={() => setIsCartOpen(false)} isCartOpen={isCartOpen} />
       </div>
     </nav>
   );

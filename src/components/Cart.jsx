@@ -1,10 +1,4 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-
-const Cart = ({ onClose }) => {
-  // State to manage the visibility of the cart
-  const [isOpen, setIsOpen] = useState(true);
-
+const Cart = ({ onClose, isCartOpen }) => {
   // Dummy data for items in the cart
   const cartItems = [
     { id: 1, name: "Product 1", price: 10 },
@@ -20,15 +14,14 @@ const Cart = ({ onClose }) => {
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-1/2 bg-white shadow-md transform z-50 ${
-        isOpen ? "translate-x-0" : "translate-x-full"
-      } transition-transform duration-300 ease-in-out`}
+      className={`cart-container fixed top-0 right-0 h-full w-full sm:w-1/3 bg-white shadow-md  ${
+        isCartOpen ? "translate-x-0" : "translate-x-full"
+      } duration-700 ease-in-out z-50`}
     >
       <div className="flex justify-between items-center p-4 border-b">
         <h1 className="text-lg font-bold">Shopping Cart</h1>
         <button
           onClick={() => {
-            setIsOpen(false);
             onClose();
           }}
         >

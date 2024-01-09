@@ -1,9 +1,9 @@
 const Cart = ({ onClose, isCartOpen }) => {
   // Dummy data for items in the cart
   const cartItems = [
-    { id: 1, name: "Product 1", price: 10 },
-    { id: 2, name: "Product 2", price: 15 },
-    { id: 3, name: "Product 3", price: 20 },
+    { id: 1, name: "Product 1", price: 10, quantity: 2, image: "product1.jpg" },
+    { id: 2, name: "Product 2", price: 15, quantity: 1, image: "product2.jpg" },
+    { id: 3, name: "Product 3", price: 20, quantity: 3, image: "product3.jpg" },
   ];
 
   // Dummy function to handle placing an order
@@ -31,16 +31,40 @@ const Cart = ({ onClose, isCartOpen }) => {
 
       <div className="p-4">
         {cartItems.map((item) => (
-          <div key={item.id} className="flex justify-between mb-2">
-            <p>{item.name}</p>
-            <p>${item.price}</p>
+          <div key={item.id} className="flex flex-col mb-2">
+            <div className="flex items-center mb-2 justify-between">
+              <div className="flex items-center">
+                <img src={item.image} alt="" className="w-10 h-10 mr-2" />
+                <p>{item.name}</p>
+              </div>
+
+              <button onClick={() => console.log("Item deleted")}>
+                <img className="w-6 h-6" src="./bin.png" alt="recicle-bin" />
+              </button>
+            </div>
+
+            <div className="flex flex-col">
+              <div className="flex mr-4 justify-between">
+                <p className="mr-2">Quantity:</p>
+                <p>{item.quantity}</p>
+              </div>
+
+              <div className="flex justify-between">
+                <p className="mr-2">Price:</p>
+                <p>${item.price * item.quantity}</p>
+              </div>
+            </div>
+            <hr />
           </div>
         ))}
       </div>
 
       <div className="flex justify-between items-center p-4 border-t">
         <p>Total:</p>
-        <p>${cartItems.reduce((acc, item) => acc + item.price, 0)}</p>
+        <p>
+          $
+          {cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)}
+        </p>
       </div>
 
       <div className="p-4">

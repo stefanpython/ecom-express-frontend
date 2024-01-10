@@ -1,12 +1,25 @@
+import AddReview from "./AddReview";
+import { useState } from "react";
+
+const mockProduct = {
+  id: 1,
+  name: "Dell Laptop",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  price: 29.99,
+  image: "https://via.placeholder.com/250",
+  quantity: 20,
+};
+
 const ProductDetails = () => {
-  const mockProduct = {
-    id: 1,
-    name: "Dell Laptop",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    price: 29.99,
-    image: "https://via.placeholder.com/250",
-    quantity: 20,
+  const [reviewTitle, setReviewTitle] = useState("");
+  const [reviewComment, setReviewComment] = useState("");
+  const [rating, setRating] = useState(0);
+
+  const handleReviewSubmit = (e) => {
+    e.preventDefault();
+    // Submit review logic goes here
+    console.log(reviewTitle, reviewComment, rating);
   };
 
   return (
@@ -36,7 +49,7 @@ const ProductDetails = () => {
             />
           </div>
 
-          <button className="flex items-center mt-32 p-2 px-4 rounded bg-blue-500 text-white font-medium">
+          <button className="flex items-center mt-32 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             <img className="w-7 mr-2" src="./add-cart.png" alt="" />
             Add to cart
           </button>
@@ -44,7 +57,17 @@ const ProductDetails = () => {
 
         <div>Left Bottom</div>
 
-        <div>Right Bottom</div>
+        <div>
+          <AddReview
+            reviewTitle={reviewTitle}
+            setReviewTitle={setReviewTitle}
+            reviewComment={reviewComment}
+            setReviewComment={setReviewComment}
+            rating={rating}
+            setRating={setRating}
+            onSubmit={handleReviewSubmit}
+          />
+        </div>
       </div>
     </div>
   );

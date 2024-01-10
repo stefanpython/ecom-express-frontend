@@ -9,8 +9,24 @@ const AddReview = ({
   setRating,
   onSubmit,
 }) => {
+  const [hoveredRating, setHoveredRating] = useState(0);
+
+  const handleHover = (hoveredValue) => {
+    setHoveredRating(hoveredValue);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredRating(0);
+  };
+
+  const handleRatingClick = (selectedRating) => {
+    setRating(selectedRating);
+  };
+
+  const stars = Array.from({ length: 5 }, (_, index) => index + 1);
+
   return (
-    <div className="w-full max-w-md mx-auto mt-5 border rounded-lg p-2">
+    <div className=" w-full max-w-md mx-auto mt-5 border rounded-lg p-2">
       <form onSubmit={onSubmit}>
         <div className="mb-4">
           <label
@@ -50,14 +66,21 @@ const AddReview = ({
           >
             Rating
           </label>
-          <input
-            id="rating"
-            type="range"
-            min="1"
-            max="5"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          />
+          <div className="star-rating">
+            {stars.map((star) => (
+              <span
+                key={star}
+                className={`star ${
+                  star <= (hoveredRating || rating) ? "selected" : ""
+                }`}
+                onMouseEnter={() => handleHover(star)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleRatingClick(star)}
+              >
+                &#9733; {/* Unicode star character */}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="flex items-center justify-between">

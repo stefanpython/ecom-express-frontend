@@ -18,7 +18,7 @@ Interface:
 
 -- Cart page - DONE
 
--- Individual order page
+-- Individual order page - DONE
 
 -- Individual product page
 

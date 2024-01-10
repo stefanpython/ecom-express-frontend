@@ -1,21 +1,50 @@
 const ProductDetails = () => {
   const mockProduct = {
     id: 1,
-    name: "Product 1",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    name: "Dell Laptop",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     price: 29.99,
     image: "https://via.placeholder.com/250",
+    quantity: 20,
   };
 
   return (
-    <div className="container mx-auto px-6 lg:px-44 sm:h-screen lg:mb-40">
-      <div className="flex justify-center w-fit">
-        <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-6 pt-6">
-          <img src="./laptop.jpg" alt="" />
-          <div>Right Top</div>
-          <div>Left Bottom</div>
-          <div>Right Bottom</div>
+    <div className="container mx-auto px-6 lg:px-44 sm:h-screen lg:mb-40 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-6 pt-6 bg-slate-50 px-4">
+        <img className="border rounded-lg" src="./laptop.jpg" alt="" />
+
+        <div className="text-left border rounded-lg p-2">
+          <h1 className="font-bold text-2xl text-blue-500 mb-2">
+            {mockProduct.name}
+          </h1>
+
+          <p>{mockProduct.description}</p>
+
+          <br />
+
+          <h2 className="font-medium text-2xl">${mockProduct.price}</h2>
+
+          <div className="flex items-left mt-2 flex-col mr-2">
+            <label className="mr-2 mb-2">Quantity:</label>
+            <input
+              type="number"
+              min="1"
+              max="999"
+              defaultValue={1}
+              className="border border-gray-300 p-1 w-26 text-left"
+            />
+          </div>
+
+          <button className="flex items-center mt-32 p-2 px-4 rounded bg-blue-500 text-white font-medium">
+            <img className="w-7 mr-2" src="./add-cart.png" alt="" />
+            Add to cart
+          </button>
         </div>
+
+        <div>Left Bottom</div>
+
+        <div>Right Bottom</div>
       </div>
     </div>
   );

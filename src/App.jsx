@@ -9,6 +9,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import Dashboard from "./components/Dashboard";
 import Shop from "./components/Shop";
 import OrderConfirmation from "./components/OrderConfirmation";
+import OrderDetails from "./components/OrderDetails";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/order" element={<OrderConfirmation />} />
+          <Route path="/order/:orderId" element={<OrderDetails />} />
         </Routes>
         <Footer />
       </HashRouter>

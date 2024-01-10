@@ -12,15 +12,15 @@ Interface:
         
 -- User Dashboard - DONE
 
--- Individual order page
-
--- Order confirmation page
+-- Order confirmation page - DONE
 
 -- Shop page all products - DONE
 
--- Individual product page
-
 -- Cart page - DONE
+
+-- Individual order page
+
+-- Individual product page
 
 -- Search page
 

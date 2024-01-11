@@ -28,11 +28,11 @@ const reviewsData = [
   },
 
   {
-    id: 2,
-    name: "Jane Smith",
-    rating: 5,
+    id: 3,
+    name: "Markus ZSmith",
+    rating: 1,
     date: "March 22, 2023",
-    comment: "Excellent service!",
+    comment: "Meh service!",
   },
 ];
 
@@ -40,15 +40,33 @@ const ProductDetails = () => {
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewComment, setReviewComment] = useState("");
   const [rating, setRating] = useState(0);
+  const [userReviews, setUserReviews] = useState([]);
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
     // Submit review logic goes here
     console.log(reviewTitle, reviewComment, rating);
+
+    // Create a new review object
+    const newReview = {
+      id: userReviews.length + 1, // Incremental id for simplicity, you may want to use a more robust id generation
+      name: "Current User", // Assuming you want to display the name of the current user
+      rating: parseInt(rating),
+      date: new Date().toLocaleDateString(),
+      comment: reviewComment,
+    };
+
+    // Update the userReviews state
+    setUserReviews((prevReviews) => [...prevReviews, newReview]);
+
+    // Clear the input fields after submitting
+    setReviewTitle("");
+    setReviewComment("");
+    setRating(0);
   };
 
   return (
-    <div className="container mx-auto px-6 lg:px-44 lg:mb-40 min-h-screen bg-slate-200">
+    <div className="container mx-auto px-6 lg:px-44 lg:mb-40 min-h-screen">
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-6 pt-6 bg-slate-100 px-4 sm:-mb-96 ">
           <img className="border rounded-lg" src="./laptop.jpg" alt="" />
@@ -101,7 +119,7 @@ const ProductDetails = () => {
         </div>
 
         <div>
-          {reviewsData.map((review) => (
+          {userReviews.map((review) => (
             <div
               key={review.id}
               className="bg-white shadow-lg rounded-lg p-4 mb-4 pb-6"

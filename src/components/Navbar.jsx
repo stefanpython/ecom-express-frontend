@@ -53,7 +53,7 @@ const Navbar = () => {
             className="bg-white-700 text-white p-2 rounded items-center w-auto md:w-96"
           />
         </div>
-
+        <div></div>
         <div className="flex space-x-2 flex-grow justify-between pt-5 sm:pt-0 sm:flex-grow-0">
           <div className="flex space-x-4 pl-1 sm:pl-0">
             <button

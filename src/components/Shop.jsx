@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Pagination from "react-js-pagination";
+import { Link } from "react-router-dom";
 
 const mockProducts = [
   {
@@ -91,6 +92,7 @@ const ProductsPerPage = 9;
 const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Pagination
   const indexOfLastProduct = currentPage * ProductsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - ProductsPerPage;
   const currentProducts = mockProducts.slice(
@@ -111,12 +113,14 @@ const Shop = () => {
               key={product.id}
               className="border p-4 grid place-items-center shadow-custom"
             >
-              <img src={product.image} alt={product.name} className="mb-2" />
-              <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
-              <p className="text-sm mb-2">{product.description}</p>
-              <p className="text-base font-semibold">
-                ${product.price.toFixed(2)}
-              </p>
+              <Link to={`/products/${product.id}`}>
+                <img src={product.image} alt={product.name} className="mb-2" />
+                <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
+                <p className="text-sm mb-2">{product.description}</p>
+                <p className="text-base font-semibold">
+                  ${product.price.toFixed(2)}
+                </p>
+              </Link>
             </div>
           ))}
         </div>

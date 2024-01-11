@@ -1,21 +1,42 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+
+// Dummy data for items in the cart
+const cartItems = [
+  { id: 1, name: "Product 1", price: 10, quantity: 2, image: "product1.jpg" },
+  { id: 2, name: "Product 2", price: 15, quantity: 1, image: "product2.jpg" },
+  { id: 3, name: "Product 3", price: 20, quantity: 3, image: "product3.jpg" },
+];
 
 const Cart = ({ onClose, isCartOpen }) => {
-  // Dummy data for items in the cart
-  const cartItems = [
-    { id: 1, name: "Product 1", price: 10, quantity: 2, image: "product1.jpg" },
-    { id: 2, name: "Product 2", price: 15, quantity: 1, image: "product2.jpg" },
-    { id: 3, name: "Product 3", price: 20, quantity: 3, image: "product3.jpg" },
-  ];
-
   // Dummy function to handle placing an order
   const handlePlaceOrder = () => {
     // Add your logic to place the order
     console.log("Placing order...");
   };
 
+  const cartRef = useRef(null);
+
+  // Close the cart when clicking outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    if (isCartOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isCartOpen, onClose]);
+
   return (
     <div
+      ref={cartRef}
       className={`cart-container fixed top-0 right-0 h-full w-full sm:w-1/3 bg-white shadow-md  ${
         isCartOpen ? "translate-x-0" : "translate-x-full"
       } duration-700 ease-in-out z-50`}
@@ -27,7 +48,7 @@ const Cart = ({ onClose, isCartOpen }) => {
             onClose();
           }}
         >
-          <span className="text-2xl">&times;</span>
+          <span className="text-4xl">&times;</span>
         </button>
       </div>
 

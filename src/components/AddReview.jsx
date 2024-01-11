@@ -26,7 +26,8 @@ const AddReview = ({
   const stars = Array.from({ length: 5 }, (_, index) => index + 1);
 
   return (
-    <div className=" w-full max-w-md mx-auto mt-5 border rounded-lg p-2">
+    <div className=" w-full  mx-auto mt-5 border rounded-lg p-2">
+      <h1 className="font-bold mb-5">Add Review</h1>
       <form onSubmit={onSubmit}>
         <div className="mb-4">
           <label

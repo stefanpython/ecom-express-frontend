@@ -11,6 +11,31 @@ const mockProduct = {
   quantity: 20,
 };
 
+const reviewsData = [
+  {
+    id: 1,
+    name: "John Doe",
+    rating: 3,
+    date: "January 15, 2023",
+    comment: "Great product!",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    rating: 5,
+    date: "March 22, 2023",
+    comment: "Excellent service!",
+  },
+
+  {
+    id: 2,
+    name: "Jane Smith",
+    rating: 5,
+    date: "March 22, 2023",
+    comment: "Excellent service!",
+  },
+];
+
 const ProductDetails = () => {
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewComment, setReviewComment] = useState("");
@@ -55,7 +80,41 @@ const ProductDetails = () => {
           </button>
         </div>
 
-        <div>Left Bottom</div>
+        <div>
+          {reviewsData.map((review) => (
+            <div
+              key={review.id}
+              className="bg-white shadow-lg rounded-lg p-4 mb-4"
+            >
+              <div className="flex items-center">
+                <img
+                  className="h-12 w-12 rounded-full object-cover"
+                  src="https://via.placeholder.com/150"
+                  alt="User avatar"
+                />
+                <div className="ml-4">
+                  <h1 className="text-xl font-semibold">{review.name}</h1>
+                  <div className="flex items-center mt-2">
+                    {/* Render stars based on the rating */}
+                    {[...Array(review.rating)].map((_, index) => (
+                      <span key={index} className="text-yellow-500 text-xl">
+                        &#9733;
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm text-gray-600 text-left ml-16 mt-2">
+                {review.date}
+              </p>
+              <p className="mt-4 text-gray-600 text-left ml-16">
+                {review.comment}
+              </p>
+              <div className="mt-4 flex justify-between items-center"></div>
+              <hr />
+            </div>
+          ))}
+        </div>
 
         <div>
           <AddReview

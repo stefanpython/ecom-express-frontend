@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cart from "./Cart";
 
+// Dummy data for items in the cart
+const cartItems = [
+  { id: 1, name: "Product 1", price: 10, quantity: 2, image: "product1.jpg" },
+  { id: 2, name: "Product 2", price: 15, quantity: 1, image: "product2.jpg" },
+  { id: 3, name: "Product 3", price: 20, quantity: 3, image: "product3.jpg" },
+  { id: 4, name: "Product 4", price: 120, quantity: 13, image: "product3.jpg" },
+];
+
 const Navbar = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -61,9 +69,11 @@ const Navbar = () => {
               onClick={handleCartToggle}
             >
               <img className="w-6 h-6" src="./cart.png" alt="cart" />
-              <span className="bg-red-500 text-white rounded-full  w-5 h-5 absolute  -mt-8 ml-4 flex items-center justify-center">
-                3
-              </span>
+              {cartItems.length > 0 && (
+                <span className="bg-red-500 text-white rounded-full w-5 h-5 absolute -mt-6 ml-4 flex items-center justify-center">
+                  {cartItems.length}
+                </span>
+              )}
             </button>
           </div>
 
@@ -105,7 +115,11 @@ const Navbar = () => {
           </div>
         </div>
 
-        <Cart onClose={() => setIsCartOpen(false)} isCartOpen={isCartOpen} />
+        <Cart
+          cartItems={cartItems}
+          onClose={() => setIsCartOpen(false)}
+          isCartOpen={isCartOpen}
+        />
       </div>
     </nav>
   );

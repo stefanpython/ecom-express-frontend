@@ -1,14 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
-// Dummy data for items in the cart
-const cartItems = [
-  { id: 1, name: "Product 1", price: 10, quantity: 2, image: "product1.jpg" },
-  { id: 2, name: "Product 2", price: 15, quantity: 1, image: "product2.jpg" },
-  { id: 3, name: "Product 3", price: 20, quantity: 3, image: "product3.jpg" },
-];
-
-const Cart = ({ onClose, isCartOpen }) => {
+const Cart = ({ onClose, isCartOpen, cartItems }) => {
   // Dummy function to handle placing an order
   const handlePlaceOrder = () => {
     // Add your logic to place the order

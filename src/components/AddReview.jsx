@@ -26,7 +26,7 @@ const AddReview = ({
   const stars = Array.from({ length: 5 }, (_, index) => index + 1);
 
   return (
-    <div className=" w-full  mx-auto mt-5 border rounded-lg p-2">
+    <div className=" w-full  mx-auto mt-5 border rounded-lg p-2 bg-slate-50">
       <h1 className="font-bold mb-5">Add Review</h1>
       <form onSubmit={onSubmit}>
         <div className="mb-4">
@@ -53,7 +53,7 @@ const AddReview = ({
             Comment
           </label>
           <textarea
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="reviewComment"
             placeholder="Write Review"
             value={reviewComment}
@@ -84,7 +84,7 @@ const AddReview = ({
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"

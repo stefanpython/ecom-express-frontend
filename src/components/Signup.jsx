@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +13,8 @@ const Signup = () => {
   const [lastNameError, setLastNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -68,23 +70,37 @@ const Signup = () => {
     }
 
     // // Perform login logic if both username and password are provided
-    // try {
-    //   // Make API request to singup endpoint
-    //   const response = await fetch("http://localhost:3000/sign-up", {
-    //     method: "POSt",
-    //     headers: {
-    //       "Content-TYpe": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       email,
-    //       firstName,
-    //       lastName,
-    //       password,
-    //     }),
-    //   });
-    // } catch (error) {
-    //   console.error("Signup failed", error);
-    // }
+    try {
+      // Make API request to singup endpoint
+      const response = await fetch("http://localhost:3000/sign-up", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          firstName,
+          lastName,
+          password,
+          confirmPassword,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Signup failed", errorData.message);
+        return; // Add this line to prevent further execution
+      }
+
+      // Handle successful signup
+      const data = await response.json();
+      console.log("User created successfully", data.savedUser);
+
+      // Re-direct user to login page
+      navigate("/login");
+    } catch (error) {
+      console.error("Signup failed", error);
+    }
   };
 
   return (

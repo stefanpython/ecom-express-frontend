@@ -11,7 +11,7 @@ const cartItems = [
 ];
 
 const Navbar = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -70,7 +70,7 @@ const Navbar = () => {
             >
               <img className="w-6 h-6" src="./cart.png" alt="cart" />
               {cartItems.length > 0 && (
-                <span className="bg-red-500 text-white rounded-full w-5 h-5 absolute -mt-6 ml-4 flex items-center justify-center">
+                <span className="bg-red-500 text-white rounded-full w-5 h-5 absolute -mt-8 ml-4 flex items-center justify-center">
                   {cartItems.length}
                 </span>
               )}

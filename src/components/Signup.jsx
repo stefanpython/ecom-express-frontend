@@ -6,11 +6,13 @@ const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [emailError, setEmailError] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = "";
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,10 +28,13 @@ const Signup = () => {
     } else if (name === "password") {
       setPassword(value);
       setPasswordError("");
+    } else if (name === "confirmPassword") {
+      setConfirmPassword(value);
+      setConfirmPasswordError("");
     }
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     // Check for empty email
@@ -52,16 +57,29 @@ const Signup = () => {
       setPasswordError("Password is required");
     }
 
-    // Perform login logic if both username and password are provided
-    if (
-      email.trim() &&
-      firstName.trim() &&
-      lastName.trim() &&
-      password.trim()
-    ) {
-      // Add your login logic here
-      console.log("Logging in...");
+    // Check for empty confirmation
+    if (!confirmPassword.trim()) {
+      setConfirmPasswordError("Confirmation is required");
     }
+
+    // // Perform login logic if both username and password are provided
+    // try {
+    //   // Make API request to singup endpoint
+    //   const response = await fetch("http://localhost:3000/sign-up", {
+    //     method: "POSt",
+    //     headers: {
+    //       "Content-TYpe": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       email,
+    //       firstName,
+    //       lastName,
+    //       password,
+    //     }),
+    //   });
+    // } catch (error) {
+    //   console.error("Signup failed", error);
+    // }
   };
 
   return (
@@ -164,6 +182,31 @@ const Signup = () => {
               {passwordError && (
                 <p className="text-red-500 text-sm text-left">
                   {passwordError}
+                </p>
+              )}
+            </div>
+
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-left text-sm font-bold mb-2"
+                htmlFor="confirmPassword"
+              >
+                Confirm Password
+              </label>
+              <input
+                className={`border ${
+                  confirmPasswordError ? "border-red-500" : "border-gray-300"
+                } rounded w-full py-2 px-3 leading-tight focus:outline-none focus:border-blue-500`}
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                placeholder="Confirm Your Password"
+                value={confirmPassword}
+                onChange={handleInputChange}
+              />
+              {confirmPassword && (
+                <p className="text-red-500 text-sm text-left">
+                  {confirmPasswordError}
                 </p>
               )}
             </div>

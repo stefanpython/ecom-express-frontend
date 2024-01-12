@@ -12,7 +12,7 @@ const Signup = () => {
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = "";
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -60,6 +60,11 @@ const Signup = () => {
     // Check for empty confirmation
     if (!confirmPassword.trim()) {
       setConfirmPasswordError("Confirmation is required");
+    }
+
+    // Check if password and confirmation match
+    if (password !== confirmPassword) {
+      setConfirmPasswordError("Confirmation does not match password");
     }
 
     // // Perform login logic if both username and password are provided
@@ -204,7 +209,7 @@ const Signup = () => {
                 value={confirmPassword}
                 onChange={handleInputChange}
               />
-              {confirmPassword && (
+              {confirmPasswordError && (
                 <p className="text-red-500 text-sm text-left">
                   {confirmPasswordError}
                 </p>

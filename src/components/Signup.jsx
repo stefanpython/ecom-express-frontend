@@ -69,7 +69,7 @@ const Signup = () => {
       setConfirmPasswordError("Confirmation does not match password");
     }
 
-    // // Perform login logic if both username and password are provided
+    // Perform signup logic
     try {
       // Make API request to singup endpoint
       const response = await fetch("http://localhost:3000/sign-up", {

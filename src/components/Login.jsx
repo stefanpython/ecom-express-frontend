@@ -1,29 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const [cookies, setCookies] = useCookies(["token"]);
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "username") {
-      setUsername(value);
-      setUsernameError("");
+    if (name === "email") {
+      setEmail(value);
+      setEmailError("");
     } else if (name === "password") {
       setPassword(value);
       setPasswordError("");
     }
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Check for empty username
-    if (!username.trim()) {
-      setUsernameError("Username is required");
+    // Check for empty email
+    if (!email.trim()) {
+      setEmailError("Email is required");
     }
 
     // Check for empty password
@@ -31,10 +36,34 @@ const Login = () => {
       setPasswordError("Password is required");
     }
 
-    // Perform login logic if both username and password are provided
-    if (username.trim() && password.trim()) {
-      // Add your login logic here
-      console.log("Logging in...");
+    // Perform login logic if both email and password are provided
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      // Check if response is ok
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Login failed", errorData.message);
+        return;
+      }
+
+      // Handle successful login
+      const data = await response.json();
+      setCookies("token", data.token, { path: "/", httpOnly: true }); // ADD secure: true BEFORE DEPLOY
+      console.log("Login successfully", data);
+
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed", error);
     }
   };
 
@@ -47,26 +76,24 @@ const Login = () => {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-left text-sm font-bold mb-2"
-                htmlFor="username"
+                htmlFor="email"
               >
-                Username
+                Email
               </label>
 
               <input
                 className={`border ${
-                  usernameError ? "border-red-500" : "border-gray-300"
+                  emailError ? "border-red-500" : "border-gray-300"
                 } rounded w-full py-2 px-3 leading-tight focus:outline-none focus:border-blue-500`}
-                id="username"
+                id="email"
                 type="text"
-                name="username"
-                value={username}
+                name="email"
+                value={email}
                 onChange={handleInputChange}
                 placeholder="Enter your username"
               />
-              {usernameError && (
-                <p className="text-red-500 text-sm text-left">
-                  {usernameError}
-                </p>
+              {emailError && (
+                <p className="text-red-500 text-sm text-left">{emailError}</p>
               )}
             </div>
 

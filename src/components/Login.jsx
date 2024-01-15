@@ -47,6 +47,7 @@ const Login = () => {
           email,
           password,
         }),
+        credentials: "include",
       });
 
       // Check if response is ok

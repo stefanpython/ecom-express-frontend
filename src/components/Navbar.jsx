@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cart from "./Cart";
+import { useCookies } from "react-cookie";
 
 // Dummy data for items in the cart
 const cartItems = [
@@ -14,6 +15,9 @@ const Navbar = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const [cookies, setCookies] = useCookies(["token"]);
+  console.log(cookies);
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);

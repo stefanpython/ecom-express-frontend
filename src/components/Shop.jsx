@@ -103,18 +103,22 @@ const Shop = () => {
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="container mx-auto px-6 lg:px-44 ">
+    <div className="container mx-auto px-24 sm:px-6 lg:px-44 ">
       <br />
 
-      <div className="flex justify-center w-fit ">
+      <div className="flex justify-center w-fit">
         <div className="grid grid-cols-1 sm:grid-cols-4 sm:grid-rows-2 gap-6 ">
           {currentProducts.map((product) => (
             <div
               key={product.id}
-              className="border p-4 grid place-items-center shadow-custom"
+              className="border p-4 items-center shadow-custom"
             >
               <Link to={`/products/${product.id}`}>
-                <img src={product.image} alt={product.name} className="mb-2" />
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="mb-2 mx-auto"
+                />
                 <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
                 <p className="text-sm mb-2">{product.description}</p>
                 <p className="text-base font-semibold">

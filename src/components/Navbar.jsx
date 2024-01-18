@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cart from "./Cart";
 import { useCookies } from "react-cookie";
+import { jwtDecode } from "jwt-decode";
 
 // Dummy data for items in the cart
 const cartItems = [
@@ -20,6 +21,21 @@ const Navbar = () => {
 
   console.log(cookies);
 
+  // Extract user ID from token
+  const getUserIDFromToken = (token) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      const { userId, username } = decodedToken;
+      return { userId, username };
+    } catch (error) {
+      console.log("Error decoding token:", error);
+      return null;
+    }
+  };
+
+  const userInfo = getUserIDFromToken(cookies.token);
+
+  // Toggle user dropdown
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };

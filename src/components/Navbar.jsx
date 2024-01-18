@@ -13,13 +13,11 @@ const cartItems = [
 ];
 
 const Navbar = () => {
-  const isUserLoggedIn = false;
+  const [cookies, setCookies] = useCookies(["token"]);
+  const isUserLoggedIn = cookies.token ? true : false;
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  const [cookies, setCookies] = useCookies(["token"]);
-
-  console.log(cookies);
 
   // Extract user ID from token
   const getUserIDFromToken = (token) => {
@@ -109,7 +107,8 @@ const Navbar = () => {
               onClick={handleDropdownToggle}
               className="text-black cursor-pointer"
             >
-              Welcome, {isUserLoggedIn ? "User" : "Guest"}
+              Welcome,{" "}
+              {isUserLoggedIn ? `${userInfo.username.split(" ")[0]}` : "Guest"}
             </button>
 
             {isDropdownOpen && (

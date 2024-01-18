@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Cart from "./Cart";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 // Dummy data for items in the cart
 const cartItems = [
@@ -13,13 +14,15 @@ const cartItems = [
 ];
 
 const Navbar = () => {
-  const [cookies, setCookies] = useCookies(["token"]);
+  const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const isUserLoggedIn = cookies.token ? true : false;
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Extract user ID from token
+  const navigate = useNavigate();
+
+  // Extract user info from token
   const getUserIDFromToken = (token) => {
     try {
       const decodedToken = jwtDecode(token);
@@ -31,16 +34,34 @@ const Navbar = () => {
     }
   };
 
-  const userInfo = getUserIDFromToken(cookies.token);
+  const userInfo = cookies.token ? getUserIDFromToken(cookies.token) : null;
 
   // Toggle user dropdown
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleSignOut = () => {
-    // Add your sign-out logic here
-    setIsUserLoggedIn(false);
+  // Handle sign out
+  const handleSignOut = async () => {
+    try {
+      // Send a request to the server to invalidate the session or token
+      const response = await fetch("http://localhost:3000/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
+
+      if (response.ok) {
+        removeCookie("token", { path: "/" });
+        navigate("/login");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
     setIsDropdownOpen(false);
   };
 

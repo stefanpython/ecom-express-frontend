@@ -8,9 +8,8 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const [cookies, setCookies] = useCookies(["token"]);
-
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(["token"]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +46,6 @@ const Login = () => {
           email,
           password,
         }),
-        credentials: "include",
       });
 
       // Check if response is ok
@@ -59,8 +57,11 @@ const Login = () => {
 
       // Handle successful login
       const data = await response.json();
-      setCookies("token", data.token, { path: "/", httpOnly: true }); // ADD secure: true BEFORE DEPLOY
       console.log("Login successfully", data);
+
+      // Set token in cookies
+      const { token } = data;
+      setCookie("token", token, { path: "/" });
 
       navigate("/");
     } catch (error) {

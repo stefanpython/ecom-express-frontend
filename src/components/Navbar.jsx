@@ -12,11 +12,12 @@ const cartItems = [
 ];
 
 const Navbar = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const isUserLoggedIn = false;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const [cookies, setCookies] = useCookies(["token"]);
+
   console.log(cookies);
 
   const handleDropdownToggle = () => {

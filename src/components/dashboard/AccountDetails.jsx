@@ -1,8 +1,26 @@
 import React, { useState } from "react";
+import { useCookies } from "react-cookie";
+import { jwtDecode } from "jwt-decode";
 
 const AccountDetails = () => {
-  const [firstName, setFirstName] = useState("Chrimson");
-  const [lastName, setLastName] = useState("Cat");
+  const [cookies, setCookies] = useCookies(["token"]);
+
+  // Extract user info from token
+  const getUserIDFromToken = (token) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      const { userId, username } = decodedToken;
+      return { userId, username };
+    } catch (error) {
+      console.log("Error decoding token:", error);
+      return null;
+    }
+  };
+
+  const userInfo = cookies.token ? getUserIDFromToken(cookies.token) : null;
+
+  const [firstName, setFirstName] = useState(userInfo.username.split(" ")[0]);
+  const [lastName, setLastName] = useState(userInfo.username.split(" ")[1]);
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);

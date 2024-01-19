@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
 
 const AccountDetails = () => {
   const [cookies, setCookies] = useCookies(["token"]);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   // Extract user info from token
   const getUserIDFromToken = (token) => {
@@ -19,8 +21,35 @@ const AccountDetails = () => {
 
   const userInfo = cookies.token ? getUserIDFromToken(cookies.token) : null;
 
-  const [firstName, setFirstName] = useState(userInfo.username.split(" ")[0]);
-  const [lastName, setLastName] = useState(userInfo.username.split(" ")[1]);
+  // Function to fetch user details
+  const getUserDetails = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/user/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const userDetails = await response.json();
+      console.log("User Details:", userDetails);
+
+      setFirstName(userDetails.user.firstName);
+      setLastName(userDetails.user.lastName);
+    } catch (error) {
+      console.error("Error fetching user details:", error.message);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    getUserDetails(userInfo.userId);
+  }, []);
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -30,11 +59,36 @@ const AccountDetails = () => {
     setLastName(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to update the user's first and last name
-    console.log("Updated first name:", firstName);
-    console.log("Updated last name:", lastName);
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/user/update/${userInfo.userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+          }),
+        }
+      );
+
+      // Check if response is ok
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Update failed", errorData.message);
+        return;
+      }
+
+      console.log("Update successful");
+    } catch (error) {
+      console.error("Saving detailes failed", error);
+    }
   };
 
   return (

@@ -20,6 +20,9 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const navigate = useNavigate();
 
   // Extract user info from token
@@ -35,6 +38,36 @@ const Navbar = () => {
   };
 
   const userInfo = cookies.token ? getUserIDFromToken(cookies.token) : null;
+
+  const getUserDetails = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/user/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const userDetails = await response.json();
+      console.log("User Details:", userDetails);
+
+      setFirstName(userDetails.user.firstName);
+      setLastName(userDetails.user.lastName);
+    } catch (error) {
+      console.error("Error fetching user details:", error.message);
+
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    getUserDetails(userInfo.userId);
+  }, []);
 
   // Toggle user dropdown
   const handleDropdownToggle = () => {
@@ -54,7 +87,10 @@ const Navbar = () => {
       });
 
       if (response.ok) {
+        // Clear the token from client-side storage
         removeCookie("token", { path: "/" });
+        setIsDropdownOpen(false);
+
         navigate("/login");
       } else {
         console.error("Logout failed");
@@ -128,8 +164,7 @@ const Navbar = () => {
               onClick={handleDropdownToggle}
               className="text-black cursor-pointer"
             >
-              Welcome,{" "}
-              {isUserLoggedIn ? `${userInfo.username.split(" ")[0]}` : "Guest"}
+              Welcome, {isUserLoggedIn ? `${firstName}` : "Guest"}
             </button>
 
             {isDropdownOpen && (

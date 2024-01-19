@@ -1,26 +1,7 @@
 TODO list:
 
-Interface:
--- Signup page - DONE
-~ Input client-side validation - DONE
-
--- Login page - DONE
-~ Input client-side validation - DONE
-
--- Forgot password page - DONE
-~ Input client-side validation - DONE
-        
--- User Dashboard - DONE
-
--- Order confirmation page - DONE
-
--- Shop page all products - DONE
-
--- Cart page - DONE
-
--- Individual order page - DONE
-
--- Individual product page - DONE
+-- Login.jsx:
+            -- Display user incorrect password
 
 -- Search page
 

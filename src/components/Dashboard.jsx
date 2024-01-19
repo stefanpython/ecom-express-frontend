@@ -3,7 +3,7 @@ import AccountDetails from "./dashboard/AccountDetails";
 import Address from "./dashboard/Address";
 import Orders from "./dashboard/Orders";
 
-const Dashboard = () => {
+const Dashboard = ({ handleSubmitName }) => {
   const [selectedTab, setSelectedTab] = useState("");
 
   const handleTabClick = (tab) => {
@@ -68,8 +68,11 @@ const Dashboard = () => {
 
       {/* Right Content Area */}
       <div className="flex-1 p-4">
+        <h1>Welcome to your dashboard panel</h1>
         {/* Render the selected form based on the selectedTab */}
-        {selectedTab === "address" && <Address />}
+        {selectedTab === "address" && (
+          <Address handleSubmitName={handleSubmitName} />
+        )}
         {selectedTab === "accountDetails" && <AccountDetails />}
         {selectedTab === "orders" && <Orders />}
       </div>

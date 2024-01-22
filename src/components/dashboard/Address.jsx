@@ -1,42 +1,63 @@
 import React, { useState } from "react";
+import { useCookies } from "react-cookie";
 
 const Address = () => {
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
+
   const [addressLine, setAddressLine] = useState("");
-  const [postalZip, setPostalZip] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [phone, setPhone] = useState("");
+
+  const [cookies, setCookies] = useCookies(["token"]);
 
   const handleAddressLineChange = (e) => {
     setAddressLine(e.target.value);
   };
 
   const handlePostalZipChange = (e) => {
-    setPostalZip(e.target.value);
+    setPostalCode(e.target.value);
   };
 
   const handlePhoneChange = (e) => {
     setPhone(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newAddress = {
-      addressLine,
-      postalZip,
-      phone,
-    };
 
-    setAddresses([...addresses, newAddress]);
-    setAddressLine("");
-    setPostalZip("");
-    setPhone("");
-    setShowForm(false);
+    try {
+      const response = await fetch(`http://localhost:3000/address`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+        body: JSON.stringify({
+          addressLine,
+          postalCode,
+          phone,
+        }),
+      });
+
+      // Check if response is ok
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Response failed", errorData.message);
+        return;
+      }
+
+      // window.alert("Address added successfully.");
+
+      console.log("Added address successful");
+    } catch (error) {
+      console.error("Adding an address failed", error);
+    }
   };
 
   const handleCancel = () => {
     setAddressLine("");
-    setPostalZip("");
+    setPostalCode("");
     setPhone("");
     setShowForm(false);
   };
@@ -69,16 +90,16 @@ const Address = () => {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="postalZip"
+                htmlFor="postalCode"
               >
                 Postal/Zip Code
               </label>
               <input
                 className="border border-gray-300 rounded w-full md:w-1/2 py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
-                id="postalZip"
+                id="postalCode"
                 type="text"
                 placeholder="Enter your postal/zip code"
-                value={postalZip}
+                value={postalCode}
                 onChange={handlePostalZipChange}
               />
             </div>
@@ -131,7 +152,7 @@ const Address = () => {
         addresses.map((address, index) => (
           <div key={index}>
             <p>{`Address Line: ${address.addressLine}`}</p>
-            <p>{`Postal/Zip Code: ${address.postalZip}`}</p>
+            <p>{`Postal/Zip Code: ${address.postalCode}`}</p>
             <p>{`Phone: ${address.phone}`}</p>
             <hr className="my-4" />
           </div>

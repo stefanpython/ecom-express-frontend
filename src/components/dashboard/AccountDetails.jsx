@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
 
-const AccountDetails = () => {
+const AccountDetails = ({ setRefreshUser, refreshUser }) => {
   const [cookies, setCookies] = useCookies(["token"]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -84,6 +84,8 @@ const AccountDetails = () => {
         console.error("Update failed", errorData.message);
         return;
       }
+
+      setRefreshUser(!refreshUser);
 
       console.log("Update successful");
     } catch (error) {

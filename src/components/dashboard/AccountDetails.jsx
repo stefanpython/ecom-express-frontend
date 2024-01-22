@@ -87,6 +87,8 @@ const AccountDetails = ({ setRefreshUser, refreshUser }) => {
 
       setRefreshUser(!refreshUser);
 
+      window.alert("Name updated successfully.");
+
       console.log("Update successful");
     } catch (error) {
       console.error("Saving detailes failed", error);

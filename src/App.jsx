@@ -52,7 +52,7 @@ function App() {
       }
 
       const userDetails = await response.json();
-      // console.log("User Details:", userDetails);
+      console.log("User Details:", userDetails);
 
       setFirstName(userDetails.user.firstName);
       setLastName(userDetails.user.lastName);
@@ -86,6 +86,7 @@ function App() {
               <Dashboard
                 refreshUser={refreshUser}
                 setRefreshUser={setRefreshUser}
+                userInfo={userInfo}
               />
             }
           />

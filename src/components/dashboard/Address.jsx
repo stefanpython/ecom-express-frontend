@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 
-const Address = () => {
+const Address = ({ userInfo }) => {
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
@@ -10,6 +10,39 @@ const Address = () => {
   const [phone, setPhone] = useState("");
 
   const [cookies, setCookies] = useCookies(["token"]);
+
+  // Retrieve user addresses
+  const handleAddressDetails = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/user/addresses/${userInfo.userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+
+      // Check if response is ok
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Response failed", errorData.message);
+        return;
+      }
+
+      const userAddresses = await response.json();
+
+      console.log("Success fetching user address list", userAddresses);
+    } catch (error) {
+      console.error("Failed to fetch address list", error);
+    }
+  };
+
+  useEffect(() => {
+    handleAddressDetails();
+  }, []);
 
   const handleAddressLineChange = (e) => {
     setAddressLine(e.target.value);

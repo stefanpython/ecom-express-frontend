@@ -8,6 +8,7 @@ const Address = ({ userInfo }) => {
   const [addressLine, setAddressLine] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [phone, setPhone] = useState("");
+  const [refreshAddress, setRefreshAddress] = useState(false);
 
   const [cookies, setCookies] = useCookies(["token"]);
 
@@ -33,6 +34,7 @@ const Address = ({ userInfo }) => {
       }
 
       const userAddresses = await response.json();
+      setAddresses(userAddresses.addresses);
 
       console.log("Success fetching user address list", userAddresses);
     } catch (error) {
@@ -42,7 +44,7 @@ const Address = ({ userInfo }) => {
 
   useEffect(() => {
     handleAddressDetails();
-  }, []);
+  }, [refreshAddress]);
 
   const handleAddressLineChange = (e) => {
     setAddressLine(e.target.value);
@@ -80,7 +82,10 @@ const Address = ({ userInfo }) => {
         return;
       }
 
+      setRefreshAddress(!refreshAddress);
       // window.alert("Address added successfully.");
+
+      handleCancel();
 
       console.log("Added address successful");
     } catch (error) {

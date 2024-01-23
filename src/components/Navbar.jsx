@@ -25,7 +25,7 @@ const Navbar = ({ firstName, userInfo, getUserDetails, refreshUser }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUserDetails(userInfo.userId);
+    getUserDetails(userInfo?.userId);
   }, [refreshUser]);
 
   // Toggle user dropdown

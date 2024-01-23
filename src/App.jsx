@@ -39,6 +39,11 @@ function App() {
   // Function to fetch user details
   const getUserDetails = async (userId) => {
     try {
+      if (!userId) {
+        console.error("userId is undefined. Skipping GET request.");
+        return;
+      }
+
       const response = await fetch(`http://localhost:3000/user/${userId}`, {
         headers: {
           "Content-Type": "application/json",
@@ -46,13 +51,20 @@ function App() {
         },
       });
 
+      // Check if response is unauthorized
+      if (response.status === 401) {
+        // Handle unauthorized error here (e.g., redirect to login)
+        console.error("Unauthorized. Redirecting to login...");
+        return;
+      }
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message);
       }
 
       const userDetails = await response.json();
-      console.log("User Details:", userDetails);
+      // console.log("User Details:", userDetails);
 
       setFirstName(userDetails.user.firstName);
       setLastName(userDetails.user.lastName);
@@ -63,7 +75,7 @@ function App() {
   };
 
   useEffect(() => {
-    getUserDetails(userInfo.userId);
+    getUserDetails(userInfo?.userId);
   }, []);
 
   return (

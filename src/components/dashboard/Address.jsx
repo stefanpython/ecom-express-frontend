@@ -186,18 +186,20 @@ const Address = ({ userInfo }) => {
       <hr />
       <br />
 
-      {addresses.length > 0 ? (
-        addresses.map((address, index) => (
-          <div key={index}>
-            <p>{`Address Line: ${address.addressLine}`}</p>
-            <p>{`Postal/Zip Code: ${address.postalCode}`}</p>
-            <p>{`Phone: ${address.phone}`}</p>
-            <hr className="my-4" />
-          </div>
-        ))
-      ) : (
-        <p>No address found</p>
-      )}
+      <div className="overflow-y-auto max-h-[510px]">
+        {addresses.length > 0 ? (
+          addresses.map((address, index) => (
+            <div key={index} className="container">
+              <p>{`Address Line: ${address.addressLine}`}</p>
+              <p>{`Postal/Zip Code: ${address.postalCode}`}</p>
+              <p>{`Phone: ${address.phone}`}</p>
+              <hr className="my-4" />
+            </div>
+          ))
+        ) : (
+          <p>No address found</p>
+        )}
+      </div>
     </div>
   );
 };

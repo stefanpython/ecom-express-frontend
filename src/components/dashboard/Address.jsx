@@ -36,7 +36,7 @@ const Address = ({ userInfo }) => {
       const userAddresses = await response.json();
       setAddresses(userAddresses.addresses);
 
-      console.log("Success fetching user address list", userAddresses);
+      // console.log("Success fetching user address list", userAddresses);
     } catch (error) {
       console.error("Failed to fetch address list", error);
     }

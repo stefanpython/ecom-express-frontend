@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Cart from "./Cart";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 // Dummy data for items in the cart
 const cartItems = [
@@ -12,17 +13,69 @@ const cartItems = [
   { id: 4, name: "Product 4", price: 120, quantity: 13, image: "product3.jpg" },
 ];
 
-const Navbar = ({ firstName, userInfo, getUserDetails, refreshUser }) => {
+const Navbar = ({ refreshUser }) => {
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const isUserLoggedIn = cookies.token ? true : false;
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const [, setFirstName] = useState("");
-  const [, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const navigate = useNavigate();
+
+  // Extract user info from token
+  const getUserIDFromToken = (token) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      const { userId, username } = decodedToken;
+      return { userId, username };
+    } catch (error) {
+      console.log("Error decoding token:", error);
+      return null;
+    }
+  };
+
+  const userInfo = cookies.token ? getUserIDFromToken(cookies.token) : null;
+
+  // Function to fetch user details
+  const getUserDetails = async (userId) => {
+    try {
+      if (!userId) {
+        console.error("userId is undefined. Skipping GET request.");
+        return;
+      }
+
+      const response = await fetch(`http://localhost:3000/user/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
+
+      // Check if response is unauthorized
+      if (response.status === 401) {
+        // Handle unauthorized error here (e.g., redirect to login)
+        console.error("Unauthorized. Redirecting to login...");
+        return;
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const userDetails = await response.json();
+      // console.log("User Details:", userDetails);
+
+      setFirstName(userDetails.user.firstName);
+      setLastName(userDetails.user.lastName);
+    } catch (error) {
+      console.error("Error fetching user details:", error.message);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     getUserDetails(userInfo?.userId);

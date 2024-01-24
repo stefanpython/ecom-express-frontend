@@ -103,25 +103,28 @@ const Orders = ({}) => {
       <hr />
       <br />
 
-      {orders.length > 0 ? (
-        orders.map((order) => (
-          <div key={order._id} className="mb-4">
-            <p>{`Status: ${order.status}`}</p>
-            <p>{`Total Amount: ${order.totalAmount}`}</p>
-            <p>{`Items:`}</p>
-            <ul>
-              {order.items.map((item) => (
-                <li
-                  key={item._id}
-                >{`Product: ${item.product.name}, Quantity: ${item.quantity}`}</li>
-              ))}
-            </ul>
-            <hr className="my-2" />
-          </div>
-        ))
-      ) : (
-        <p>You have no orders yet.</p>
-      )}
+      <div className="overflow-y-auto max-h-[510px]">
+        {orders.length > 0 ? (
+          orders.map((order) => (
+            <div key={order._id} className="mb-4">
+              <p>{`ID: ${order._id}`}</p>
+              <p>{`Status: ${order.status}`}</p>
+              <p>{`Total Amount: ${order.totalAmount}`}</p>
+              <p>{`Items:`}</p>
+              <ul>
+                {order.items.map((item) => (
+                  <li
+                    key={item._id}
+                  >{`Product: ${item.product.name}, Quantity: ${item.quantity}`}</li>
+                ))}
+              </ul>
+              <hr className="my-2" />
+            </div>
+          ))
+        ) : (
+          <p>You have no orders yet.</p>
+        )}
+      </div>
     </div>
   );
 };

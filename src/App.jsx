@@ -81,12 +81,7 @@ function App() {
   return (
     <div className="App">
       <HashRouter>
-        <Navbar
-          firstName={firstName}
-          getUserDetails={getUserDetails}
-          userInfo={userInfo}
-          refreshUser={refreshUser}
-        />
+        <Navbar firstName={firstName} refreshUser={refreshUser} />
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />

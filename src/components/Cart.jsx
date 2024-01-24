@@ -47,15 +47,19 @@ const Cart = ({ onClose, isCartOpen, cartItems }) => {
 
       <div className="p-4">
         {cartItems.map((item) => (
-          <div key={item.id} className="flex flex-col mb-2">
+          <div key={item._id} className="flex flex-col mb-2">
             <div className="flex items-center mb-2 justify-between">
               <div className="flex items-center">
-                <img src={item.image} alt="" className="w-10 h-10 mr-2" />
-                <p>{item.name}</p>
+                <img
+                  src={item.product.image}
+                  alt=""
+                  className="w-10 h-10 mr-2"
+                />
+                <p>{item.product.name}</p>
               </div>
 
               <button onClick={() => console.log("Item deleted")}>
-                <img className="w-6 h-6" src="./bin.png" alt="recicle-bin" />
+                <img className="w-6 h-6" src="./bin.png" alt="recycle-bin" />
               </button>
             </div>
 
@@ -67,7 +71,7 @@ const Cart = ({ onClose, isCartOpen, cartItems }) => {
 
               <div className="flex justify-between">
                 <p className="mr-2">Price:</p>
-                <p>${item.price * item.quantity}</p>
+                <p>${item.product.price * item.quantity}</p>
               </div>
             </div>
             <hr />
@@ -79,7 +83,10 @@ const Cart = ({ onClose, isCartOpen, cartItems }) => {
         <p>Total:</p>
         <p>
           $
-          {cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)}
+          {cartItems.reduce(
+            (acc, item) => acc + item.product.price * item.quantity,
+            0
+          )}
         </p>
       </div>
 

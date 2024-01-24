@@ -5,13 +5,13 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-// Dummy data for items in the cart
-const cartItems = [
-  { id: 1, name: "Product 1", price: 10, quantity: 2, image: "product1.jpg" },
-  { id: 2, name: "Product 2", price: 15, quantity: 1, image: "product2.jpg" },
-  { id: 3, name: "Product 3", price: 20, quantity: 3, image: "product3.jpg" },
-  { id: 4, name: "Product 4", price: 120, quantity: 13, image: "product3.jpg" },
-];
+// // Dummy data for items in the cart
+// const cartItems = [
+//   { id: 1, name: "Product 1", price: 10, quantity: 2, image: "product1.jpg" },
+//   { id: 2, name: "Product 2", price: 15, quantity: 1, image: "product2.jpg" },
+//   { id: 3, name: "Product 3", price: 20, quantity: 3, image: "product3.jpg" },
+//   { id: 4, name: "Product 4", price: 120, quantity: 13, image: "product3.jpg" },
+// ];
 
 const Navbar = ({ refreshUser }) => {
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
@@ -22,6 +22,8 @@ const Navbar = ({ refreshUser }) => {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+
+  const [cartItems, setCartItems] = useState([]);
 
   const navigate = useNavigate();
 
@@ -67,7 +69,6 @@ const Navbar = ({ refreshUser }) => {
       }
 
       const userDetails = await response.json();
-      // console.log("User Details:", userDetails);
 
       setFirstName(userDetails.user.firstName);
       setLastName(userDetails.user.lastName);
@@ -132,6 +133,35 @@ const Navbar = ({ refreshUser }) => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [isDropdownOpen]);
+
+  // Grab cart items
+  const getCartDetails = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/cart_user`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const cartDetails = await response.json();
+
+      setCartItems(cartDetails.cart.items);
+    } catch (error) {
+      console.error("Failed to get cart details:", error);
+    }
+  };
+
+  useEffect(() => {
+    getCartDetails();
+  }, []);
+
+  console.log(cartItems);
 
   return (
     <nav className="p-3 shadow bg-slate-100">

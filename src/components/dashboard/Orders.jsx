@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
-import OrderDetails from "../OrderDetails";
 
 const Orders = ({}) => {
   const [cookies, setCookies] = useCookies(["token"]);
@@ -25,11 +24,6 @@ const Orders = ({}) => {
   // Function to fetch user details
   const getOrderDetails = async (userId) => {
     try {
-      if (!userId) {
-        console.error("userId is undefined. Skipping GET request.");
-        return;
-      }
-
       const response = await fetch(
         `http://localhost:3000/user/${userId}/orders`,
         {
@@ -70,10 +64,37 @@ const Orders = ({}) => {
     setSearchQuery(e.target.value);
   };
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    // Add logic for handling search (if needed)
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/order/${searchQuery}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const orderDetails = await response.json();
+      setOrders([orderDetails.order]);
+    } catch (error) {
+      console.error("Error searching for order:", error.message);
+    }
   };
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      getOrderDetails();
+    }
+  }, [searchQuery]);
 
   return (
     <div>
@@ -87,7 +108,7 @@ const Orders = ({}) => {
             className="border border-gray-300 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
             id="searchQuery"
             type="text"
-            placeholder="Search for orders"
+            placeholder="Search for order by ID"
             value={searchQuery}
             onChange={handleSearchChange}
           />
@@ -104,7 +125,7 @@ const Orders = ({}) => {
       <br />
 
       <div className="overflow-y-auto max-h-[510px]">
-        {orders.length > 0 ? (
+        {orders && orders.length > 0 ? (
           orders.map((order) => (
             <div key={order._id} className="mb-4">
               <p>{`ID: ${order._id}`}</p>

@@ -12,9 +12,37 @@ const Cart = ({
   const [cookies, setCookies] = useCookies(["token"]);
 
   // Dummy function to handle placing an order
-  const handlePlaceOrder = () => {
-    // Add your logic to place the order
-    console.log("Placing order...");
+  const handlePlaceOrder = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/create_order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+        body: JSON.stringify({
+          items: cartItems.map((item) => ({
+            product: item.product._id,
+            quantity: item.quantity,
+          })),
+          totalAmount: cartItems.reduce(
+            (acc, item) => acc + item.product.price * item.quantity,
+            0
+          ),
+          status: "Pending", // You might want to adjust the status based on your business logic
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      // Clear the cart or perform any other necessary actions
+      console.log("Order placed successfully!");
+    } catch (error) {
+      console.error("Failed to place order:", error);
+    }
   };
 
   const cartRef = useRef(null);
@@ -129,7 +157,7 @@ const Cart = ({
           <button
             className="w-full bg-blue-500 text-white p-2 rounded"
             onClick={() => {
-              handlePlaceOrder;
+              handlePlaceOrder();
               onClose();
             }}
           >

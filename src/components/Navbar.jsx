@@ -5,14 +5,6 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-// // Dummy data for items in the cart
-// const cartItems = [
-//   { id: 1, name: "Product 1", price: 10, quantity: 2, image: "product1.jpg" },
-//   { id: 2, name: "Product 2", price: 15, quantity: 1, image: "product2.jpg" },
-//   { id: 3, name: "Product 3", price: 20, quantity: 3, image: "product3.jpg" },
-//   { id: 4, name: "Product 4", price: 120, quantity: 13, image: "product3.jpg" },
-// ];
-
 const Navbar = ({ refreshUser }) => {
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const isUserLoggedIn = cookies.token ? true : false;
@@ -24,6 +16,8 @@ const Navbar = ({ refreshUser }) => {
   const [lastName, setLastName] = useState("");
 
   const [cartItems, setCartItems] = useState([]);
+
+  const [refreshCart, setRefrehCart] = useState(false);
 
   const navigate = useNavigate();
 
@@ -159,7 +153,7 @@ const Navbar = ({ refreshUser }) => {
 
   useEffect(() => {
     getCartDetails();
-  }, []);
+  }, [refreshCart]);
 
   console.log(cartItems);
 
@@ -237,6 +231,8 @@ const Navbar = ({ refreshUser }) => {
           cartItems={cartItems}
           onClose={() => setIsCartOpen(false)}
           isCartOpen={isCartOpen}
+          setRefrehCart={setRefrehCart}
+          refreshCart={refreshCart}
         />
       </div>
     </nav>

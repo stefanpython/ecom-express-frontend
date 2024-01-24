@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
 
-const Cart = ({ onClose, isCartOpen, cartItems }) => {
+const Cart = ({
+  onClose,
+  isCartOpen,
+  cartItems,
+  refreshCart,
+  setRefrehCart,
+}) => {
+  const [cookies, setCookies] = useCookies(["token"]);
+
   // Dummy function to handle placing an order
   const handlePlaceOrder = () => {
     // Add your logic to place the order
@@ -27,6 +36,31 @@ const Cart = ({ onClose, isCartOpen, cartItems }) => {
     };
   }, [isCartOpen, onClose]);
 
+  // Function to handle removal of an item
+  const handleRemoveItem = async (productId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/cart/remove_auth/${productId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`, // Assuming you have cookies available
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      setRefrehCart(!refreshCart);
+    } catch (error) {
+      console.error("Failed to remove item from the cart:", error);
+    }
+  };
+
   return (
     <div
       ref={cartRef}
@@ -51,14 +85,14 @@ const Cart = ({ onClose, isCartOpen, cartItems }) => {
             <div className="flex items-center mb-2 justify-between">
               <div className="flex items-center">
                 <img
-                  src={item.product.image}
+                  // src={item.product.image}
                   alt=""
                   className="w-10 h-10 mr-2"
                 />
                 <p>{item.product.name}</p>
               </div>
 
-              <button onClick={() => console.log("Item deleted")}>
+              <button onClick={() => handleRemoveItem(item.product._id)}>
                 <img className="w-6 h-6" src="./bin.png" alt="recycle-bin" />
               </button>
             </div>

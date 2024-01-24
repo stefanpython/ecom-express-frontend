@@ -10,6 +10,7 @@ const Cart = ({
   setRefrehCart,
 }) => {
   const [cookies, setCookies] = useCookies(["token"]);
+  const cartRef = useRef(null);
 
   // Dummy function to handle placing an order
   const handlePlaceOrder = async () => {
@@ -29,7 +30,7 @@ const Cart = ({
             (acc, item) => acc + item.product.price * item.quantity,
             0
           ),
-          status: "Pending", // You might want to adjust the status based on your business logic
+          status: "Pending",
         }),
       });
 
@@ -38,14 +39,37 @@ const Cart = ({
         throw new Error(errorData.message);
       }
 
-      // Clear the cart or perform any other necessary actions
+      await clearCart();
+      onClose();
+
       console.log("Order placed successfully!");
     } catch (error) {
       console.error("Failed to place order:", error);
     }
   };
 
-  const cartRef = useRef(null);
+  // Function to handle clearing the entire cart
+  const clearCart = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/clear_cart", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      // After clearing the cart, you can refresh the cart
+      setRefrehCart(!refreshCart);
+    } catch (error) {
+      console.error("Failed to clear the cart:", error);
+    }
+  };
 
   // Close the cart when clicking outside of it
   useEffect(() => {

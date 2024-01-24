@@ -97,7 +97,7 @@ const Cart = ({
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.token}`, // Assuming you have cookies available
+            Authorization: `Bearer ${cookies.token}`,
           },
         }
       );

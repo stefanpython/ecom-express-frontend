@@ -76,12 +76,16 @@ function App() {
 
   useEffect(() => {
     getUserDetails(userInfo?.userId);
-  }, []);
+  }, [refreshUser]);
 
   return (
     <div className="App">
       <HashRouter>
-        <Navbar firstName={firstName} refreshUser={refreshUser} />
+        <Navbar
+          refreshUser={refreshUser}
+          firstName={firstName}
+          lastName={lastName}
+        />
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />

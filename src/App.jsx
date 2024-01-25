@@ -11,6 +11,7 @@ import Shop from "./components/Shop";
 import OrderConfirmation from "./components/OrderConfirmation";
 import OrderDetails from "./components/OrderDetails";
 import ProductDetails from "./components/ProductDetails";
+import Orders from "./components/dashboard/Orders";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";

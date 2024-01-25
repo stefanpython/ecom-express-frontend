@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AccountDetails from "./dashboard/AccountDetails";
 import Address from "./dashboard/Address";
 import Orders from "./dashboard/Orders";
+import { useLocation } from "react-router-dom";
 
 const Dashboard = ({ userInfo, refreshUser, setRefreshUser }) => {
   const [selectedTab, setSelectedTab] = useState("");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tabFromParams = searchParams.get("selectedTab");
+    if (tabFromParams) {
+      setSelectedTab(tabFromParams);
+    }
+  }, [location.search]);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);

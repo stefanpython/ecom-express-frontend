@@ -4,7 +4,7 @@ import Cart from "./Cart";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = ({ refreshUser, firstName, lastName }) => {
+const Navbar = ({ firstName, refreshLogin }) => {
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const isUserLoggedIn = cookies.token ? true : false;
 
@@ -98,7 +98,7 @@ const Navbar = ({ refreshUser, firstName, lastName }) => {
     if (cookies.token) {
       getCartDetails();
     }
-  }, [refreshCart]);
+  }, [refreshCart, refreshLogin]);
 
   return (
     <nav className="p-3 shadow bg-slate-100">

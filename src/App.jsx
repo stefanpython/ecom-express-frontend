@@ -21,6 +21,7 @@ function App() {
   const [lastName, setLastName] = useState("");
 
   const [refreshUser, setRefreshUser] = useState(true);
+  const [refreshLogin, setRefreshLogin] = useState(true);
 
   // Extract user info from token
   const getUserIDFromToken = (token) => {
@@ -76,19 +77,28 @@ function App() {
 
   useEffect(() => {
     getUserDetails(userInfo?.userId);
-  }, [refreshUser]);
+  }, [refreshUser, refreshLogin]);
 
   return (
     <div className="App">
       <HashRouter>
         <Navbar
-          refreshUser={refreshUser}
           firstName={firstName}
           lastName={lastName}
+          refreshLogin={refreshLogin}
+          setRefreshLogin={setRefreshLogin}
         />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={
+              <Login
+                refreshLogin={refreshLogin}
+                setRefreshLogin={setRefreshLogin}
+              />
+            }
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route

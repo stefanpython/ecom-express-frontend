@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
 
-const Login = () => {
+const Login = ({ refreshLogin, setRefreshLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -62,6 +62,8 @@ const Login = () => {
       // Set token in cookies
       const { token } = data;
       setCookie("token", token, { path: "/" });
+
+      setRefreshLogin(!refreshLogin);
 
       navigate("/");
     } catch (error) {

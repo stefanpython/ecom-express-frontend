@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom";
 
 const Orders = ({}) => {
   const [cookies, setCookies] = useCookies(["token"]);
@@ -49,7 +50,7 @@ const Orders = ({}) => {
       const orderDetails = await response.json();
       setOrders(orderDetails.userOrders);
 
-      console.log("Orders Details:", orderDetails);
+      // console.log("Orders Details:", orderDetails);
     } catch (error) {
       console.error("Error fetching user details:", error.message);
       throw error;
@@ -127,20 +128,22 @@ const Orders = ({}) => {
       <div className="overflow-y-auto max-h-[510px]">
         {orders && orders.length > 0 ? (
           orders.map((order) => (
-            <div key={order._id} className="mb-4">
-              <p>{`ID: ${order._id}`}</p>
-              <p>{`Status: ${order.status}`}</p>
-              <p>{`Total Amount: ${order.totalAmount}`}</p>
-              <p>{`Items:`}</p>
-              <ul>
-                {order.items.map((item) => (
-                  <li
-                    key={item._id}
-                  >{`Product: ${item.product.name}, Quantity: ${item.quantity}`}</li>
-                ))}
-              </ul>
-              <hr className="my-2" />
-            </div>
+            <Link key={order._id} to={`/order/${order._id}`}>
+              <div key={order._id} className="mb-4">
+                <p>{`ID: ${order._id}`}</p>
+                <p>{`Status: ${order.status}`}</p>
+                <p>{`Total Amount: ${order.totalAmount}`}</p>
+                <p>{`Items:`}</p>
+                <ul>
+                  {order.items.map((item) => (
+                    <li
+                      key={item._id}
+                    >{`Product: ${item.product.name}, Quantity: ${item.quantity}`}</li>
+                  ))}
+                </ul>
+                <hr className="my-2" />
+              </div>
+            </Link>
           ))
         ) : (
           <p>You have no orders yet.</p>

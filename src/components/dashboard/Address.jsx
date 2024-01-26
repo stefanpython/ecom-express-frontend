@@ -189,7 +189,10 @@ const Address = ({ userInfo }) => {
       <div className="overflow-y-auto max-h-[510px]">
         {addresses.length > 0 ? (
           addresses.map((address, index) => (
-            <div key={index} className="container">
+            <div
+              key={index}
+              className="container hover:bg-gray-100 p-1 rounded-md"
+            >
               <p>{`Address Line: ${address.addressLine}`}</p>
               <p>{`Postal/Zip Code: ${address.postalCode}`}</p>
               <p>{`Phone: ${address.phone}`}</p>

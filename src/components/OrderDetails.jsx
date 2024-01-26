@@ -43,6 +43,9 @@ const OrderDetails = () => {
       day: "numeric",
       weekday: "long",
       year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
     };
 
     const formattedDate = new Date(dateString).toLocaleDateString(

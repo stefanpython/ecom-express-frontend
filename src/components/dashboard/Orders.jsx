@@ -129,7 +129,10 @@ const Orders = ({}) => {
         {orders && orders.length > 0 ? (
           orders.map((order) => (
             <Link key={order._id} to={`/order/${order._id}`}>
-              <div key={order._id} className="mb-4">
+              <div
+                key={order._id}
+                className="mb-4 hover:bg-gray-100 p-2 rounded-md"
+              >
                 <p>{`ID: ${order._id}`}</p>
                 <p>{`Status: ${order.status}`}</p>
                 <p>{`Total Amount: ${order.totalAmount}`}</p>

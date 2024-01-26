@@ -12,6 +12,7 @@ import OrderConfirmation from "./components/OrderConfirmation";
 import OrderDetails from "./components/OrderDetails";
 import ProductDetails from "./components/ProductDetails";
 import Orders from "./components/dashboard/Orders";
+import AddressDetails from "./components/dashboard/AddressDetails";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
@@ -116,6 +117,7 @@ function App() {
           <Route path="/order" element={<OrderConfirmation />} />
           <Route path="/order/:orderId" element={<OrderDetails />} />
           <Route path="/products/:productId" element={<ProductDetails />} />
+          <Route path="/address/:addressId" element={<AddressDetails />} />
         </Routes>
         <Footer />
       </HashRouter>

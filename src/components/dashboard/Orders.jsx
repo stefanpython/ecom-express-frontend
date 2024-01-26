@@ -133,7 +133,7 @@ const Orders = ({}) => {
                 <p>{`ID: ${order._id}`}</p>
                 <p>{`Status: ${order.status}`}</p>
                 <p>{`Total Amount: ${order.totalAmount}`}</p>
-                <p>{`Items:`}</p>
+
                 <ul>
                   {order.items.map((item) => (
                     <li

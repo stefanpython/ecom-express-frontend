@@ -1,31 +1,6 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
-// // Dummy data for order items
-// const orderItems = [
-//   {
-//     id: 1,
-//     name: "Converse All Star",
-//     price: 40,
-//     quantity: 2,
-//     image: "converse.jpg",
-//   },
-//   {
-//     id: 2,
-//     name: "Nike Air Max",
-//     price: 80,
-//     quantity: 1,
-//     image: "nike_air_max.jpg",
-//   },
-//   {
-//     id: 3,
-//     name: "Adidas Superstar",
-//     price: 60,
-//     quantity: 3,
-//     image: "adidas_superstar.jpg",
-//   },
-// ];
 
 const OrderDetails = () => {
   const [orderItems, setOrderItems] = useState([]);
@@ -34,6 +9,9 @@ const OrderDetails = () => {
   const location = useLocation();
   const orderNumber = location.pathname.split("/").pop();
 
+  const navigate = useNavigate();
+
+  // Function to get order details
   const handleOrderDetails = async (orderId) => {
     try {
       const response = await fetch(`http://localhost:3000/order/${orderId}`, {
@@ -59,7 +37,7 @@ const OrderDetails = () => {
     handleOrderDetails(orderNumber);
   }, []);
 
-  // Format date
+  // Function to format date
   const formatCreatedAtDate = (dateString) => {
     const options = {
       day: "numeric",
@@ -73,6 +51,38 @@ const OrderDetails = () => {
     );
 
     return formattedDate;
+  };
+
+  // Function to cancel order
+  const handleCancelOrder = async (orderId) => {
+    // Display a confirmation dialog
+    const isConfirmed = window.confirm(
+      "Are you sure you want to cancel this order?"
+    );
+
+    if (!isConfirmed) {
+      // User canceled the action
+      return;
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:3000/delete_order/${orderId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error("Failed to delete order:", error);
+    }
   };
 
   return (
@@ -137,17 +147,22 @@ const OrderDetails = () => {
               <h3 className="text-lg font-semibold mb-2">Total Price</h3>
               <p className="text-gray-700">
                 $
-                {orderItems.items &&
-                  orderItems.items.reduce(
-                    (acc, item) => acc + item.product.price * item.quantity,
-                    0
-                  )}
+                {Math.round(
+                  orderItems.items &&
+                    orderItems.items.reduce(
+                      (acc, item) => acc + item.product.price * item.quantity,
+                      0
+                    )
+                )}
               </p>
             </div>
           </div>
           <div className="mt-4">
             <button
-              onClick={() => console.log("Order canceled")}
+              onClick={() => {
+                handleCancelOrder(orderItems._id);
+                navigate(`/dashboard?selectedTab=orders`);
+              }}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
             >
               Cancel Order

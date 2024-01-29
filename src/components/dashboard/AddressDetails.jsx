@@ -10,6 +10,8 @@ const AddressDetails = () => {
 
   const [cookies, setCookies] = useCookies(["token"]);
 
+  const navigate = useNavigate();
+
   // Grab address details
   const getAddressDetails = async (id) => {
     try {
@@ -75,10 +77,33 @@ const AddressDetails = () => {
   };
 
   const handleDelete = async () => {
+    // Display a confirmation dialog
+    const isConfirmed = window.confirm(
+      "Are you sure you want delete this address?"
+    );
+
+    if (!isConfirmed) {
+      // User canceled the action
+      return;
+    }
     try {
-      // Perform the delete logic here
-      // You can use a fetch request to delete the address on the server
-      // After successful deletion, you may want to navigate to another page or handle accordingly
+      const response = await fetch(
+        `http://localhost:3000/address/${addressId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      navigate(`/dashboard?selectedTab=address`);
     } catch (error) {
       console.error("Failed to delete address:", error);
     }

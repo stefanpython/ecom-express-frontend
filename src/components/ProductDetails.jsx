@@ -1,5 +1,6 @@
+import { useParams } from "react-router-dom";
 import AddReview from "./AddReview";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const mockProduct = {
   id: 1,
@@ -42,6 +43,38 @@ const ProductDetails = () => {
   const [rating, setRating] = useState(0);
   const [userReviews, setUserReviews] = useState([]);
 
+  const [productDetails, setProductDetails] = useState("");
+
+  const { productId } = useParams();
+
+  // Get details for a product based on id
+  const getProductDetails = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/product/${productId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const itemData = await response.json();
+      setProductDetails(itemData.product);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProductDetails();
+  }, []);
+
   const handleReviewSubmit = (e) => {
     e.preventDefault();
     // Submit review logic goes here
@@ -65,22 +98,28 @@ const ProductDetails = () => {
     setRating(0);
   };
 
+  console.log(productDetails);
+
   return (
     <div className="container mx-auto px-6 lg:px-44 lg:mb-40 min-h-screen">
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-6 pt-6 bg-slate-100 px-4 sm:-mb-96 ">
-          <img className="border rounded-lg" src="./laptop.jpg" alt="" />
+          <img
+            className="border rounded-lg"
+            src={productDetails.image}
+            alt=""
+          />
 
           <div className="text-left border rounded-lg p-2 bg-slate-50">
             <h1 className="font-bold text-2xl text-blue-500 mb-2">
-              {mockProduct.name}
+              {productDetails.name}
             </h1>
 
-            <p>{mockProduct.description}</p>
+            <p>{productDetails.description}</p>
 
             <br />
 
-            <h2 className="font-medium text-2xl">${mockProduct.price}</h2>
+            <h2 className="font-medium text-2xl">${productDetails.price}</h2>
 
             <div className="flex items-left mt-2 flex-col mr-2">
               <label className="mr-2 mb-2">Quantity:</label>

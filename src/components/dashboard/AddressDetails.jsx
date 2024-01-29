@@ -1,16 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 const AddressDetails = () => {
   const [addressLine, setAddressLine] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [phone, setPhone] = useState("");
+  const { addressId } = useParams();
 
   const [cookies, setCookies] = useCookies(["token"]);
 
+  // Grab address details
+  const getAddressDetails = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/address/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const addressDetails = await response.json();
+
+      setAddressLine(addressDetails.address.addressLine);
+      setPhone(addressDetails.address.phone);
+      setPostalCode(addressDetails.address.postalCode);
+    } catch (error) {
+      console.error("Failed to grab address details", error);
+    }
+  };
+
   // Fetch the address details on component mount
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getAddressDetails(addressId);
+  }, []);
 
   const handleSave = async () => {
     try {
@@ -44,7 +71,7 @@ const AddressDetails = () => {
     setPhone(e.target.value);
   };
 
-  console.log(phone, addressLine, postalCode);
+  console.log(addressId);
 
   return (
     <div className="flex items-center justify-center min-h-[879px]">

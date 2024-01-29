@@ -92,6 +92,15 @@ const OrderDetails = () => {
     <div className="flex items-center justify-center min-h-[879px]">
       <div className="-mt-64">
         <div className="bg-white shadow-lg rounded-lg p-8">
+          <div className=" flex justify-end text-right">
+            <button
+              className="text-blue-500 hover:bg-slate-100 p-1 rounded-md"
+              onClick={() => navigate(`/dashboard?selectedTab=orders`)}
+            >
+              Back to orders
+            </button>
+          </div>
+
           <h2 className="text-2xl font-bold mb-4">Order Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>

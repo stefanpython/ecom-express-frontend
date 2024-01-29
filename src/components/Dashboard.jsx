@@ -22,7 +22,7 @@ const Dashboard = ({ userInfo, refreshUser, setRefreshUser }) => {
   };
 
   return (
-    <div className="grid h-max sm:flex sm:min-h-[875px] ">
+    <div className="grid h-max sm:flex sm:min-h-[875px]">
       {/* Left Sidebar with Tabs */}
       <div className="h-25 sm:h-auto w-auto  bg-slate-100 p-4 lg:hidden sm:mb-44">
         {/* Collapsible Menu for Small Screens */}

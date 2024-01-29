@@ -125,6 +125,16 @@ const AddressDetails = () => {
     <div className="flex items-center justify-center min-h-[879px]">
       <div className="-mt-64">
         <div className="bg-white shadow-lg rounded-lg p-8">
+          <div className=" flex justify-end text-right">
+            <button
+              className="text-blue-500 hover:bg-slate-100 p-1 rounded-md"
+              onClick={() => navigate(`/dashboard?selectedTab=address`)}
+            >
+              Back to orders
+            </button>
+          </div>
+
+          <br />
           <h2 className="text-2xl font-bold mb-4">Address Details</h2>
           <form onSubmit={handleSave}>
             <div className="mb-4">

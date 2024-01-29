@@ -39,13 +39,38 @@ const AddressDetails = () => {
     getAddressDetails(addressId);
   }, []);
 
-  const handleSave = async () => {
+  const handleSave = async (e) => {
+    e.preventDefault();
+
     try {
-      // Perform the save/update logic here
-      // You can use a fetch request to update the address on the server
-      // After successful update, you may want to navigate to another page or refresh the data
+      const response = await fetch(
+        `http://localhost:3000/update_address/${addressId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          body: JSON.stringify({
+            addressLine,
+            postalCode,
+            phone,
+          }),
+        }
+      );
+
+      // Check if response is ok
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Update failed", errorData.message);
+        return;
+      }
+
+      window.alert("Name updated successfully.");
+
+      console.log("Update successful");
     } catch (error) {
-      console.error("Failed to save address:", error);
+      console.error("Saving detailes failed", error);
     }
   };
 
@@ -71,14 +96,12 @@ const AddressDetails = () => {
     setPhone(e.target.value);
   };
 
-  console.log(addressId);
-
   return (
     <div className="flex items-center justify-center min-h-[879px]">
       <div className="-mt-64">
         <div className="bg-white shadow-lg rounded-lg p-8">
           <h2 className="text-2xl font-bold mb-4">Address Details</h2>
-          <form>
+          <form onSubmit={handleSave}>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600">
                 Address Line
@@ -117,8 +140,7 @@ const AddressDetails = () => {
             </div>
             <div className="flex space-x-44">
               <button
-                type="button"
-                onClick={handleSave}
+                type="submit"
                 className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
               >
                 Save

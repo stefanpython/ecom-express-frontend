@@ -187,7 +187,7 @@ const Address = ({ userInfo }) => {
       <hr />
       <br />
 
-      <div className="overflow-y-auto max-h-[510px]">
+      <div className="overflow-auto max-h-[510px]">
         {addresses.length > 0 ? (
           addresses.map((address, index) => (
             <Link key={address._id} to={`/address/${address._id}`}>

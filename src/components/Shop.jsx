@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
 
@@ -91,16 +91,44 @@ const ProductsPerPage = 9;
 
 const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [products, setProducts] = useState([]);
+
+  // Get products list
+  const getProductsList = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/product_list`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const productsData = await response.json();
+      setProducts(productsData.products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProductsList();
+  }, []);
 
   // Pagination
   const indexOfLastProduct = currentPage * ProductsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - ProductsPerPage;
-  const currentProducts = mockProducts.slice(
+  const currentProducts = products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
+  console.log(currentProducts);
 
   return (
     <div className="container mx-auto px-24 sm:px-6 lg:px-44 ">
@@ -110,10 +138,10 @@ const Shop = () => {
         <div className="grid grid-cols-1 sm:grid-cols-4 sm:grid-rows-2 gap-6 ">
           {currentProducts.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="border p-4 items-center shadow-custom"
             >
-              <Link to={`/products/${product.id}`}>
+              <Link to={`/products/${product._id}`}>
                 <img
                   src={product.image}
                   alt={product.name}

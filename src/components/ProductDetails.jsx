@@ -87,30 +87,47 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
     }
   };
 
-  const handleReviewSubmit = (e) => {
+  const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    // Submit review logic goes here
-    console.log(reviewTitle, reviewComment, rating);
+    try {
+      const response = await fetch(
+        `http://localhost:3000/review/create/${productId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          body: JSON.stringify({
+            rating: parseInt(rating),
+            comment: reviewComment,
+            title: reviewTitle,
+          }),
+        }
+      );
 
-    // Create a new review object
-    const newReview = {
-      id: userReviews.length + 1, // Incremental id for simplicity, you may want to use a more robust id generation
-      name: "Current User", // Assuming you want to display the name of the current user
-      rating: parseInt(rating),
-      date: new Date().toLocaleDateString(),
-      comment: reviewComment,
-    };
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
 
-    // Update the userReviews state
-    setUserReviews((prevReviews) => [...prevReviews, newReview]);
+      const reviewData = await response.json();
 
-    // Clear the input fields after submitting
-    setReviewTitle("");
-    setReviewComment("");
-    setRating(0);
+      // Assuming the backend returns the newly created review
+      const newReview = reviewData.review;
+
+      console.log(newReview);
+
+      // Clear the input fields after submitting
+      setReviewTitle("");
+      setReviewComment("");
+      setRating(0);
+
+      console.log("Review added successfully");
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  console.log(quantity);
 
   return (
     <div className="container mx-auto px-6 lg:px-44 lg:mb-40 min-h-screen">

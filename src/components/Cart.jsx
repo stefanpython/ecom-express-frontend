@@ -157,7 +157,7 @@ const Cart = ({
 
               <div className="flex justify-between">
                 <p className="mr-2">Price:</p>
-                <p>${item.product.price * item.quantity}</p>
+                <p>${parseInt(item.product.price * item.quantity)}</p>
               </div>
             </div>
             <hr />
@@ -169,9 +169,11 @@ const Cart = ({
         <p>Total:</p>
         <p>
           $
-          {cartItems.reduce(
-            (acc, item) => acc + item.product.price * item.quantity,
-            0
+          {parseInt(
+            cartItems.reduce(
+              (acc, item) => acc + item.product.price * item.quantity,
+              0
+            )
           )}
         </p>
       </div>

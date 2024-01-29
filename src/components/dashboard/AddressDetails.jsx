@@ -3,22 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 const AddressDetails = () => {
-  const [address, setAddress] = useState({
-    addressLine: "",
-    postalCode: "",
-    phone: "",
-  });
+  const [addressLine, setAddressLine] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [phone, setPhone] = useState("");
+
   const [cookies, setCookies] = useCookies(["token"]);
-  const location = useLocation();
-  const navigate = useNavigate();
 
   // Fetch the address details on component mount
-  useEffect(() => {
-    // Fetch address details and set them to the state
-    // You can use the same approach you've used in other components
-    // Fetch the address based on the address ID from the URL
-    // Update the address state with the fetched data
-  }, []);
+  useEffect(() => {}, []);
 
   const handleSave = async () => {
     try {
@@ -40,13 +32,19 @@ const AddressDetails = () => {
     }
   };
 
-  const handleChange = (e) => {
-    // Update the state as the user types
-    setAddress({
-      ...address,
-      [e.target.name]: e.target.value,
-    });
+  const handleAddressLine = (e) => {
+    setAddressLine(e.target.value);
   };
+
+  const handlePostalCode = (e) => {
+    setPostalCode(e.target.value);
+  };
+
+  const handlePhone = (e) => {
+    setPhone(e.target.value);
+  };
+
+  console.log(phone, addressLine, postalCode);
 
   return (
     <div className="flex items-center justify-center min-h-[879px]">
@@ -61,8 +59,8 @@ const AddressDetails = () => {
               <input
                 type="text"
                 name="addressLine"
-                value={address.addressLine}
-                onChange={handleChange}
+                value={addressLine}
+                onChange={handleAddressLine}
                 className="mt-1 p-2 border rounded-md w-full"
               />
             </div>
@@ -73,8 +71,8 @@ const AddressDetails = () => {
               <input
                 type="text"
                 name="postalCode"
-                value={address.postalCode}
-                onChange={handleChange}
+                value={postalCode}
+                onChange={handlePostalCode}
                 className="mt-1 p-2 border rounded-md w-full"
               />
             </div>
@@ -85,8 +83,8 @@ const AddressDetails = () => {
               <input
                 type="text"
                 name="phone"
-                value={address.phone}
-                onChange={handleChange}
+                value={phone}
+                onChange={handlePhone}
                 className="mt-1 p-2 border rounded-md w-full"
               />
             </div>

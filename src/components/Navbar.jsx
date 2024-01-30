@@ -74,11 +74,21 @@ const Navbar = ({ firstName, refreshLogin }) => {
   // Grab cart items
   const getCartDetails = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/cart_user`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
+      const url = cookies.token
+        ? `http://localhost:3000/cart_user`
+        : `http://localhost:3000/cart_guest`;
+
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      // Add Authorization header if cookies.token is not empty
+      if (cookies.token) {
+        headers["Authorization"] = `Bearer ${cookies.token}`;
+      }
+
+      const response = await fetch(url, {
+        headers: headers,
       });
 
       if (!response.ok) {
@@ -95,9 +105,7 @@ const Navbar = ({ firstName, refreshLogin }) => {
   };
 
   useEffect(() => {
-    if (cookies.token) {
-      getCartDetails();
-    }
+    getCartDetails();
   }, [refreshCart, refreshLogin]);
 
   return (

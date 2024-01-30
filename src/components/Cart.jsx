@@ -51,12 +51,18 @@ const Cart = ({
   // Function to handle clearing the entire cart
   const clearCart = async () => {
     try {
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      // Add Authorization header if cookies.token is not empty
+      if (cookies.token) {
+        headers["Authorization"] = `Bearer ${cookies.token}`;
+      }
+
       const response = await fetch("http://localhost:3000/clear_cart", {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
+        headers: headers,
       });
 
       if (!response.ok) {
@@ -91,16 +97,23 @@ const Cart = ({
   // Function to handle removal of an item
   const handleRemoveItem = async (productId) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/cart/remove_auth/${productId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.token}`,
-          },
-        }
-      );
+      const url = cookies.token
+        ? `http://localhost:3000/cart/remove_auth/${productId}`
+        : `http://localhost:3000/cart/remove_guest/${productId}`;
+
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      // Add Authorization header if cookies.token is not empty
+      if (cookies.token) {
+        headers["Authorization"] = `Bearer ${cookies.token}`;
+      }
+
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: headers,
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

@@ -87,6 +87,7 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
     }
   };
 
+  // Handle adding comments to a product
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -12,7 +12,7 @@ const Cart = ({
   const [cookies, setCookies] = useCookies(["token"]);
   const cartRef = useRef(null);
 
-  // Dummy function to handle placing an order
+  // Function to handle placing an order
   const handlePlaceOrder = async () => {
     try {
       const response = await fetch("http://localhost:3000/create_order", {
@@ -33,6 +33,21 @@ const Cart = ({
           status: "Pending",
         }),
       });
+
+      // Store order details in local storage
+      const orderDetails = {
+        items: cartItems.map((item) => ({
+          product: item.product._id,
+          quantity: item.quantity,
+        })),
+        totalAmount: cartItems.reduce(
+          (acc, item) => acc + item.product.price * item.quantity,
+          0
+        ),
+        status: "Pending",
+      };
+
+      localStorage.setItem("pendingOrder", JSON.stringify(orderDetails));
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -192,7 +207,7 @@ const Cart = ({
       </div>
 
       <div className="p-4">
-        <Link to="/order">
+        <Link to={cookies.token ? "/order" : "/login"}>
           <button
             className="w-full bg-blue-500 text-white p-2 rounded"
             onClick={() => {

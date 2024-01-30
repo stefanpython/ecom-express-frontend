@@ -57,7 +57,7 @@ const Login = ({ refreshLogin, setRefreshLogin }) => {
 
       // Handle successful login
       const data = await response.json();
-      console.log("Login successfully", data);
+      // console.log("Login successfully", data);
 
       // Set token in cookies
       const { token } = data;
@@ -65,7 +65,35 @@ const Login = ({ refreshLogin, setRefreshLogin }) => {
 
       setRefreshLogin(!refreshLogin);
 
-      navigate("/");
+      // Check for pending order in local storage
+      const pendingOrder = localStorage.getItem("pendingOrder");
+      if (pendingOrder) {
+        const parsedOrder = JSON.parse(pendingOrder);
+
+        // Send the pending order to the server
+        const orderResponse = await fetch(
+          "http://localhost:3000/create_order",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(parsedOrder),
+          }
+        );
+
+        if (!orderResponse.ok) {
+          const errorData = await orderResponse.json();
+          console.error("Failed to create order:", errorData.message);
+          return;
+        }
+
+        // Clear the pending order from local storage
+        localStorage.removeItem("pendingOrder");
+      }
+
+      navigate(pendingOrder ? "/order" : "/");
     } catch (error) {
       console.error("Login failed", error);
     }

@@ -11,6 +11,8 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
   const [quantity, setQuantity] = useState(1);
   const [cookies, setCookies] = useCookies(["token"]);
 
+  const [refreshReviews, setRefreshReviews] = useState(false);
+
   const [productDetails, setProductDetails] = useState("");
 
   const { productId } = useParams();
@@ -91,6 +93,11 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (!cookies.token) {
+        window.alert("Please log in to leave a review.");
+        return;
+      }
+
       const response = await fetch(
         `http://localhost:3000/review/create/${productId}`,
         {
@@ -114,10 +121,8 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
 
       const reviewData = await response.json();
 
-      // Assuming the backend returns the newly created review
-      const newReview = reviewData.review;
-
-      console.log(newReview);
+      // Set refresh reviews
+      setRefreshReviews(!refreshReviews);
 
       // Clear the input fields after submitting
       setReviewTitle("");
@@ -129,6 +134,55 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
       console.error(error);
     }
   };
+
+  // Get and display product reviews
+  const getProductReviews = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/review/product/${productId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const reviewsData = await response.json();
+      setUserReviews(reviewsData.reviews);
+    } catch (error) {
+      console.error("Failed to GET reviews", error);
+    }
+  };
+
+  useEffect(() => {
+    getProductReviews();
+  }, [refreshReviews]);
+
+  // Function to format date
+  const formatCreatedAtDate = (dateString) => {
+    const options = {
+      day: "numeric",
+      weekday: "long",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      "en-US",
+      options
+    );
+
+    return formattedDate;
+  };
+
+  console.log(userReviews);
 
   return (
     <div className="container mx-auto px-6 lg:px-44 lg:mb-40 min-h-screen">
@@ -194,7 +248,7 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
         <div>
           {userReviews.map((review) => (
             <div
-              key={review.id}
+              key={review._id}
               className="bg-white shadow-lg rounded-lg p-4 mb-4 pb-6"
             >
               <div className="flex items-center">
@@ -204,7 +258,14 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
                   alt="User avatar"
                 />
                 <div className="ml-4">
-                  <h1 className="text-xl font-semibold">{review.name}</h1>
+                  <h1 className="text-xl font-semibold text-left">
+                    {review.title}
+                  </h1>
+
+                  <p className="text-sm">
+                    {formatCreatedAtDate(review.createdAt)}
+                  </p>
+
                   <div className="flex items-center mt-2">
                     {/* Render stars based on the rating */}
                     {[...Array(review.rating)].map((_, index) => (
@@ -215,8 +276,8 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-gray-600 text-left ml-16 mt-2">
-                {review.date}
+              <p className="text-sm text-gray-600 text-left ml-16 mt-2 italic">
+                {review.user.firstName} {review.user.lastName} said:
               </p>
               <p className="mt-4 text-gray-600 text-left ml-16">
                 {review.comment}

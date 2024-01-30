@@ -2,91 +2,6 @@ import React, { useState, useEffect } from "react";
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
 
-const mockProducts = [
-  {
-    id: 1,
-    name: "Product 1",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    price: 29.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    description:
-      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    price: 39.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    price: 29.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 4,
-    name: "Product 4",
-    description:
-      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    price: 39.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 5,
-    name: "Product 5",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    price: 29.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 6,
-    name: "Product 6",
-    description:
-      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    price: 39.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 7,
-    name: "Product 7",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    price: 29.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 8,
-    name: "Product 8",
-    description:
-      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    price: 39.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 9,
-    name: "Product 9",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    price: 29.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 10,
-    name: "Product 10",
-    description:
-      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    price: 39.99,
-    image: "https://via.placeholder.com/250",
-  },
-  {
-    id: 11,
-    name: "Product 11",
-    description:
-      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    price: 39.99,
-    image: "https://via.placeholder.com/250",
-  },
-];
 const ProductsPerPage = 9;
 
 const Shop = () => {
@@ -128,8 +43,6 @@ const Shop = () => {
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
-  console.log(currentProducts);
-
   return (
     <div className="container mx-auto px-24 sm:px-6 lg:px-44 ">
       <br />
@@ -162,7 +75,7 @@ const Shop = () => {
         <Pagination
           activePage={currentPage}
           itemsCountPerPage={ProductsPerPage}
-          totalItemsCount={mockProducts.length}
+          totalItemsCount={products.length}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
           itemClass="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring ring-gray-500 focus:border-gray-500 active:bg-gray-100"

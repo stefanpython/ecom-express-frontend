@@ -56,10 +56,14 @@ const Shop = () => {
             >
               <Link to={`/products/${product._id}`}>
                 <img
-                  src={product.image}
+                  src={`http://localhost:3000/images/${product.image}`}
                   alt={product.name}
-                  className="mb-2 mx-auto"
+                  className="mb-2 mx-auto w-64 h-52"
                 />
+
+                <hr />
+                <br />
+
                 <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
                 <p className="text-sm mb-2">{product.description}</p>
                 <p className="text-base font-semibold">

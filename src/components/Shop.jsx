@@ -58,7 +58,7 @@ const Shop = () => {
                 <img
                   src={`http://localhost:3000/images/${product.image}`}
                   alt={product.name}
-                  className="mb-2 mx-auto w-64 h-52"
+                  className="mb-2 mx-auto w-64 h-56"
                 />
 
                 <hr />

@@ -187,8 +187,8 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-6 pt-6 bg-slate-100 px-4 sm:-mb-96 ">
           <img
-            className="border rounded-lg w-60"
-            src={productDetails.image}
+            className="border rounded-lg max-h-96"
+            src={`http://localhost:3000/images/${productDetails.image}`}
             alt=""
           />
 

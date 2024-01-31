@@ -188,10 +188,10 @@ const Navbar = ({
                     setRefreshSearch(!refreshSearch);
                   }}
                 >
-                  <div className="flex items-center hover:bg-gray-100">
+                  <div className="flex items-center hover:bg-gray-100 pb-3">
                     <img
                       className="w-10 mr-2"
-                      src={result.image}
+                      src={`http://localhost:3000/images/${result.image}`}
                       alt="product image"
                     />
                     <p className="text-left">{result.name}</p>

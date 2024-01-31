@@ -159,6 +159,8 @@ const Navbar = ({
     };
   }, []);
 
+  console.log(autocompleteResults);
+
   return (
     <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
@@ -182,13 +184,20 @@ const Navbar = ({
                 <Link
                   to={`/products/${result._id}`}
                   key={result._id}
-                  className="autocomplete-link"
+                  className="autocomplete-link "
                   onClick={() => {
                     setSearchQuery("");
                     setRefreshSearch(!refreshSearch);
                   }}
                 >
-                  <p className="text-left">{result.name}</p>
+                  <div className="flex items-center hover:bg-gray-100">
+                    <img
+                      className="w-10 mr-2"
+                      src={result.image}
+                      alt="product image"
+                    />
+                    <p className="text-left">{result.name}</p>
+                  </div>
                 </Link>
               ))}
             </div>

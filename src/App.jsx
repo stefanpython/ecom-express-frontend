@@ -81,7 +81,6 @@ function App() {
     getUserDetails(userInfo?.userId);
   }, [refreshUser, refreshLogin]);
 
-  console.log(refreshSearch);
   return (
     <div className="App">
       <HashRouter>

@@ -4,18 +4,53 @@ import Cart from "./Cart";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = ({ firstName, refreshLogin }) => {
+const Navbar = ({
+  firstName,
+  refreshLogin,
+  refreshSearch,
+  setRefreshSearch,
+}) => {
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const isUserLoggedIn = cookies.token ? true : false;
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
   const [cartItems, setCartItems] = useState([]);
 
   const [refreshCart, setRefrehCart] = useState(false);
 
   const navigate = useNavigate();
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [autocompleteResults, setAutocompleteResults] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+
+  // Fetch all products
+  const fetchAllProducts = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/product_list");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const products = await response.json();
+      setAllProducts(products.products);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllProducts();
+  }, []);
+
+  // Fetch autocomplete results when typing
+  useEffect(() => {
+    const filteredResults = allProducts.filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setAutocompleteResults(filteredResults);
+  }, [searchQuery, allProducts]);
 
   // Toggle user dropdown
   const handleDropdownToggle = () => {
@@ -108,6 +143,22 @@ const Navbar = ({ firstName, refreshLogin }) => {
     getCartDetails();
   }, [refreshCart, refreshLogin]);
 
+  // Close searchbar dropdown when click outside it
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(".autocomplete-link")) {
+        setSearchQuery("");
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
@@ -121,8 +172,27 @@ const Navbar = ({ firstName, refreshLogin }) => {
           <input
             type="text"
             placeholder="Search products"
-            className="bg-white-700 text-white p-2 rounded items-center w-auto md:w-96"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className=" bg-white-700 text-black p-2 rounded items-center w-auto md:w-96 ml-4"
           />
+          {searchQuery.length > 0 && (
+            <div className="absolute bg-white p-2 mt-10 rounded shadow w-96 z-10">
+              {autocompleteResults.map((result) => (
+                <Link
+                  to={`/products/${result._id}`}
+                  key={result._id}
+                  className="autocomplete-link"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setRefreshSearch(!refreshSearch);
+                  }}
+                >
+                  <p className="text-left">{result.name}</p>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
         <div></div>
         <div className="flex space-x-2 flex-grow justify-between pt-5 sm:pt-0 sm:flex-grow-0">

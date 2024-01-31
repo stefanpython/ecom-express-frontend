@@ -23,6 +23,7 @@ function App() {
 
   const [refreshUser, setRefreshUser] = useState(true);
   const [refreshLogin, setRefreshLogin] = useState(true);
+  const [refreshSearch, setRefreshSearch] = useState(false);
 
   // Extract user info from token
   const getUserIDFromToken = (token) => {
@@ -80,6 +81,7 @@ function App() {
     getUserDetails(userInfo?.userId);
   }, [refreshUser, refreshLogin]);
 
+  console.log(refreshSearch);
   return (
     <div className="App">
       <HashRouter>
@@ -88,6 +90,8 @@ function App() {
           lastName={lastName}
           refreshLogin={refreshLogin}
           setRefreshLogin={setRefreshLogin}
+          refreshSearch={refreshSearch}
+          setRefreshSearch={setRefreshSearch}
         />
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -121,6 +125,7 @@ function App() {
               <ProductDetails
                 refreshLogin={refreshLogin}
                 setRefreshLogin={setRefreshLogin}
+                refreshSearch={refreshSearch}
               />
             }
           />

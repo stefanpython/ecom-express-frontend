@@ -3,7 +3,7 @@ import AddReview from "./AddReview";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
+const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewComment, setReviewComment] = useState("");
   const [rating, setRating] = useState(0);
@@ -48,7 +48,7 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
 
   useEffect(() => {
     getProductDetails();
-  }, []);
+  }, [refreshSearch]);
 
   // Handle Add product to cart button
   const handleAddToCart = async () => {
@@ -161,7 +161,7 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
 
   useEffect(() => {
     getProductReviews();
-  }, [refreshReviews]);
+  }, [refreshReviews, refreshSearch]);
 
   // Function to format date
   const formatCreatedAtDate = (dateString) => {
@@ -181,8 +181,6 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin }) => {
 
     return formattedDate;
   };
-
-  console.log(userReviews);
 
   return (
     <div className="container mx-auto px-6 lg:px-44 lg:mb-40 min-h-screen">

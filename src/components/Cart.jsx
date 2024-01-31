@@ -165,7 +165,7 @@ const Cart = ({
             <div className="flex items-center mb-2 justify-between">
               <div className="flex items-center">
                 <img
-                  // src={item.product.image}
+                  src={`http://localhost:3000/images/${item.product.image}`}
                   alt=""
                   className="w-10 h-10 mr-2"
                 />

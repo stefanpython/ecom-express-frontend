@@ -12,14 +12,25 @@ import OrderConfirmation from "./components/OrderConfirmation";
 import OrderDetails from "./components/OrderDetails";
 import ProductDetails from "./components/ProductDetails";
 import AddressDetails from "./components/dashboard/AddressDetails";
+import Admin from "./components/Admin";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
+import { Navigate } from "react-router-dom";
+
+function PrivateRoute({ element, authenticated, isAdmin }) {
+  return authenticated && isAdmin ? (
+    element
+  ) : (
+    <Navigate to="/login" state={{ from: "/admin" }} replace />
+  );
+}
 
 function App() {
   const [cookies, setCookies] = useCookies(["token"]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [isAdmin, setIsAdmin] = useState("");
 
   const [refreshUser, setRefreshUser] = useState(true);
   const [refreshLogin, setRefreshLogin] = useState(true);
@@ -69,6 +80,7 @@ function App() {
       const userDetails = await response.json();
       // console.log("User Details:", userDetails);
 
+      setIsAdmin(userDetails.user.isAdmin);
       setFirstName(userDetails.user.firstName);
       setLastName(userDetails.user.lastName);
     } catch (error) {
@@ -91,6 +103,8 @@ function App() {
           setRefreshLogin={setRefreshLogin}
           refreshSearch={refreshSearch}
           setRefreshSearch={setRefreshSearch}
+          setIsAdmin={setIsAdmin}
+          isAdmin={isAdmin}
         />
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -100,6 +114,7 @@ function App() {
               <Login
                 refreshLogin={refreshLogin}
                 setRefreshLogin={setRefreshLogin}
+                isAdmin={isAdmin}
               />
             }
           />
@@ -129,6 +144,17 @@ function App() {
             }
           />
           <Route path="/address/:addressId" element={<AddressDetails />} />
+
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute
+                element={<Admin />}
+                authenticated={Boolean(cookies.token)}
+                isAdmin={isAdmin}
+              />
+            }
+          />
         </Routes>
         <Footer />
       </HashRouter>

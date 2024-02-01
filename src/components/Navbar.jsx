@@ -9,6 +9,8 @@ const Navbar = ({
   refreshLogin,
   refreshSearch,
   setRefreshSearch,
+  setIsAdmin,
+  isAdmin,
 }) => {
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const isUserLoggedIn = cookies.token ? true : false;
@@ -76,6 +78,8 @@ const Navbar = ({
 
         setCartItems([]);
 
+        setIsAdmin(!isAdmin);
+
         navigate("/login");
       } else {
         console.error("Logout failed");
@@ -127,15 +131,17 @@ const Navbar = ({
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message);
+        // const errorData = await response.json();
+        // throw new Error(errorData.message);
+        return;
       }
 
       const cartDetails = await response.json();
 
       setCartItems(cartDetails.cart.items);
     } catch (error) {
-      console.error("Failed to get cart details:", error);
+      // console.error("Failed to get cart details:", error);
+      return;
     }
   };
 
@@ -159,12 +165,30 @@ const Navbar = ({
     };
   }, []);
 
+  useEffect(() => {
+    const checkAdminAndRedirect = async () => {
+      if (isAdmin === undefined || cookies.token === undefined) {
+        // Data not available yet, do nothing
+        return;
+      }
+
+      if (isAdmin && Boolean(cookies.token)) {
+        navigate("/admin");
+      }
+    };
+
+    checkAdminAndRedirect();
+  }, [isAdmin]);
+
   return (
     <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
         <div className="flex items-center space-x-4 justify-center flex-grow mr-4 sm:justify-start sm:mr-0 sm:flex-grow-0">
-          <div className="text-black text-lg font-bold">
-            <Link to="/">Ecom Express</Link>
+          <div className=" text-black text-lg font-bold">
+            <Link to="/" className="flex items-center">
+              <img src="./logo.png" alt="logo" className="w-12 mr-2" />
+              Ecom Express
+            </Link>
           </div>
         </div>
 

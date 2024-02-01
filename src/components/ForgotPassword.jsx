@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [resetPasswordMessage, setResetPasswordMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -13,18 +14,34 @@ const ForgotPassword = () => {
     }
   };
 
-  const handleForgotPassword = (e) => {
+  const handleForgotPassword = async (e) => {
     e.preventDefault();
 
     // Check for empty email
     if (!email.trim()) {
       setEmailError("Email is required");
-    }
+    } else {
+      try {
+        // Send a request to your backend for the forgot password functionality
+        const response = await fetch("http://localhost:3000/forgot-password", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        });
 
-    // Perform login logic if both username and password are provided
-    if (email.trim()) {
-      // Add your login logic here
-      console.log("Logging in...");
+        if (response.ok) {
+          // Reset the email input and display a success message
+          setEmail("");
+          setResetPasswordMessage("Password reset email sent successfully");
+        } else {
+          const errorData = await response.json();
+          setEmailError(errorData.message);
+        }
+      } catch (error) {
+        console.error("Error sending forgot password request:", error);
+      }
     }
   };
 
@@ -56,6 +73,14 @@ const ForgotPassword = () => {
               />
               {emailError && (
                 <p className="text-red-500 text-sm text-left">{emailError}</p>
+              )}
+            </div>
+
+            <div className="mb-4">
+              {resetPasswordMessage && (
+                <p className="text-green-500 text-sm text-left">
+                  {resetPasswordMessage}
+                </p>
               )}
             </div>
 

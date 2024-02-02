@@ -4,13 +4,37 @@ import AddProduct from "./admin/AddProduct";
 import Review from "./admin/Review";
 
 const Admin = () => {
-  const [selectedTab, setSelectedTab] = useState("addProduct");
+  const [selectedTab, setSelectedTab] = useState("");
+
+  const handleTabClick = (tab) => {
+    setSelectedTab(tab);
+  };
 
   return (
-    <div className="flex h-max sm:flex sm:min-h-[875px]">
+    <div className="grid h-max sm:flex sm:min-h-[875px]">
       {/* Left Sidebar with Tabs */}
-      <div className="w-1/4 bg-slate-100 p-4">
-        <h1 className="text-xl mb-6 font-medium">Admin Panel</h1>
+      <div className="h-25 sm:h-auto w-auto  bg-slate-100 p-4 lg:hidden sm:mb-44">
+        {/* Collapsible Menu for Small Screens */}
+
+        <h1 className="text-xl mb-2 font-medium">Admin Panel</h1>
+
+        <select
+          onChange={(e) => handleTabClick(e.target.value)}
+          value={selectedTab}
+          className="w-full py-2 border border-gray-300 bg-white"
+        >
+          <option value="" disabled>
+            Select an option
+          </option>
+          <option value="addProduct">Add Product</option>
+          <option value="addCategory">Add Category</option>
+          <option value="review">Reviews</option>
+        </select>
+      </div>
+
+      {/* Left Sidebar with Tabs */}
+      <div className="w-fit  bg-slate-100 p-4 hidden lg:block mb-44 ">
+        <h1 className="text-xl mb-6 font-medium mt-10">Admin Panel</h1>
 
         <button
           onClick={() => setSelectedTab("addProduct")}

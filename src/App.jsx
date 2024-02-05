@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router-dom";
+import EditForm from "./components/admin/EditForm";
 
 function PrivateRoute({ element, authenticated, isAdmin }) {
   return authenticated && isAdmin ? (
@@ -155,6 +156,8 @@ function App() {
               />
             }
           />
+
+          <Route path="/update_product/:productId" element={<EditForm />} />
         </Routes>
         <Footer />
       </HashRouter>

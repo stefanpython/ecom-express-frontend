@@ -72,7 +72,7 @@ const EditProduct = () => {
       <div className="overflow-y-auto max-h-[510px]">
         {filteredProducts && filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <Link key={product._id} to={`/editproduct/${product._id}`}>
+            <Link key={product._id} to={`/update_product/${product._id}`}>
               <div
                 key={product._id}
                 className="mb-4 hover:bg-gray-100 p-2 rounded-md"

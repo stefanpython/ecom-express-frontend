@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AddCategory from "./admin/AddCategory";
 import AddProduct from "./admin/AddProduct";
+import EditProduct from "./admin/EditProduct";
 import Review from "./admin/Review";
 
 const Admin = () => {
@@ -27,6 +28,7 @@ const Admin = () => {
             Select an option
           </option>
           <option value="addProduct">Add Product</option>
+          <option value="editProduct">Edit Product</option>
           <option value="addCategory">Add Category</option>
           <option value="review">Reviews</option>
         </select>
@@ -43,6 +45,17 @@ const Admin = () => {
           }`}
         >
           Add Product
+        </button>
+
+        <button
+          onClick={() => setSelectedTab("editProduct")}
+          className={`w-full py-2 border border-gray-300 ${
+            selectedTab === "editProduct"
+              ? "bg-blue-500 text-white"
+              : "bg-white"
+          }`}
+        >
+          Edit Product
         </button>
 
         <button
@@ -71,6 +84,7 @@ const Admin = () => {
         <h1>Welcome to the Admin panel</h1>
         {/* Render the selected form based on the selectedTab */}
         {selectedTab === "addProduct" && <AddProduct />}
+        {selectedTab === "editProduct" && <EditProduct />}
         {selectedTab === "addCategory" && <AddCategory />}
         {selectedTab === "review" && <Review />}
       </div>

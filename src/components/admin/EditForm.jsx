@@ -83,8 +83,6 @@ const EditForm = () => {
         }
       );
 
-      console.log("Form data: ", formData);
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message);
@@ -121,8 +119,6 @@ const EditForm = () => {
   useEffect(() => {
     fetchCategoryList();
   }, []);
-
-  console.log(productDetails.category);
 
   return (
     <div className="flex items-center justify-center min-h-[879px]">

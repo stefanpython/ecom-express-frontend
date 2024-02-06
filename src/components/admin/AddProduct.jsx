@@ -1,42 +1,102 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 const AddProduct = () => {
-  // State for form fields
-  const [productName, setProductName] = useState("");
-  const [productDescription, setProductDescription] = useState("");
-  const [productPrice, setProductPrice] = useState("");
-  const [productQuantity, setProductQuantity] = useState("");
-  const [productCategory, setProductCategory] = useState("");
-  const [productImage, setProductImage] = useState(null);
+  const [productDetails, setProductDetails] = useState({
+    name: "",
+    description: "",
+    price: "",
+    quantity: "",
+    category: "",
+    image: null,
+  });
+  const [cookies, setCookies] = useCookies(["token"]);
+  const [categories, setCategories] = useState("");
 
-  // Dummy categories for testing (Replace with actual fetched categories)
-  const categories = [
-    { id: "1", name: "Electronics" },
-    { id: "2", name: "Clothing" },
-    { id: "3", name: "Books" },
-  ];
+  // Handle input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setProductDetails((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  // Handle input change for files aka iamges
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    setProductDetails((prevData) => ({ ...prevData, image: file }));
+  };
+
+  // Fetch a list of all categories
+  const fetchCategoryList = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/category_list`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const categoryData = await response.json();
+      setCategories(categoryData.categories);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategoryList();
+  }, []);
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Perform submission logic here (e.g., API request to create a product)
-    console.log({
-      productName,
-      productDescription,
-      productPrice,
-      productQuantity,
-      productCategory,
-      productImage,
-    });
+    const formData = new FormData();
 
-    // Reset form fields after submission
-    setProductName("");
-    setProductDescription("");
-    setProductPrice("");
-    setProductQuantity("");
-    setProductCategory("");
-    setProductImage(null);
+    formData.append("image", productDetails.image);
+    formData.append("name", productDetails.name);
+    formData.append("description", productDetails.description);
+    formData.append("price", productDetails.price);
+    formData.append("quantity", productDetails.quantity);
+    formData.append("category", productDetails.category);
+
+    try {
+      const response = await fetch(`http://localhost:3000/create_product`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${cookies.token}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const createdProduct = await response.json();
+      console.log("Product updated successfully:", createdProduct);
+
+      // Reset the input fields after successful form submission
+      setProductDetails({
+        name: "",
+        description: "",
+        price: "",
+        quantity: "",
+        category: "",
+        image: null,
+      });
+
+      // Admin confirmation pop-up
+      window.alert("Product successfully added!");
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
   };
 
   return (
@@ -56,11 +116,12 @@ const AddProduct = () => {
           </label>
           <input
             className="border border-gray-300 rounded w-full sm:w-1/2 py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
-            id="productName"
+            id="name"
+            name="name"
             type="text"
             placeholder="Enter product name"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
+            value={productDetails.name}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-4">
@@ -72,10 +133,11 @@ const AddProduct = () => {
           </label>
           <textarea
             className="border border-gray-300 rounded w-full sm:w-1/2 py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
-            id="productDescription"
+            id="description"
+            name="description"
             placeholder="Enter product description"
-            value={productDescription}
-            onChange={(e) => setProductDescription(e.target.value)}
+            value={productDetails.description}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-4">
@@ -87,11 +149,12 @@ const AddProduct = () => {
           </label>
           <input
             className="border border-gray-300 rounded w-full sm:w-1/2 py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
-            id="productPrice"
+            id="price"
+            name="price"
             type="text"
             placeholder="Enter product price"
-            value={productPrice}
-            onChange={(e) => setProductPrice(e.target.value)}
+            value={productDetails.price}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-4">
@@ -103,11 +166,12 @@ const AddProduct = () => {
           </label>
           <input
             className="border border-gray-300 rounded w-full sm:w-1/2 py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
-            id="productQuantity"
+            id="quantity"
+            name="quantity"
             type="text"
             placeholder="Enter product quantity"
-            value={productQuantity}
-            onChange={(e) => setProductQuantity(e.target.value)}
+            value={productDetails.quantity}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-4">
@@ -119,18 +183,20 @@ const AddProduct = () => {
           </label>
           <select
             className="border border-gray-300 rounded w-full sm:w-1/2 py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
-            id="productCategory"
-            value={productCategory}
-            onChange={(e) => setProductCategory(e.target.value)}
+            id="category"
+            name="category"
+            value={productDetails.category}
+            onChange={handleChange}
           >
             <option value="" disabled>
               Select a category
             </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
+            {categories &&
+              categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
           </select>
         </div>
         <div className="mb-4">
@@ -143,9 +209,9 @@ const AddProduct = () => {
           <input
             className="border border-gray-300 rounded w-full sm:w-1/2 py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
             id="productImage"
+            name="image"
             type="file"
-            accept="image/*"
-            onChange={(e) => setProductImage(e.target.files[0])}
+            onChange={handleFileChange}
           />
         </div>
         <button

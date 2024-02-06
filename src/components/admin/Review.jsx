@@ -5,7 +5,29 @@ const Review = ({ productId, userId }) => {
   const [reviews, setReviews] = useState([]);
 
   // Fetch reviews for a specific product or user
-  const fetchReviews = async () => {};
+  const fetchReviews = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/reviews_list`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const reviewsData = await response.json();
+      setReviews(reviewsData.reviews);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
   // Delete a review
   const deleteReview = async (reviewId) => {};
@@ -13,30 +35,36 @@ const Review = ({ productId, userId }) => {
   useEffect(() => {
     // Fetch reviews when the component mounts
     fetchReviews();
-  }, [productId, userId]); // Include dependencies based on your fetching criteria
+  }, [productId, userId]);
 
+  console.log(reviews);
   return (
     <div>
       <h1 className="text-left font-medium">Reviews</h1>
-
       <hr />
       <br />
 
-      {reviews.map((review) => (
-        <div key={review._id} className="mb-4">
-          <p>{review.text}</p>
-          <p>Rating: {review.rating}</p>
-          {/* Display additional review details as needed */}
-          {userId && (
-            <button
-              onClick={() => deleteReview(review._id)}
-              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
+      <div className="overflow-y-auto max-h-[510px]">
+        {reviews && reviews.length > 0 ? (
+          reviews.map((review) => (
+            <div
+              key={review._id}
+              className="mb-4 hover:bg-gray-100 p-2 rounded-md"
             >
-              Delete Review
-            </button>
-          )}
-        </div>
-      ))}
+              <p>{`ID: ${review._id}`}</p>
+              <p>{`ProductID: ${review.product}`}</p>
+              <p>{`UserID: ${review.user}`}</p>
+              <p>{`Title: ${review.title}`}</p>
+              <p>{`Comment: ${review.comment}`}</p>
+              <p>{`Rating: ${review.rating}`}</p>
+
+              <hr className="my-2" />
+            </div>
+          ))
+        ) : (
+          <p>No products found.</p>
+        )}
+      </div>
     </div>
   );
 };

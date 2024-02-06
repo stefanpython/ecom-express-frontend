@@ -1,23 +1,43 @@
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 
 const AddCategory = () => {
   // State for form fields
   const [categoryName, setCategoryName] = useState("");
   const [categoryDescription, setCategoryDescription] = useState("");
 
+  const [cookies, setCookies] = useCookies(["token"]);
+
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Perform submission logic here (e.g., API request to create a category)
-    console.log({
-      categoryName,
-      categoryDescription,
-    });
+    try {
+      const response = await fetch(`http://localhost:3000/create_category`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+        body: JSON.stringify({
+          name: categoryName,
+          description: categoryDescription,
+        }),
+      });
 
-    // Reset form fields after submission
-    setCategoryName("");
-    setCategoryDescription("");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      window.alert("Category added successfully");
+
+      // Reset form fields after submission
+      setCategoryName("");
+      setCategoryDescription("");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -37,7 +57,8 @@ const AddCategory = () => {
           </label>
           <input
             className="border border-gray-300 rounded w-full sm:w-1/2 py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
-            id="categoryName"
+            id="name"
+            name="name"
             type="text"
             placeholder="Enter category name"
             value={categoryName}
@@ -53,7 +74,8 @@ const AddCategory = () => {
           </label>
           <textarea
             className="border border-gray-300 rounded w-full sm:w-1/2 py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
-            id="categoryDescription"
+            id="description"
+            name="description"
             placeholder="Enter category description"
             value={categoryDescription}
             onChange={(e) => setCategoryDescription(e.target.value)}

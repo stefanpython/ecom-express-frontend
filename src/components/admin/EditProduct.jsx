@@ -45,8 +45,6 @@ const EditProduct = () => {
     setSearchQuery(e.target.value);
   };
 
-  console.log(searchQuery);
-
   return (
     <div>
       <h1 className="text-left font-semibold">Edit Products</h1>

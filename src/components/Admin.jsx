@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddCategory from "./admin/AddCategory";
 import AddProduct from "./admin/AddProduct";
 import EditProduct from "./admin/EditProduct";
 import Review from "./admin/Review";
+import { useLocation } from "react-router-dom";
 
 const Admin = () => {
   const [selectedTab, setSelectedTab] = useState("");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tabFromParams = searchParams.get("selectedTab");
+    if (tabFromParams) {
+      setSelectedTab(tabFromParams);
+    }
+  }, [location.search]);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);

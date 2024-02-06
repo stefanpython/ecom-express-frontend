@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const EditForm = () => {
   const [productDetails, setProductDetails] = useState({
@@ -13,6 +14,8 @@ const EditForm = () => {
   });
   const [cookies, setCookies] = useCookies(["token"]);
   const [categories, setCategories] = useState("");
+
+  const navigate = useNavigate();
 
   const { productId } = useParams();
 
@@ -120,10 +123,46 @@ const EditForm = () => {
     fetchCategoryList();
   }, []);
 
+  // Handle delete product by id
+  const handleDeleteItem = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/delete_product/${productId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      console.log("Item deleted successfully");
+
+      window.alert("Item deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-[879px]">
       <div className="-mt-64">
         <div className="bg-white shadow-lg rounded-lg p-8">
+          <div className=" flex justify-end text-right">
+            <button
+              className="text-blue-500 hover:bg-slate-100 p-1 rounded-md"
+              onClick={() => navigate(`/admin?selectedTab=editProduct`)}
+            >
+              Back to Items
+            </button>
+          </div>
+
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
@@ -230,12 +269,23 @@ const EditForm = () => {
                 onChange={handleFileChange}
               />
             </div>
-            <button
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-              type="submit"
-            >
-              Save Changes
-            </button>
+
+            <div className="flex justify-between">
+              <button
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
+                type="submit"
+              >
+                Save Changes
+              </button>
+
+              <button
+                className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline-blue"
+                type="button"
+                onClick={() => handleDeleteItem}
+              >
+                Delete Item
+              </button>
+            </div>
           </form>
         </div>
       </div>

@@ -145,6 +145,8 @@ const EditForm = () => {
       console.log("Item deleted successfully");
 
       window.alert("Item deleted successfully");
+
+      navigate(`/admin?selectedTab=editProduct`);
     } catch (error) {
       console.log(error);
     }
@@ -281,7 +283,7 @@ const EditForm = () => {
               <button
                 className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline-blue"
                 type="button"
-                onClick={() => handleDeleteItem}
+                onClick={handleDeleteItem}
               >
                 Delete Item
               </button>

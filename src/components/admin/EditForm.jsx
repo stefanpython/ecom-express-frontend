@@ -69,6 +69,7 @@ const EditForm = () => {
     formData.append("description", productDetails.description);
     formData.append("price", productDetails.price);
     formData.append("quantity", productDetails.quantity);
+    formData.append("category", productDetails.category);
 
     try {
       const response = await fetch(
@@ -120,6 +121,8 @@ const EditForm = () => {
   useEffect(() => {
     fetchCategoryList();
   }, []);
+
+  console.log(productDetails.category);
 
   return (
     <div className="flex items-center justify-center min-h-[879px]">
@@ -191,7 +194,7 @@ const EditForm = () => {
               />
             </div>
 
-            {/* <div className="mb-4">
+            <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="category"
@@ -206,10 +209,15 @@ const EditForm = () => {
                 value={productDetails.category}
                 onChange={handleChange}
               >
-                <option value="category1">Category 1</option>
-                <option value="category2">Category 2</option>
+                <option value="">Select a category</option>
+                {categories &&
+                  categories.map((category) => (
+                    <option key={category._id} value={category._id}>
+                      {category.name}
+                    </option>
+                  ))}
               </select>
-            </div> */}
+            </div>
 
             <div className="mb-4">
               <label

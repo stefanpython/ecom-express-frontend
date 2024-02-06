@@ -12,6 +12,7 @@ const EditForm = () => {
     image: null,
   });
   const [cookies, setCookies] = useCookies(["token"]);
+  const [categories, setCategories] = useState("");
 
   const { productId } = useParams();
 
@@ -43,18 +44,21 @@ const EditForm = () => {
     fetchProductDetails();
   }, []);
 
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setProductDetails((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  // Handle input change for files aka iamges
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
     setProductDetails((prevData) => ({ ...prevData, image: file }));
   };
 
+  // Handle Submit on Edit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -91,6 +95,31 @@ const EditForm = () => {
       console.error("Error updating product:", error);
     }
   };
+
+  // Fetch a list of all categories
+  const fetchCategoryList = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/category_list`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const categoryData = await response.json();
+      setCategories(categoryData.categories);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategoryList();
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-[879px]">

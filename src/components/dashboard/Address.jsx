@@ -189,19 +189,22 @@ const Address = ({ userInfo }) => {
 
       <div className="overflow-auto max-h-[510px]">
         {addresses.length > 0 ? (
-          addresses.map((address, index) => (
-            <Link key={address._id} to={`/address/${address._id}`}>
-              <div
-                key={index}
-                className="container hover:bg-gray-100 p-1 rounded-md"
-              >
-                <p>{`Address Line: ${address.addressLine}`}</p>
-                <p>{`Postal/Zip Code: ${address.postalCode}`}</p>
-                <p>{`Phone: ${address.phone}`}</p>
-                <hr className="my-4" />
-              </div>
-            </Link>
-          ))
+          addresses
+            .slice() // Create a copy of the addresses array
+            .reverse()
+            .map((address, index) => (
+              <Link key={address._id} to={`/address/${address._id}`}>
+                <div
+                  key={index}
+                  className="container hover:bg-gray-100 p-1 rounded-md"
+                >
+                  <p>{`Address Line: ${address.addressLine}`}</p>
+                  <p>{`Postal/Zip Code: ${address.postalCode}`}</p>
+                  <p>{`Phone: ${address.phone}`}</p>
+                  <hr className="my-4" />
+                </div>
+              </Link>
+            ))
         ) : (
           <p>No address found</p>
         )}

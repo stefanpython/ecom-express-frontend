@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 const Review = () => {
   // State for storing reviews
   const [reviews, setReviews] = useState([]);
+  const [hoveredReview, setHoveredReview] = useState(null);
 
   // Fetch reviews for a specific product or user
   const fetchReviews = async () => {
@@ -37,19 +38,20 @@ const Review = () => {
     fetchReviews();
   }, []);
 
-  console.log(reviews);
   return (
-    <div>
+    <div className="group relative">
       <h1 className="text-left font-medium">Reviews</h1>
       <hr />
       <br />
 
       <div className="overflow-y-auto max-h-[510px]">
         {reviews && reviews.length > 0 ? (
-          reviews.map((review) => (
+          reviews.map((review, index) => (
             <div
               key={review._id}
-              className="mb-4 hover:bg-gray-100 p-2 rounded-md"
+              className="relative mb-4 hover:bg-gray-100 p-2 rounded-md"
+              onMouseEnter={() => setHoveredReview(index)}
+              onMouseLeave={() => setHoveredReview(null)}
             >
               <p>{`ID: ${review._id}`}</p>
               <p>{`ProductID: ${review.product}`}</p>
@@ -57,6 +59,15 @@ const Review = () => {
               <p>{`Title: ${review.title}`}</p>
               <p>{`Comment: ${review.comment}`}</p>
               <p>{`Rating: ${review.rating}`}</p>
+
+              {/* Conditional rendering for delete button */}
+              {hoveredReview === index && (
+                <div className="absolute top-3 right-10 opacity-100 transition-opacity">
+                  <button className="bg-red-500 text-white px-2 py-1 rounded-md">
+                    Delete
+                  </button>
+                </div>
+              )}
 
               <hr className="my-2" />
             </div>

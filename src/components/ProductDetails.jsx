@@ -17,6 +17,11 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
 
   const { productId } = useParams();
 
+  // Review display user errors
+  const [titleError, setTitleError] = useState(false);
+  const [commentError, setCommentError] = useState(false);
+  const [ratingError, setRatingError] = useState(false);
+
   // Handle setting product quantity
   const handleQuantity = (e) => {
     setQuantity(e.target.value);
@@ -92,46 +97,67 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
   // Handle adding comments to a product
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (!cookies.token) {
-        window.alert("Please log in to leave a review.");
-        return;
-      }
 
-      const response = await fetch(
-        `http://localhost:3000/review/create/${productId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.token}`,
-          },
-          body: JSON.stringify({
-            rating: parseInt(rating),
-            comment: reviewComment,
-            title: reviewTitle,
-          }),
+    // Reset error states
+    setTitleError(false);
+    setCommentError(false);
+    setRatingError(false);
+
+    // Validate input fields
+    if (!reviewTitle) {
+      setTitleError(true);
+    }
+
+    if (!reviewComment) {
+      setCommentError(true);
+    }
+
+    if (!rating) {
+      setRatingError(true);
+    }
+
+    if (reviewTitle && reviewComment && rating) {
+      try {
+        if (!cookies.token) {
+          window.alert("Please log in to leave a review.");
+          return;
         }
-      );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message);
+        const response = await fetch(
+          `http://localhost:3000/review/create/${productId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookies.token}`,
+            },
+            body: JSON.stringify({
+              rating: parseInt(rating),
+              comment: reviewComment,
+              title: reviewTitle,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message);
+        }
+
+        const reviewData = await response.json();
+
+        // Set refresh reviews
+        setRefreshReviews(!refreshReviews);
+
+        // Clear the input fields after submitting
+        setReviewTitle("");
+        setReviewComment("");
+        setRating(0);
+
+        console.log("Review added successfully");
+      } catch (error) {
+        console.error(error);
       }
-
-      const reviewData = await response.json();
-
-      // Set refresh reviews
-      setRefreshReviews(!refreshReviews);
-
-      // Clear the input fields after submitting
-      setReviewTitle("");
-      setReviewComment("");
-      setRating(0);
-
-      console.log("Review added successfully");
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -251,6 +277,9 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
             rating={rating}
             setRating={setRating}
             onSubmit={handleReviewSubmit}
+            titleError={titleError}
+            commentError={commentError}
+            ratingError={ratingError}
           />
         </div>
 

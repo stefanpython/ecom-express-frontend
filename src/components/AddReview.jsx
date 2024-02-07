@@ -8,6 +8,9 @@ const AddReview = ({
   rating,
   setRating,
   onSubmit,
+  titleError,
+  commentError,
+  ratingError,
 }) => {
   const [hoveredRating, setHoveredRating] = useState(0);
 
@@ -44,6 +47,9 @@ const AddReview = ({
             value={reviewTitle}
             onChange={(e) => setReviewTitle(e.target.value)}
           />
+          {titleError && (
+            <p className="text-red-500 text-xs italic">Please enter a title</p>
+          )}
         </div>
         <div className="mb-4">
           <label
@@ -59,6 +65,11 @@ const AddReview = ({
             value={reviewComment}
             onChange={(e) => setReviewComment(e.target.value)}
           />
+          {commentError && (
+            <p className="text-red-500 text-xs italic">
+              Please enter a comment
+            </p>
+          )}
         </div>
         <div className="mb-4">
           <label
@@ -82,6 +93,11 @@ const AddReview = ({
               </span>
             ))}
           </div>
+          {ratingError && (
+            <p className="text-red-500 text-xs italic">
+              Please select a rating
+            </p>
+          )}
         </div>
 
         <div>

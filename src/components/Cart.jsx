@@ -207,17 +207,19 @@ const Cart = ({
       </div>
 
       <div className="p-4">
-        <Link to={cookies.token ? "/order" : "/login"}>
-          <button
-            className="w-full bg-blue-500 text-white p-2 rounded"
-            onClick={() => {
-              handlePlaceOrder();
-              onClose();
-            }}
-          >
-            Place Order
-          </button>
-        </Link>
+        {cartItems.length > 0 && (
+          <Link to={cookies.token ? "/order" : "/login"}>
+            <button
+              className="w-full bg-blue-500 text-white p-2 rounded"
+              onClick={() => {
+                handlePlaceOrder();
+                onClose();
+              }}
+            >
+              Place Order
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Review = ({ productId, userId }) => {
+const Review = () => {
   // State for storing reviews
   const [reviews, setReviews] = useState([]);
 
@@ -35,7 +35,7 @@ const Review = ({ productId, userId }) => {
   useEffect(() => {
     // Fetch reviews when the component mounts
     fetchReviews();
-  }, [productId, userId]);
+  }, []);
 
   console.log(reviews);
   return (

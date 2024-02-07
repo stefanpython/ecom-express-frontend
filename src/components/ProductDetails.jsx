@@ -182,6 +182,17 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
     return formattedDate;
   };
 
+  // Function to get initials from the first name and last name
+  const getInitials = (firstName, lastName) => {
+    if (firstName && lastName) {
+      return `${firstName[0]}${lastName[0]}`;
+    } else if (firstName) {
+      return firstName[0];
+    } else {
+      return "";
+    }
+  };
+
   return (
     <div className="container mx-auto px-6 lg:px-44 lg:mb-40 min-h-screen">
       <div>
@@ -250,11 +261,10 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
               className="bg-white shadow-lg rounded-lg p-4 mb-4 pb-6"
             >
               <div className="flex items-center">
-                <img
-                  className="h-12 w-12 rounded-full object-cover"
-                  src="https://via.placeholder.com/150"
-                  alt="User avatar"
-                />
+                <div className="h-12 w-12 rounded-full flex items-center justify-center bg-gray-300 text-gray-600 text-sm font-semibold mr-1">
+                  {getInitials(review.user.firstName, review.user.lastName)}
+                </div>
+
                 <div className="ml-4">
                   <h1 className="text-xl font-semibold text-left">
                     {review.title}

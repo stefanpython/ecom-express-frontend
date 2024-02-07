@@ -93,6 +93,8 @@ const EditForm = () => {
 
       const updatedProductData = await response.json();
       console.log("Product updated successfully:", updatedProductData);
+
+      window.alert("Product updated successfully!");
     } catch (error) {
       console.error("Error updating product:", error);
     }

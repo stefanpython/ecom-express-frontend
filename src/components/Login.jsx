@@ -7,6 +7,7 @@ const Login = ({ refreshLogin, setRefreshLogin, isAdmin }) => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["token"]);
@@ -52,6 +53,7 @@ const Login = ({ refreshLogin, setRefreshLogin, isAdmin }) => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Login failed", errorData.message);
+        setError(errorData.message);
         return;
       }
 
@@ -152,6 +154,10 @@ const Login = ({ refreshLogin, setRefreshLogin, isAdmin }) => {
                 <p className="text-red-500 text-sm text-left">
                   {passwordError}
                 </p>
+              )}
+
+              {error && (
+                <p className="text-red-500 text-sm text-left">{error}</p>
               )}
             </div>
 

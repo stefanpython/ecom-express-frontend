@@ -219,7 +219,7 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
               <input
                 type="number"
                 min="1"
-                max="999"
+                max={productDetails.quantity}
                 value={quantity}
                 onChange={handleQuantity}
                 className="border border-gray-300 p-1 w-26 text-left"

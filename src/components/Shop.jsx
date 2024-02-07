@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
 
-const ProductsPerPage = 9;
+const ProductsPerPage = 12;
 
 const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);

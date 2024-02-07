@@ -31,7 +31,30 @@ const Review = () => {
   }, []);
 
   // Delete a review
-  const deleteReview = async (reviewId) => {};
+  const deleteReview = async (reviewId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/review/${reviewId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      // Remove the deleted review from the state
+      setReviews(reviews.filter((review) => review._id !== reviewId));
+
+      console.log("Review deleted successfully");
+
+      window.alert("Review deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     // Fetch reviews when the component mounts
@@ -63,7 +86,10 @@ const Review = () => {
               {/* Conditional rendering for delete button */}
               {hoveredReview === index && (
                 <div className="absolute top-3 right-10 opacity-100 transition-opacity">
-                  <button className="bg-red-500 text-white px-2 py-1 rounded-md">
+                  <button
+                    onClick={() => deleteReview(review._id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded-md"
+                  >
                     Delete
                   </button>
                 </div>

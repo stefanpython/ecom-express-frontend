@@ -97,6 +97,25 @@ const Orders = ({}) => {
     }
   }, [searchQuery]);
 
+  // Function to format date
+  const formatCreatedAtDate = (dateString) => {
+    const options = {
+      day: "numeric",
+      weekday: "long",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      "en-US",
+      options
+    );
+
+    return formattedDate;
+  };
+
   return (
     <div>
       <h1 className="text-left font-semibold">Orders</h1>
@@ -127,27 +146,30 @@ const Orders = ({}) => {
 
       <div className="overflow-y-auto max-h-[510px]">
         {orders && orders.length > 0 ? (
-          orders.map((order) => (
-            <Link key={order._id} to={`/order/${order._id}`}>
-              <div
-                key={order._id}
-                className="mb-4 hover:bg-gray-100 p-2 rounded-md"
-              >
-                <p>{`ID: ${order._id}`}</p>
-                <p>{`Status: ${order.status}`}</p>
-                <p>{`Total Amount: $${order.totalAmount}`}</p>
+          orders
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((order) => (
+              <Link key={order._id} to={`/order/${order._id}`}>
+                <div
+                  key={order._id}
+                  className="mb-4 hover:bg-gray-100 p-2 rounded-md"
+                >
+                  <p>{`ID: ${order._id}`}</p>
+                  <p>{`Status: ${order.status}`}</p>
+                  <p>{`Date: ${formatCreatedAtDate(order.createdAt)}`}</p>
+                  <p>{`Total Amount: $${order.totalAmount}`}</p>
 
-                <ul>
-                  {order.items.map((item) => (
-                    <li
-                      key={item._id}
-                    >{`Product: ${item.product.name}, Quantity: ${item.quantity}`}</li>
-                  ))}
-                </ul>
-                <hr className="my-2" />
-              </div>
-            </Link>
-          ))
+                  <ul>
+                    {order.items.map((item) => (
+                      <li
+                        key={item._id}
+                      >{`Product: ${item.product.name}, Quantity: ${item.quantity}`}</li>
+                    ))}
+                  </ul>
+                  <hr className="my-2" />
+                </div>
+              </Link>
+            ))
         ) : (
           <p>You have no orders yet.</p>
         )}

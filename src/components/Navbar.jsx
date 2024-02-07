@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = ({
   firstName,
+  lastName,
   refreshLogin,
   refreshSearch,
   setRefreshSearch,
@@ -180,6 +181,17 @@ const Navbar = ({
     checkAdminAndRedirect();
   }, [isAdmin]);
 
+  // Function to get initials from the first name and last name
+  const getInitials = (firstName, lastName) => {
+    if (firstName && lastName) {
+      return `${firstName[0]}${lastName[0]}`;
+    } else if (firstName) {
+      return firstName[0];
+    } else {
+      return "";
+    }
+  };
+
   return (
     <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
@@ -241,18 +253,22 @@ const Navbar = ({
             </button>
           </div>
 
-          <div className="flex justify-end flex-grow pl-2 ">
+          <div className="flex justify-end flex-grow pl-2 items-center">
             <Link to="/shop" className="text-black cursor-pointer">
               Shop
             </Link>
           </div>
 
-          <div className="relative dropdown-container">
+          <div className="relative dropdown-container flex items-center">
+            Welcome back,
             <button
               onClick={handleDropdownToggle}
-              className="text-black cursor-pointer flex items-center relative"
+              className="text-black cursor-pointer flex items-center relative ml-1"
             >
-              Welcome back,
+              <div className="h-8 w-8 rounded-full flex items-center justify-center bg-gray-300 text-gray-600 text-sm font-semibold mr-1">
+                {getInitials(firstName, lastName)}
+              </div>
+
               {isUserLoggedIn ? ` ${firstName}` : "Guest"}
               {/* Render down or up arrow based on dropdown state */}
               {isDropdownOpen ? (
@@ -283,7 +299,6 @@ const Navbar = ({
                 </svg>
               )}
             </button>
-
             {isDropdownOpen && (
               <div className="absolute top-10 right-0 bg-white p-4 rounded shadow">
                 {isUserLoggedIn ? (

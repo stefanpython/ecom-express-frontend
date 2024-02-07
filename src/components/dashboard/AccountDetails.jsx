@@ -37,7 +37,6 @@ const AccountDetails = ({ setRefreshUser, refreshUser }) => {
       }
 
       const userDetails = await response.json();
-      console.log("User Details:", userDetails);
 
       setFirstName(userDetails.user.firstName);
       setLastName(userDetails.user.lastName);

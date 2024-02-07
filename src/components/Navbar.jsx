@@ -241,7 +241,7 @@ const Navbar = ({
             </button>
           </div>
 
-          <div className="flex justify-end flex-grow pl-2">
+          <div className="flex justify-end flex-grow pl-2 ">
             <Link to="/shop" className="text-black cursor-pointer">
               Shop
             </Link>
@@ -250,9 +250,38 @@ const Navbar = ({
           <div className="relative dropdown-container">
             <button
               onClick={handleDropdownToggle}
-              className="text-black cursor-pointer"
+              className="text-black cursor-pointer flex items-center relative"
             >
-              Welcome, {isUserLoggedIn ? `${firstName}` : "Guest"}
+              Welcome back,
+              {isUserLoggedIn ? ` ${firstName}` : "Guest"}
+              {/* Render down or up arrow based on dropdown state */}
+              {isDropdownOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-4 w-4 ml-1 transition-transform duration-300 transform rotate-180 animate-pulse`}
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 3.293L2.146 11.147a.5.5 0 00.708.708L10 4.707l7.146 7.146a.5.5 0 00.708-.708L10 3.293z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-4 w-4 ml-1 transition-transform duration-300 transform`}
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 16.707l7.146-7.146a.5.5 0 00-.708-.708L10 15.293 2.854 8.147a.5.5 0 00-.708.708L10 16.707z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              )}
             </button>
 
             {isDropdownOpen && (

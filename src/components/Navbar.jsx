@@ -212,7 +212,13 @@ const Navbar = ({
     }
   };
 
-  console.log(categories);
+  // Toggle category dropdown
+  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
+
+  const handleCategoryDropdownToggle = () => {
+    setIsCategoryDropdownOpen(!isCategoryDropdownOpen);
+  };
+
   return (
     <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
@@ -281,9 +287,55 @@ const Navbar = ({
           </div>
 
           <div className="flex justify-end flex-grow pr-4 items-center">
-            <Link to="" className="text-black cursor-pointer">
-              Categories
-            </Link>
+            <div className="relative dropdown-container">
+              <div
+                className="text-black cursor-pointer flex items-center relative ml-1"
+                onClick={handleCategoryDropdownToggle}
+              >
+                Categories
+                {/* Render down or up arrow based on dropdown state */}
+                {isCategoryDropdownOpen ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-4 w-4 ml-1 transition-transform duration-300 transform rotate-180 animate-pulse`}
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 3.293L2.146 11.147a.5.5 0 00.708.708L10 4.707l7.146 7.146a.5.5 0 00.708-.708L10 3.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-4 w-4 ml-1 transition-transform duration-300 transform`}
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 16.707l7.146-7.146a.5.5 0 00-.708-.708L10 15.293 2.854 8.147a.5.5 0 00-.708.708L10 16.707z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+              </div>
+              {isCategoryDropdownOpen && (
+                <div className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container">
+                  {categories.map((category) => (
+                    <Link
+                      to={`/shop?category=${category._id}`}
+                      key={category._id}
+                      className="block py-2"
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="relative dropdown-container flex items-center">

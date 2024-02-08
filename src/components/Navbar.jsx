@@ -323,7 +323,7 @@ const Navbar = ({
                 )}
               </div>
               {isCategoryDropdownOpen && (
-                <div className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container">
+                <div className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container z-10">
                   {categories.map((category) => (
                     <Link
                       to={`/shop?category=${category._id}`}

@@ -1,12 +1,35 @@
 import React, { useState, useEffect } from "react";
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const ProductsPerPage = 12;
 
 const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
+  const [originalProducts, setOriginalProducts] = useState([]);
+
+  const location = useLocation();
+
+  // Function to parse query parameters from URL
+  const getQueryParam = (key) => {
+    const queryParams = new URLSearchParams(location.search);
+    return queryParams.get(key);
+  };
+  const categoryId = getQueryParam("category");
+
+  // Filter products by category ID
+  useEffect(() => {
+    if (categoryId) {
+      const filteredProducts = originalProducts.filter(
+        (product) => product.category._id === categoryId
+      );
+      setProducts(filteredProducts);
+    } else {
+      setProducts(originalProducts);
+    }
+  }, [categoryId, originalProducts]);
 
   // Get products list
   const getProductsList = async () => {
@@ -24,6 +47,7 @@ const Shop = () => {
 
       const productsData = await response.json();
       setProducts(productsData.products);
+      setOriginalProducts(productsData.products);
     } catch (error) {
       console.log(error);
     }

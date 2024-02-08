@@ -16,6 +16,7 @@ const Navbar = ({
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const isUserLoggedIn = cookies.token ? true : false;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
@@ -104,6 +105,13 @@ const Navbar = ({
       if (isDropdownOpen && !event.target.closest(".dropdown-container")) {
         setIsDropdownOpen(false);
       }
+
+      if (
+        isCategoryDropdownOpen &&
+        !event.target.closest(".dropdown-container")
+      ) {
+        setIsDropdownOpen(false);
+      }
     };
 
     document.addEventListener("click", handleOutsideClick);
@@ -135,8 +143,8 @@ const Navbar = ({
       });
 
       if (!response.ok) {
-        // const errorData = await response.json();
-        // throw new Error(errorData.message);
+        const errorData = await response.json();
+        throw new Error(errorData.message);
         return;
       }
 
@@ -211,9 +219,6 @@ const Navbar = ({
       console.error("Failed to fetch products:", error);
     }
   };
-
-  // Toggle category dropdown
-  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
 
   const handleCategoryDropdownToggle = () => {
     setIsCategoryDropdownOpen(!isCategoryDropdownOpen);
@@ -323,7 +328,12 @@ const Navbar = ({
                 )}
               </div>
               {isCategoryDropdownOpen && (
-                <div className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container z-10">
+                <div
+                  onClick={() =>
+                    setIsCategoryDropdownOpen(!isCategoryDropdownOpen)
+                  }
+                  className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container z-10"
+                >
                   {categories.map((category) => (
                     <Link
                       to={`/shop?category=${category._id}`}
@@ -379,7 +389,10 @@ const Navbar = ({
               )}
             </button>
             {isDropdownOpen && (
-              <div className="absolute top-10 right-0 bg-white p-4 rounded shadow">
+              <div
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="absolute top-10 right-0 bg-white p-4 rounded shadow"
+              >
                 {isUserLoggedIn ? (
                   <>
                     <Link to="/dashboard">Dashboard</Link>

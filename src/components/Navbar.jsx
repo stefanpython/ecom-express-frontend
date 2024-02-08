@@ -27,6 +27,8 @@ const Navbar = ({
   const [autocompleteResults, setAutocompleteResults] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
 
+  const [categories, setCategories] = useState([]);
+
   // Fetch all products
   const fetchAllProducts = async () => {
     try {
@@ -45,6 +47,7 @@ const Navbar = ({
 
   useEffect(() => {
     fetchAllProducts();
+    fetchCategoryList();
   }, []);
 
   // Fetch autocomplete results when typing
@@ -192,6 +195,24 @@ const Navbar = ({
     }
   };
 
+  // Fetch category list
+  const fetchCategoryList = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/category_list");
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const categories = await response.json();
+      setCategories(categories.categories);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  };
+
+  console.log(categories);
   return (
     <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
@@ -256,6 +277,12 @@ const Navbar = ({
           <div className="flex justify-end flex-grow pl-2 items-center">
             <Link to="/shop" className="text-black cursor-pointer">
               Shop
+            </Link>
+          </div>
+
+          <div className="flex justify-end flex-grow pr-4 items-center">
+            <Link to="" className="text-black cursor-pointer">
+              Categories
             </Link>
           </div>
 

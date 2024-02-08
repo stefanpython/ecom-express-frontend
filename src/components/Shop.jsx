@@ -40,7 +40,6 @@ const Shop = () => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (

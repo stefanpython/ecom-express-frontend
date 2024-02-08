@@ -220,9 +220,9 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
   };
 
   return (
-    <div className="container mx-auto px-6 lg:px-44 lg:mb-40 min-h-screen">
+    <div className="container mx-auto px-6 lg:px-44 lg:mb-40 min-h-screen ">
       <div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-6 pt-6 bg-slate-100 px-4 sm:-mb-96 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-6 pt-6 bg-slate-100 px-4 sm:-mb-96 border ">
           <img
             className="border rounded-lg max-h-96"
             src={`http://localhost:3000/images/${productDetails.image}`}

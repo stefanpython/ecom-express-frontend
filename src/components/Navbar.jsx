@@ -99,7 +99,7 @@ const Navbar = ({
     setIsCartOpen(!isCartOpen);
   };
 
-  // Add event listener when the component mounts
+  // Close dropdowns when ever user clicks outsite them
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (isDropdownOpen && !event.target.closest(".dropdown-container")) {
@@ -110,7 +110,7 @@ const Navbar = ({
         isCategoryDropdownOpen &&
         !event.target.closest(".dropdown-container")
       ) {
-        setIsDropdownOpen(false);
+        setIsCategoryDropdownOpen(false);
       }
     };
 
@@ -120,7 +120,7 @@ const Navbar = ({
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, [isDropdownOpen]);
+  }, [isDropdownOpen, isCategoryDropdownOpen]);
 
   // Grab cart items
   const getCartDetails = async () => {

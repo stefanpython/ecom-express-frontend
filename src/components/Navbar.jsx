@@ -229,8 +229,8 @@ const Navbar = ({
       <div className="container mx-auto flex justify-between items-center flex-wrap">
         <div className="flex items-center space-x-4 justify-center flex-grow mr-4 sm:justify-start sm:mr-0 sm:flex-grow-0">
           <div className=" text-black text-lg font-bold">
-            <Link to="/" className="flex items-center">
-              <img src="./logo.png" alt="logo" className="w-12 mr-2" />
+            <Link to="/" className="title flex items-center">
+              <img src="./ecom.png" alt="logo" className="w-12 mr-2" />
               Ecom Express
             </Link>
           </div>
@@ -239,7 +239,7 @@ const Navbar = ({
         <div className="flex space-x-4 flex-grow justify-center pt-3 sm:pt-0 ">
           <input
             type="text"
-            placeholder="Search products"
+            placeholder="Search for products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className=" bg-white-700 text-black p-2 rounded items-center w-auto md:w-96 ml-4 border"
@@ -288,7 +288,7 @@ const Navbar = ({
           <div className="flex justify-end flex-grow pl-2 items-center">
             <Link
               to="/shop"
-              className="text-black cursor-pointer hover-underline"
+              className="link-text  text-black cursor-pointer hover-underline"
             >
               Shop
             </Link>
@@ -297,7 +297,7 @@ const Navbar = ({
           <div className="flex justify-end flex-grow pr-4 items-center">
             <div className="relative dropdown-container">
               <div
-                className="text-black cursor-pointer flex items-center relative ml-1 hover-underline"
+                className="link-text text-black cursor-pointer flex items-center relative ml-1 hover-underline"
                 onClick={handleCategoryDropdownToggle}
               >
                 Categories
@@ -335,7 +335,7 @@ const Navbar = ({
                   onClick={() =>
                     setIsCategoryDropdownOpen(!isCategoryDropdownOpen)
                   }
-                  className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container z-10"
+                  className="link-text absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container z-10"
                 >
                   {categories.map((category) => (
                     <Link
@@ -351,15 +351,19 @@ const Navbar = ({
             </div>
           </div>
 
-          <div className="relative dropdown-container flex items-center">
+          <div className="link-text relative dropdown-container flex items-center">
             Welcome back,
             <button
               onClick={handleDropdownToggle}
               className="text-black cursor-pointer flex items-center relative ml-1 hover-underline"
             >
-              <div className="h-8 w-8 rounded-full flex items-center justify-center bg-blue-400 text-white text-sm font-semibold mr-1">
-                {getInitials(firstName, lastName)}
-              </div>
+              {isUserLoggedIn ? (
+                <div className="link-text h-8 w-8 rounded-full flex items-center justify-center bg-blue-400 text-white text-sm font-semibold mr-1">
+                  {getInitials(firstName, lastName)}
+                </div>
+              ) : (
+                ""
+              )}
 
               {isUserLoggedIn ? ` ${firstName}` : "Guest"}
               {/* Render down or up arrow based on dropdown state */}

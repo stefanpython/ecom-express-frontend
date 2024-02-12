@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 const OrderDetails = () => {
@@ -119,25 +119,27 @@ const OrderDetails = () => {
               <ul className="list-none flex flex-col">
                 {orderItems.items &&
                   orderItems.items.map((item) => (
-                    <li key={item._id} className="mb-2 flex items-center">
-                      <img
-                        src={item.product.image}
-                        alt=""
-                        className="w-8 h-8 mr-2"
-                      />
-                      <span className="font-semibold mr-8">
-                        {item.product.name}
-                      </span>
-                      <br />
-                      <br />
-                      <span className="text-gray-500 ml-auto">
-                        <span className="mr-2">{item.quantity}</span> x
-                        <span className="ml-2">
-                          {" "}
-                          ${Math.round(item.product.price)}
+                    <Link to={`/products/${item.product._id}`}>
+                      <li key={item._id} className="mb-2 flex items-center">
+                        <img
+                          src={`http://localhost:3000/images/${item.product.image}`}
+                          alt=""
+                          className="w-8 h-8 mr-2"
+                        />
+                        <span className="font-semibold mr-8">
+                          {item.product.name}
                         </span>
-                      </span>
-                    </li>
+                        <br />
+                        <br />
+                        <span className="text-gray-500 ml-auto">
+                          <span className="mr-2">{item.quantity}</span> x
+                          <span className="ml-2">
+                            {" "}
+                            ${Math.round(item.product.price)}
+                          </span>
+                        </span>
+                      </li>
+                    </Link>
                   ))}
               </ul>
             </div>

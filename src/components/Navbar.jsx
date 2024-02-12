@@ -242,10 +242,10 @@ const Navbar = ({
             placeholder="Search products"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className=" bg-white-700 text-black p-2 rounded items-center w-auto md:w-96 ml-4"
+            className=" bg-white-700 text-black p-2 rounded items-center w-auto md:w-96 ml-4 border"
           />
           {searchQuery.length > 0 && (
-            <div className="absolute bg-white p-2 mt-10 rounded shadow w-96 z-10">
+            <div className="absolute bg-white p-2 mt-11 rounded shadow w-96 z-10">
               {autocompleteResults.map((result) => (
                 <Link
                   to={`/products/${result._id}`}
@@ -332,13 +332,13 @@ const Navbar = ({
                   onClick={() =>
                     setIsCategoryDropdownOpen(!isCategoryDropdownOpen)
                   }
-                  className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container z-10"
+                  className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container z-1"
                 >
                   {categories.map((category) => (
                     <Link
                       to={`/shop?category=${category._id}`}
                       key={category._id}
-                      className="block py-2"
+                      className="block py-2 hover:bg-slate-100 p-2"
                     >
                       {category.name}
                     </Link>
@@ -395,8 +395,13 @@ const Navbar = ({
               >
                 {isUserLoggedIn ? (
                   <>
-                    <Link to="/dashboard">Dashboard</Link>
-                    <div className="cursor-pointer" onClick={handleSignOut}>
+                    <Link className="hover:bg-slate-100 p-2" to="/dashboard">
+                      Dashboard
+                    </Link>
+                    <div
+                      className="cursor-pointer hover:bg-slate-100 p-2"
+                      onClick={handleSignOut}
+                    >
                       Sign Out
                     </div>
                   </>

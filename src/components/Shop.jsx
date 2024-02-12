@@ -9,6 +9,7 @@ const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [originalProducts, setOriginalProducts] = useState([]);
+  const [sortBy, setSortBy] = useState(""); // State to track sorting option
 
   const location = useLocation();
 
@@ -57,6 +58,22 @@ const Shop = () => {
     getProductsList();
   }, []);
 
+  // Function to handle sorting
+  const handleSortChange = (event) => {
+    const sortByOption = event.target.value;
+    setSortBy(sortByOption);
+    let sortedProducts = [...products]; // Create a copy of the products array
+
+    // Sort products based on the selected option
+    if (sortByOption === "lowToHigh") {
+      sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (sortByOption === "highToLow") {
+      sortedProducts.sort((a, b) => b.price - a.price);
+    }
+
+    setProducts(sortedProducts); // Update the state with sorted products
+  };
+
   // Pagination
   const indexOfLastProduct = currentPage * ProductsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - ProductsPerPage;
@@ -69,6 +86,19 @@ const Shop = () => {
   return (
     <div className="container mx-auto px-24 sm:px-6 lg:px-44 ">
       <br />
+
+      {/* Dropdown for sorting */}
+      <div className="flex justify-end mb-4 bg-gray-100 p-2 rounded-md">
+        <select
+          value={sortBy}
+          onChange={handleSortChange}
+          className="px-4 py-2 border rounded bg-white"
+        >
+          <option value="">Sort by</option>
+          <option value="lowToHigh">Price Low to High</option>
+          <option value="highToLow">Price High to Low</option>
+        </select>
+      </div>
 
       <div className="flex justify-center w-fit">
         <div className="grid grid-cols-1 sm:grid-cols-4 sm:grid-rows-2 gap-6 ">

@@ -354,7 +354,7 @@ const Navbar = ({
               onClick={handleDropdownToggle}
               className="text-black cursor-pointer flex items-center relative ml-1"
             >
-              <div className="h-8 w-8 rounded-full flex items-center justify-center bg-gray-300 text-gray-600 text-sm font-semibold mr-1">
+              <div className="h-8 w-8 rounded-full flex items-center justify-center bg-blue-400 text-white text-sm font-semibold mr-1">
                 {getInitials(firstName, lastName)}
               </div>
 

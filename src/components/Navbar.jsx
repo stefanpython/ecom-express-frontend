@@ -335,7 +335,7 @@ const Navbar = ({
                   onClick={() =>
                     setIsCategoryDropdownOpen(!isCategoryDropdownOpen)
                   }
-                  className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container z-1"
+                  className="absolute top-10 right-0 bg-white p-4 rounded shadow category-dropdown-container z-10"
                 >
                   {categories.map((category) => (
                     <Link

@@ -4,7 +4,7 @@ const Shipping = () => {
   return (
     <div className="flex items-center justify-center min-h-[870px]">
       <div className="max-w-4xl mx-auto px-6 sm:-mt-60">
-        <h1 className="text-3xl font-bold mb-6">About Ecom Express</h1>
+        <h1 className="text-3xl font-bold mb-6">Shipping</h1>
         <p className="text-lg mb-4">
           We offer shipping to most locations worldwide. Shipping costs and
           delivery times may vary depending on your location and the items

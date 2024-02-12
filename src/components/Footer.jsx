@@ -1,12 +1,22 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <div className="footer grid grid-cols-1 sm:grid-cols-3 grid-row-1 bg-slate-100 sm:-my-44 py-7 mt-10">
       <div className="sm:flex sm:text-left sm:justify-center lg:border-r-2 border-b-2 sm:border-b-0 pb-6 sm:pb-0">
         <div>
           <h1 className="text-lg text-stone-800 mb-1">CUSTOMER SERVICE</h1>
-          <p className="text-stone-500 mb-1">Contact Us</p>
-          <p className="text-stone-500 mb-1">Sell with Us</p>
-          <p className="text-stone-500">Shipping</p>
+          <Link to="/contact">
+            <p className="text-stone-500 mb-1">Contact Us</p>
+          </Link>
+
+          <Link to="/sell">
+            <p className="text-stone-500 mb-1">Sell with Us</p>
+          </Link>
+
+          <Link to="/shipping">
+            <p className="text-stone-500">Shipping</p>
+          </Link>
         </div>
       </div>
 
@@ -15,9 +25,18 @@ const Footer = () => {
       <div className="sm:flex sm:text-left sm:justify-center sm:row-start-1 border-b-2 lg:border-r-2 sm:border-b-0 pb-6 sm:pb-0">
         <div>
           <h1 className="text-lg text-stone-800 mb-1">LINKS</h1>
-          <p className="text-stone-500 mb-1">About Us</p>
-          <p className="text-stone-500 mb-1">Terms and conditions</p>
-          <p className="text-stone-500">Processing of personal data</p>
+
+          <Link to="/about">
+            <p className="text-stone-500 mb-1">About Us</p>
+          </Link>
+
+          <Link to="/terms">
+            <p className="text-stone-500 mb-1">Terms and conditions</p>
+          </Link>
+
+          <Link to="/processing">
+            <p className="text-stone-500">Processing of personal data</p>
+          </Link>
         </div>
       </div>
 

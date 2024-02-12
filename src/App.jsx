@@ -19,6 +19,14 @@ import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router-dom";
 import EditForm from "./components/admin/EditForm";
 
+// Footer imports
+import About from "./components/footer/About";
+import Contact from "./components/footer/Contact";
+import Processing from "./components/footer/Processing";
+import SellWithUs from "./components/footer/SellWithUs";
+import Shipping from "./components/footer/Shipping";
+import Terms from "./components/footer/Terms";
+
 function PrivateRoute({ element, authenticated, isAdmin }) {
   return authenticated && isAdmin ? (
     element
@@ -158,6 +166,14 @@ function App() {
           />
 
           <Route path="/update_product/:productId" element={<EditForm />} />
+
+          {/* Footer routes */}
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/processing" element={<Processing />} />
+          <Route path="/sell" element={<SellWithUs />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
         <Footer />
       </HashRouter>

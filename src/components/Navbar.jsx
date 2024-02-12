@@ -286,7 +286,10 @@ const Navbar = ({
           </div>
 
           <div className="flex justify-end flex-grow pl-2 items-center">
-            <Link to="/shop" className="text-black cursor-pointer">
+            <Link
+              to="/shop"
+              className="text-black cursor-pointer hover-underline"
+            >
               Shop
             </Link>
           </div>
@@ -294,7 +297,7 @@ const Navbar = ({
           <div className="flex justify-end flex-grow pr-4 items-center">
             <div className="relative dropdown-container">
               <div
-                className="text-black cursor-pointer flex items-center relative ml-1"
+                className="text-black cursor-pointer flex items-center relative ml-1 hover-underline"
                 onClick={handleCategoryDropdownToggle}
               >
                 Categories
@@ -338,7 +341,7 @@ const Navbar = ({
                     <Link
                       to={`/shop?category=${category._id}`}
                       key={category._id}
-                      className="block py-2 hover:bg-slate-100 p-2"
+                      className="block py-2 hover:bg-blue-100 p-2"
                     >
                       {category.name}
                     </Link>
@@ -352,7 +355,7 @@ const Navbar = ({
             Welcome back,
             <button
               onClick={handleDropdownToggle}
-              className="text-black cursor-pointer flex items-center relative ml-1"
+              className="text-black cursor-pointer flex items-center relative ml-1 hover-underline"
             >
               <div className="h-8 w-8 rounded-full flex items-center justify-center bg-blue-400 text-white text-sm font-semibold mr-1">
                 {getInitials(firstName, lastName)}
@@ -395,11 +398,11 @@ const Navbar = ({
               >
                 {isUserLoggedIn ? (
                   <>
-                    <Link className="hover:bg-slate-100 p-2" to="/dashboard">
+                    <Link className="hover:bg-blue-100 p-2" to="/dashboard">
                       Dashboard
                     </Link>
                     <div
-                      className="cursor-pointer hover:bg-slate-100 p-2"
+                      className="cursor-pointer hover:bg-blue-100 p-2"
                       onClick={handleSignOut}
                     >
                       Sign Out

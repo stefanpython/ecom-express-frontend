@@ -11,6 +11,16 @@
   .home-height {
     margin-bottom: -32rem;
   }
+
+  .hover-underline {
+    @apply hover:underline;
+    text-decoration-thickness: 3px; /* Adjust the thickness of the underline */
+    text-decoration-color: rgb(
+      0,
+      183,
+      255
+    ); /* Change the color of the underline */
+  }
 }
 
 /* StarRating.css */

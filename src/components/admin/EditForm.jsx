@@ -155,8 +155,8 @@ const EditForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[879px]">
-      <div className="-mt-64">
+    <div className="flex items-center justify-center min-h-[870px]">
+      <div className="-mt-56">
         <div className="bg-white shadow-lg rounded-lg p-8">
           <div className=" flex justify-end text-right">
             <button

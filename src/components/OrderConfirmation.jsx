@@ -60,7 +60,7 @@ const OrderConfirmation = () => {
   };
 
   useEffect(() => {
-    getOrderDetails(userInfo.userId);
+    getOrderDetails(userInfo?.userId);
   }, []);
 
   // Navigate to the dashboard with selectedTab set to "orders"

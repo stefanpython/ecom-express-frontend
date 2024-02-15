@@ -102,6 +102,45 @@ function App() {
     getUserDetails(userInfo?.userId);
   }, [refreshUser, refreshLogin]);
 
+  // Handle Add product to cart button
+  const handleAddToCart = async (productId, quantity) => {
+    try {
+      const url = cookies.token
+        ? "http://localhost:3000/add_cart_auth"
+        : "http://localhost:3000/add_cart_guest";
+
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      // Add Authorization header if cookies.token is not empty
+      if (cookies.token) {
+        headers["Authorization"] = `Bearer ${cookies.token}`;
+      }
+
+      const addToCartResponse = await fetch(url, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          product: productId,
+          quantity: parseInt(quantity),
+        }),
+      });
+
+      if (!addToCartResponse.ok) {
+        const errorData = await addToCartResponse.json();
+        throw new Error(errorData.message);
+      }
+
+      const cartData = await addToCartResponse.json();
+      console.log(cartData.message);
+
+      setRefreshLogin(!refreshLogin);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="App">
       <HashRouter>
@@ -139,7 +178,16 @@ function App() {
               />
             }
           />
-          <Route path="/shop" element={<Shop />} />
+          <Route
+            path="/shop"
+            element={
+              <Shop
+                refreshLogin={refreshLogin}
+                setRefreshLogin={setRefreshLogin}
+                handleAddToCart={handleAddToCart}
+              />
+            }
+          />
           <Route path="/order" element={<OrderConfirmation />} />
           <Route path="/order/:orderId" element={<OrderDetails />} />
           <Route
@@ -149,6 +197,7 @@ function App() {
                 refreshLogin={refreshLogin}
                 setRefreshLogin={setRefreshLogin}
                 refreshSearch={refreshSearch}
+                handleAddToCart={handleAddToCart}
               />
             }
           />

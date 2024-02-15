@@ -3,7 +3,7 @@ import AddReview from "./AddReview";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
+const ProductDetails = ({ refreshSearch, handleAddToCart }) => {
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewComment, setReviewComment] = useState("");
   const [rating, setRating] = useState(0);
@@ -54,45 +54,6 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
   useEffect(() => {
     getProductDetails();
   }, [refreshSearch]);
-
-  // Handle Add product to cart button
-  const handleAddToCart = async () => {
-    try {
-      const url = cookies.token
-        ? "http://localhost:3000/add_cart_auth"
-        : "http://localhost:3000/add_cart_guest";
-
-      const headers = {
-        "Content-Type": "application/json",
-      };
-
-      // Add Authorization header if cookies.token is not empty
-      if (cookies.token) {
-        headers["Authorization"] = `Bearer ${cookies.token}`;
-      }
-
-      const addToCartResponse = await fetch(url, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify({
-          product: productDetails._id,
-          quantity: parseInt(quantity),
-        }),
-      });
-
-      if (!addToCartResponse.ok) {
-        const errorData = await addToCartResponse.json();
-        throw new Error(errorData.message);
-      }
-
-      const cartData = await addToCartResponse.json();
-      console.log(cartData.message);
-
-      setRefreshLogin(!refreshLogin);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // Handle adding comments to a product
   const handleReviewSubmit = async (e) => {
@@ -253,7 +214,7 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
             </div>
 
             <button
-              onClick={handleAddToCart}
+              onClick={() => handleAddToCart(productId, quantity)}
               className="flex items-center mt-32 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               <img

@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const ProductsPerPage = 12;
 
-const Shop = () => {
+const Shop = ({ handleAddToCart }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [originalProducts, setOriginalProducts] = useState([]);
-  const [sortBy, setSortBy] = useState(""); // State to track sorting option
+  const [sortBy, setSortBy] = useState("");
+  const [quantity, setQuantity] = useState(1);
+
+  const [cookies, setCookies] = useCookies(["token"]);
 
   const location = useLocation();
 
@@ -123,6 +127,15 @@ const Shop = () => {
                   ${product.price?.toFixed(2)}
                 </p>
               </Link>
+
+              <div className="flex justify-center">
+                <button
+                  onClick={() => handleAddToCart(product._id, quantity)}
+                  className="mt-7 flex items-center p-2 bg-blue-500 hover:bg-blue-700 text-white font-medium px-10 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Add to cart
+                </button>
+              </div>
             </div>
           ))}
         </div>

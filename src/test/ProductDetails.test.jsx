@@ -64,7 +64,6 @@ describe("ProductDetails component", () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            product: "1",
             quantity: 1,
           }),
         }

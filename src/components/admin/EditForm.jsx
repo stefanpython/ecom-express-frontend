@@ -12,6 +12,7 @@ const EditForm = () => {
     category: "",
     image: null,
   });
+
   const [cookies, setCookies] = useCookies(["token"]);
   const [categories, setCategories] = useState("");
 
@@ -38,6 +39,11 @@ const EditForm = () => {
 
       const productData = await response.json();
       setProductDetails(productData.product);
+
+      setProductDetails((prevProductDetails) => ({
+        ...prevProductDetails,
+        category: "",
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -64,6 +70,12 @@ const EditForm = () => {
   // Handle Submit on Edit form
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if category is selected
+    if (productDetails.category === "") {
+      window.alert("Please select a category");
+      return; // Stop further execution
+    }
 
     const formData = new FormData();
 

@@ -225,27 +225,27 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-6 pt-6 bg-slate-100 px-4 sm:-mb-96 border ">
           <img
             className="border rounded-lg max-h-96"
-            src={`http://localhost:3000/images/${productDetails.image}`}
+            src={`http://localhost:3000/images/${productDetails?.image}`}
             alt=""
           />
 
           <div className="text-left border rounded-lg p-2 bg-slate-50">
             <h1 className="font-bold text-2xl text-blue-500 mb-2">
-              {productDetails.name}
+              {productDetails?.name}
             </h1>
 
-            <p>{productDetails.description}</p>
+            <p>{productDetails?.description}</p>
 
             <br />
 
-            <h2 className="font-medium text-2xl">${productDetails.price}</h2>
+            <h2 className="font-medium text-2xl">${productDetails?.price}</h2>
 
             <div className="flex items-left mt-2 flex-col mr-2">
               <label className="mr-2 mb-2">Quantity:</label>
               <input
                 type="number"
                 min="1"
-                max={productDetails.quantity}
+                max={productDetails?.quantity}
                 value={quantity}
                 onChange={handleQuantity}
                 className="border border-gray-300 p-1 w-26 text-left"
@@ -284,43 +284,44 @@ const ProductDetails = ({ refreshLogin, setRefreshLogin, refreshSearch }) => {
         </div>
 
         <div>
-          {userReviews.map((review) => (
-            <div
-              key={review._id}
-              className="bg-white shadow-lg rounded-lg p-4 mb-4 pb-6"
-            >
-              <div className="flex items-center">
-                <div className="h-12 w-12 rounded-full flex items-center justify-center bg-gray-300 text-gray-600 text-sm font-semibold mr-1">
-                  {getInitials(review.user.firstName, review.user.lastName)}
-                </div>
+          {userReviews &&
+            userReviews.map((review) => (
+              <div
+                key={review._id}
+                className="bg-white shadow-lg rounded-lg p-4 mb-4 pb-6"
+              >
+                <div className="flex items-center">
+                  <div className="h-12 w-12 rounded-full flex items-center justify-center bg-gray-300 text-gray-600 text-sm font-semibold mr-1">
+                    {getInitials(review.user.firstName, review.user.lastName)}
+                  </div>
 
-                <div className="ml-4">
-                  <h1 className="text-xl font-semibold text-left">
-                    {review.title}
-                  </h1>
+                  <div className="ml-4">
+                    <h1 className="text-xl font-semibold text-left">
+                      {review.title}
+                    </h1>
 
-                  <p className="text-sm">
-                    {formatCreatedAtDate(review.createdAt)}
-                  </p>
+                    <p className="text-sm">
+                      {formatCreatedAtDate(review.createdAt)}
+                    </p>
 
-                  <div className="flex items-center mt-2">
-                    {/* Render stars based on the rating */}
-                    {[...Array(review.rating)].map((_, index) => (
-                      <span key={index} className="text-yellow-500 text-xl">
-                        &#9733;
-                      </span>
-                    ))}
+                    <div className="flex items-center mt-2">
+                      {/* Render stars based on the rating */}
+                      {[...Array(review.rating)].map((_, index) => (
+                        <span key={index} className="text-yellow-500 text-xl">
+                          &#9733;
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
+                <p className="text-sm text-gray-600 text-left ml-16 mt-2 italic">
+                  {review.user.firstName} {review.user.lastName} said:
+                </p>
+                <p className="mt-4 text-gray-600 text-left ml-16">
+                  {review.comment}
+                </p>
               </div>
-              <p className="text-sm text-gray-600 text-left ml-16 mt-2 italic">
-                {review.user.firstName} {review.user.lastName} said:
-              </p>
-              <p className="mt-4 text-gray-600 text-left ml-16">
-                {review.comment}
-              </p>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>

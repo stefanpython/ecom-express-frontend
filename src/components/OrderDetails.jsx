@@ -105,19 +105,20 @@ const OrderDetails = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <h3 className="text-lg font-semibold mb-2">Order ID</h3>
-              <p className="text-gray-700">{orderItems._id}</p>
+              <p className="text-gray-700">{orderItems?._id}</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Order Date</h3>
               <p className="text-gray-700">
-                {orderItems.createdAt &&
+                {orderItems &&
+                  orderItems.createdAt &&
                   formatCreatedAtDate(orderItems.createdAt)}
               </p>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Order Items</h3>
               <ul className="list-none flex flex-col">
-                {orderItems.items &&
+                {orderItems?.items &&
                   orderItems.items.map((item) => (
                     <Link to={`/products/${item.product._id}`}>
                       <li key={item._id} className="mb-2 flex items-center">
@@ -145,13 +146,13 @@ const OrderDetails = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Status</h3>
-              <p className="text-gray-700">- {orderItems.status} - </p>
+              <p className="text-gray-700">- {orderItems?.status} - </p>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Total Quantity</h3>
               <p className="text-gray-700">
-                {orderItems.items &&
-                  orderItems.items.reduce(
+                {orderItems?.items &&
+                  orderItems?.items.reduce(
                     (total, item) => total + item.quantity,
                     0
                   )}
@@ -162,8 +163,8 @@ const OrderDetails = () => {
               <p className="text-gray-700">
                 $
                 {Math.round(
-                  orderItems.items &&
-                    orderItems.items.reduce(
+                  orderItems?.items &&
+                    orderItems?.items.reduce(
                       (acc, item) => acc + item.product.price * item.quantity,
                       0
                     )
@@ -174,12 +175,12 @@ const OrderDetails = () => {
           <div className="mt-4">
             <button
               onClick={() => {
-                handleCancelOrder(orderItems._id);
+                handleCancelOrder(orderItems?._id);
                 navigate(`/dashboard?selectedTab=orders`);
               }}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
             >
-              Cancel Order
+              Cancel
             </button>
           </div>
         </div>

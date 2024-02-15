@@ -1,6 +1,5 @@
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import Signup from "../components/Signup";
-import { useNavigate } from "react-router-dom";
 import { vi } from "vitest";
 
 // Mock the useNavigate hook

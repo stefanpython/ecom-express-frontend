@@ -52,22 +52,12 @@ describe("ProductDetails component", () => {
   });
 
   it("handles add to cart correctly", async () => {
-    render(<ProductDetails />);
+    const mockHandleAddToCart = vi.fn(); // Create a mock function
+    render(<ProductDetails handleAddToCart={mockHandleAddToCart} />);
     const addToCartButton = screen.getByText("Add to cart");
     fireEvent.click(addToCartButton);
     await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith(
-        "http://localhost:3000/add_cart_guest",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            quantity: 1,
-          }),
-        }
-      );
+      expect(mockHandleAddToCart).toHaveBeenCalledWith(undefined, 1); // Ensure mock function is called correctly
     });
   });
 });

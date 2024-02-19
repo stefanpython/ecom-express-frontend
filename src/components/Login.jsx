@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 
-const Login = ({ refreshLogin, setRefreshLogin, isAdmin }) => {
+const Login = ({ refreshLogin, setRefreshLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");

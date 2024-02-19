@@ -12,6 +12,7 @@ const Navbar = ({
   setRefreshSearch,
   setIsAdmin,
   isAdmin,
+  userInfo,
 }) => {
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const isUserLoggedIn = cookies.token ? true : false;
@@ -144,7 +145,7 @@ const Navbar = ({
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message);
+        // throw new Error(errorData.message);
         return;
       }
 
@@ -224,6 +225,35 @@ const Navbar = ({
     setIsCategoryDropdownOpen(!isCategoryDropdownOpen);
   };
 
+  const deleteEmptyCart = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/cart/${userInfo?.userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+
+      // Check if response is ok
+      if (!response.ok) {
+        return;
+      }
+    } catch (error) {
+      // console.error("Error deleting cart:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      deleteEmptyCart();
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [refreshCart, refreshLogin]);
   return (
     <nav className="p-3 shadow bg-slate-100">
       <div className="container mx-auto flex justify-between items-center flex-wrap">

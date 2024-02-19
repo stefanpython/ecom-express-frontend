@@ -153,6 +153,7 @@ function App() {
           setRefreshSearch={setRefreshSearch}
           setIsAdmin={setIsAdmin}
           isAdmin={isAdmin}
+          userInfo={userInfo}
         />
         <Routes>
           <Route path="/" element={<Homepage />} />

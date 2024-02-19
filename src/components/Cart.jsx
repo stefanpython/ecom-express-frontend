@@ -135,6 +135,8 @@ const Cart = ({
         throw new Error(errorData.message);
       }
 
+      window.alert("Item deleted successfully");
+
       setRefrehCart(!refreshCart);
     } catch (error) {
       console.error("Failed to remove item from the cart:", error);
@@ -159,7 +161,7 @@ const Cart = ({
         </button>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 overflow-y-auto max-h-[750px]">
         {cartItems.map((item) => (
           <div key={item._id} className="flex flex-col mb-2">
             <div className="flex items-center mb-2 justify-between">

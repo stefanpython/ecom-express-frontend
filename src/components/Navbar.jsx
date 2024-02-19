@@ -13,12 +13,14 @@ const Navbar = ({
   setIsAdmin,
   isAdmin,
   userInfo,
+  isCartOpen,
+  setIsCartOpen,
 }) => {
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const isUserLoggedIn = cookies.token ? true : false;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+
   const [cartItems, setCartItems] = useState([]);
 
   const [refreshCart, setRefrehCart] = useState(false);
@@ -428,7 +430,7 @@ const Navbar = ({
             {isDropdownOpen && (
               <div
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="absolute top-10 right-0 bg-white p-4 rounded shadow"
+                className="absolute top-10 right-0 bg-white p-4 rounded shadow z-10"
               >
                 {isUserLoggedIn ? (
                   <>
@@ -459,7 +461,7 @@ const Navbar = ({
 
         <Cart
           cartItems={cartItems}
-          onClose={() => setIsCartOpen(false)}
+          onClose={() => setIsCartOpen(!isCartOpen)}
           isCartOpen={isCartOpen}
           setRefrehCart={setRefrehCart}
           refreshCart={refreshCart}

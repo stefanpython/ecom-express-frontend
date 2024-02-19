@@ -40,6 +40,7 @@ function App() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isAdmin, setIsAdmin] = useState("");
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const [refreshUser, setRefreshUser] = useState(true);
   const [refreshLogin, setRefreshLogin] = useState(true);
@@ -136,6 +137,7 @@ function App() {
       console.log(cartData.message);
 
       setRefreshLogin(!refreshLogin);
+      setIsCartOpen(true);
     } catch (error) {
       console.log(error);
     }
@@ -154,6 +156,8 @@ function App() {
           setIsAdmin={setIsAdmin}
           isAdmin={isAdmin}
           userInfo={userInfo}
+          isCartOpen={isCartOpen}
+          setIsCartOpen={setIsCartOpen}
         />
         <Routes>
           <Route path="/" element={<Homepage />} />

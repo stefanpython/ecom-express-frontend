@@ -13,8 +13,6 @@ const Shop = ({ handleAddToCart }) => {
   const [sortBy, setSortBy] = useState("");
   const [quantity, setQuantity] = useState(1);
 
-  const [cookies, setCookies] = useCookies(["token"]);
-
   const location = useLocation();
 
   // Function to parse query parameters from URL

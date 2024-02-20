@@ -64,7 +64,7 @@ function App() {
   const getUserDetails = async (userId) => {
     try {
       if (!userId) {
-        console.error("userId is undefined. Skipping GET request.");
+        // console.error("userId is undefined. Skipping GET request.");
         return;
       }
 

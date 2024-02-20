@@ -331,6 +331,7 @@ const Navbar = ({
               <div
                 className="link-text text-black cursor-pointer flex items-center relative ml-1 hover-underline"
                 onClick={handleCategoryDropdownToggle}
+                data-testid="category-dropdown-container"
               >
                 Categories
                 {/* Render down or up arrow based on dropdown state */}
@@ -388,6 +389,7 @@ const Navbar = ({
             <button
               onClick={handleDropdownToggle}
               className="text-black cursor-pointer flex items-center relative ml-1 hover-underline"
+              data-testid="dropdown-toggle"
             >
               {isUserLoggedIn ? (
                 <div className="link-text h-8 w-8 rounded-full flex items-center justify-center bg-blue-400 text-white text-sm font-semibold mr-1">

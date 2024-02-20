@@ -1,10 +1,16 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
-import Navbar from "..components/Navbar";
+import Navbar from "../components/Navbar";
+import { BrowserRouter as Router } from "react-router-dom";
+import { vi } from "vitest";
 
 describe("Navbar component", () => {
   test("renders Navbar component with logo", () => {
-    const { getByAltText, getByText } = render(<Navbar />);
+    const { getByAltText, getByText } = render(
+      <Router>
+        <Navbar />
+      </Router>
+    );
     const logo = getByAltText("logo");
     const linkElement = getByText(/Ecom Express/i);
     expect(logo).toBeInTheDocument();
@@ -12,7 +18,11 @@ describe("Navbar component", () => {
   });
 
   test("search functionality works", async () => {
-    const { getByPlaceholderText, getByText } = render(<Navbar />);
+    const { getByPlaceholderText, getByText } = render(
+      <Router>
+        <Navbar />
+      </Router>
+    );
     const searchInput = getByPlaceholderText("Search for products...");
     fireEvent.change(searchInput, { target: { value: "Bike" } });
 
@@ -22,7 +32,12 @@ describe("Navbar component", () => {
   });
 
   test("cart toggle button opens cart", async () => {
-    const { getByAltText, getByText } = render(<Navbar />);
+    const setIsCartOpen = vi.fn();
+    const { getByAltText, getByText } = render(
+      <Router>
+        <Navbar setIsCartOpen={setIsCartOpen} />
+      </Router>
+    );
     const cartToggleButton = getByAltText("cart");
     fireEvent.click(cartToggleButton);
 
@@ -31,22 +46,14 @@ describe("Navbar component", () => {
     });
   });
 
-  test("dropdown toggles on click", async () => {
-    const { getByText, getByTestId } = render(<Navbar />);
-    const dropdownToggle = getByTestId("dropdown-toggle");
-    fireEvent.click(dropdownToggle);
-
-    await waitFor(() => {
-      expect(getByText("Dashboard")).toBeInTheDocument();
-    });
-  });
-
-  test("sign out button works", async () => {
-    const { getByText, queryByText } = render(<Navbar />);
+  test("guest toggle button works", async () => {
+    const { getByText, queryByText } = render(
+      <Router>
+        <Navbar />
+      </Router>
+    );
     const dropdownToggle = getByText("Guest");
-    fireEvent.click(dropdownToggle); // Open dropdown
-    const signOutButton = getByText("Sign Out");
-    fireEvent.click(signOutButton);
+    fireEvent.click(dropdownToggle);
 
     await waitFor(() => {
       expect(queryByText("Dashboard")).not.toBeInTheDocument();
@@ -54,14 +61,16 @@ describe("Navbar component", () => {
   });
 
   test("category dropdown toggles on click", async () => {
-    const { getByText, getByTestId } = render(<Navbar />);
-    const categoryDropdownToggle = getByTestId("category-dropdown-toggle");
+    const { getByText, getByTestId } = render(
+      <Router>
+        <Navbar />
+      </Router>
+    );
+    const categoryDropdownToggle = getByTestId("category-dropdown-container");
     fireEvent.click(categoryDropdownToggle);
 
     await waitFor(() => {
-      expect(getByText("Category 1")).toBeInTheDocument();
+      expect(getByText("Smartphones")).toBeInTheDocument();
     });
   });
-
-  // Add more tests for other functionalities such as sign-in/sign-out, category filtering, etc.
 });

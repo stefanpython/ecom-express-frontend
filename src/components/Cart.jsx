@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 
 const Cart = ({
@@ -162,54 +162,59 @@ const Cart = ({
       </div>
 
       <div className="p-4 overflow-y-auto max-h-[750px]">
-        {cartItems.map((item) => (
-          <div key={item._id} className="flex flex-col mb-2">
-            <div className="flex items-center mb-2 justify-between">
-              <div className="flex items-center">
-                <img
-                  src={`http://localhost:3000/images/${item.product.image}`}
-                  alt=""
-                  className="w-10 h-10 mr-2"
-                />
-                <p>{item.product.name}</p>
+        {cartItems &&
+          cartItems.map((item) => (
+            <div key={item._id} className="flex flex-col mb-2">
+              <div className="flex items-center mb-2 justify-between">
+                <div className="flex items-center">
+                  <img
+                    src={`http://localhost:3000/images/${item.product.image}`}
+                    alt=""
+                    className="w-10 h-10 mr-2"
+                  />
+                  <p>{item.product.name}</p>
+                </div>
+
+                <button
+                  onClick={() => handleRemoveItem(item.product._id)}
+                  data-testid="remove-button"
+                >
+                  <img className="w-6 h-6" src="./bin.png" alt="recycle-bin" />
+                </button>
               </div>
 
-              <button onClick={() => handleRemoveItem(item.product._id)}>
-                <img className="w-6 h-6" src="./bin.png" alt="recycle-bin" />
-              </button>
+              <div className="flex flex-col">
+                <div className="flex mr-4 justify-between">
+                  <p className="mr-2">Quantity:</p>
+                  <p>{item.quantity}</p>
+                </div>
+
+                <div className="flex justify-between">
+                  <p className="mr-2">Price:</p>
+                  <p>${parseInt(item.product.price * item.quantity)}</p>
+                </div>
+              </div>
+              <hr />
             </div>
-
-            <div className="flex flex-col">
-              <div className="flex mr-4 justify-between">
-                <p className="mr-2">Quantity:</p>
-                <p>{item.quantity}</p>
-              </div>
-
-              <div className="flex justify-between">
-                <p className="mr-2">Price:</p>
-                <p>${parseInt(item.product.price * item.quantity)}</p>
-              </div>
-            </div>
-            <hr />
-          </div>
-        ))}
+          ))}
       </div>
 
       <div className="flex justify-between items-center p-4 border-t">
         <p>Total:</p>
         <p>
           $
-          {parseInt(
-            cartItems.reduce(
-              (acc, item) => acc + item.product.price * item.quantity,
-              0
-            )
-          )}
+          {cartItems &&
+            parseInt(
+              cartItems.reduce(
+                (acc, item) => acc + item.product.price * item.quantity,
+                0
+              )
+            )}
         </p>
       </div>
 
       <div className="p-4">
-        {cartItems.length > 0 && (
+        {cartItems && cartItems.length > 0 && (
           <Link to={cookies.token ? "/order" : "/login"}>
             <button
               className="w-full bg-blue-500 text-white p-2 rounded"

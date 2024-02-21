@@ -58,7 +58,7 @@ const Orders = ({}) => {
   };
 
   useEffect(() => {
-    getOrderDetails(userInfo.userId);
+    getOrderDetails(userInfo?.userId);
   }, []);
 
   const handleSearchChange = (e) => {

@@ -47,7 +47,7 @@ const AccountDetails = ({ setRefreshUser, refreshUser }) => {
   };
 
   useEffect(() => {
-    getUserDetails(userInfo.userId);
+    getUserDetails(userInfo?.userId);
   }, []);
 
   const handleFirstNameChange = (e) => {

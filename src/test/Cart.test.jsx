@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import Cart from "../components/Cart";
 import { vi } from "vitest";
-import { BrowserRouter as Router, MemoryRouter } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 describe("Cart component", () => {
   // Test 1: Rendering of cart items

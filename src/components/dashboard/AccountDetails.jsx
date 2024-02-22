@@ -38,8 +38,8 @@ const AccountDetails = ({ setRefreshUser, refreshUser }) => {
 
       const userDetails = await response.json();
 
-      setFirstName(userDetails.user.firstName);
-      setLastName(userDetails.user.lastName);
+      setFirstName(userDetails?.user.firstName);
+      setLastName(userDetails?.user.lastName);
     } catch (error) {
       console.error("Error fetching user details:", error.message);
       throw error;

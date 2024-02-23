@@ -79,7 +79,7 @@ const AddressDetails = () => {
   const handleDelete = async () => {
     // Display a confirmation dialog
     const isConfirmed = window.confirm(
-      "Are you sure you want delete this address?"
+      "Are you sure you want delete to this address?"
     );
 
     if (!isConfirmed) {
@@ -136,12 +136,17 @@ const AddressDetails = () => {
 
           <br />
           <h2 className="text-2xl font-bold mb-4">Address Details</h2>
+
           <form onSubmit={handleSave}>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="addressLine"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Address Line
               </label>
               <input
+                id="addressLine"
                 type="text"
                 name="addressLine"
                 value={addressLine}
@@ -150,10 +155,14 @@ const AddressDetails = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="postalCode"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Postal/Zip Code
               </label>
               <input
+                id="postalCode"
                 type="text"
                 name="postalCode"
                 value={postalCode}
@@ -162,10 +171,14 @@ const AddressDetails = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Phone
               </label>
               <input
+                id="phone"
                 type="text"
                 name="phone"
                 value={phone}

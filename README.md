@@ -42,4 +42,4 @@ Ecom Express is a full stack online shopping platform that offers a wide range o
    npm start
    ```
 
-4. Open http://localhost:3000 in your browser to view the application.
+4. Open http://localhost:5173 in your browser to view the application.

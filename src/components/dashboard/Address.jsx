@@ -198,9 +198,18 @@ const Address = ({ userInfo }) => {
                   key={index}
                   className="container hover:bg-gray-100 p-1 rounded-md"
                 >
-                  <p>{`Address Line: ${address.addressLine}`}</p>
-                  <p>{`Postal/Zip Code: ${address.postalCode}`}</p>
-                  <p>{`Phone: ${address.phone}`}</p>
+                  <p>
+                    {`Address Line:`}{" "}
+                    <span className="font-bold">{address.addressLine}</span>
+                  </p>
+                  <p>
+                    {`Postal/Zip Code:`}{" "}
+                    <span className="font-bold">{address.postalCode}</span>
+                  </p>
+                  <p>
+                    {`Phone:`}{" "}
+                    <span className="font-bold">{address.phone}</span>
+                  </p>
                   <hr className="my-4" />
                 </div>
               </Link>

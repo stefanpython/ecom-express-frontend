@@ -154,16 +154,32 @@ const Orders = ({}) => {
                   key={order._id}
                   className="mb-4 hover:bg-gray-100 p-2 rounded-md"
                 >
-                  <p>{`ID: ${order._id}`}</p>
-                  <p>{`Status: ${order.status}`}</p>
-                  <p>{`Date: ${formatCreatedAtDate(order.createdAt)}`}</p>
-                  <p>{`Total Amount: $${order.totalAmount}`}</p>
+                  <p>
+                    {`ID:`} <span className="font-bold">{order._id}</span>
+                  </p>
+                  <p>
+                    {`Status:`}{" "}
+                    <span className="font-bold">{order.status}</span>
+                  </p>
+                  <p>
+                    {`Date:`}{" "}
+                    <span className="font-bold">
+                      {formatCreatedAtDate(order.createdAt)}
+                    </span>
+                  </p>
+                  <p>
+                    {`Total Amount: `}{" "}
+                    <span className="font-bold">{order.totalAmount}</span>
+                  </p>
 
                   <ul>
                     {order.items.map((item) => (
-                      <li
-                        key={item._id}
-                      >{`Product: ${item.product.name}, Quantity: ${item.quantity}`}</li>
+                      <li key={item._id}>
+                        Product:{" "}
+                        <span className="font-bold">{item.product.name}</span>{" "}
+                        Quantity:
+                        <span className="font-bold">{item.quantity}</span>
+                      </li>
                     ))}
                   </ul>
                   <hr className="my-2" />

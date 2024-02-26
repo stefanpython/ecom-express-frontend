@@ -188,7 +188,7 @@ const Address = ({ userInfo }) => {
       <br />
 
       <div className="overflow-auto max-h-[510px]">
-        {addresses.length > 0 ? (
+        {!showForm && addresses.length > 0 ? (
           addresses
             .slice() // Create a copy of the addresses array
             .reverse()
@@ -205,6 +205,8 @@ const Address = ({ userInfo }) => {
                 </div>
               </Link>
             ))
+        ) : showForm ? (
+          ""
         ) : (
           <p>No address found</p>
         )}

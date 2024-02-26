@@ -24,12 +24,15 @@ const AccountDetails = ({ setRefreshUser, refreshUser }) => {
   // Function to fetch user details
   const getUserDetails = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:3000/user/${userId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/user/${userId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -63,7 +66,7 @@ const AccountDetails = ({ setRefreshUser, refreshUser }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/user/update/${userInfo.userId}`,
+        `https://ecom-express-backend-production.up.railway.app/user/update/${userInfo.userId}`,
         {
           method: "PUT",
           headers: {

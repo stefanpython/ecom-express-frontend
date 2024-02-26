@@ -15,11 +15,14 @@ const AddressDetails = () => {
   // Grab address details
   const getAddressDetails = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/address/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/address/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -46,7 +49,7 @@ const AddressDetails = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/update_address/${addressId}`,
+        `https://ecom-express-backend-production.up.railway.app/update_address/${addressId}`,
         {
           method: "PUT",
           headers: {
@@ -88,7 +91,7 @@ const AddressDetails = () => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/address/${addressId}`,
+        `https://ecom-express-backend-production.up.railway.app/address/${addressId}`,
         {
           method: "DELETE",
           headers: {

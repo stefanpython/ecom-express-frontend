@@ -37,11 +37,14 @@ const Shop = ({ handleAddToCart }) => {
   // Get products list
   const getProductsList = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/product_list`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/product_list`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -111,7 +114,7 @@ const Shop = ({ handleAddToCart }) => {
             >
               <Link to={`/products/${product._id}`}>
                 <img
-                  src={`http://localhost:3000/images/${product.image}`}
+                  src={`https://ecom-express-backend-production.up.railway.app/images/${product.image}`}
                   alt={product.name}
                   className="mb-2 mx-auto w-44 h-32"
                 />

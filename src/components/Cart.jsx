@@ -15,24 +15,27 @@ const Cart = ({
   // Function to handle placing an order
   const handlePlaceOrder = async () => {
     try {
-      const response = await fetch("http://localhost:3000/create_order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
-        body: JSON.stringify({
-          items: cartItems.map((item) => ({
-            product: item.product._id,
-            quantity: item.quantity,
-          })),
-          totalAmount: cartItems.reduce(
-            (acc, item) => acc + item.product.price * item.quantity,
-            0
-          ),
-          status: "Pending",
-        }),
-      });
+      const response = await fetch(
+        "https://ecom-express-backend-production.up.railway.app/create_order",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          body: JSON.stringify({
+            items: cartItems.map((item) => ({
+              product: item.product._id,
+              quantity: item.quantity,
+            })),
+            totalAmount: cartItems.reduce(
+              (acc, item) => acc + item.product.price * item.quantity,
+              0
+            ),
+            status: "Pending",
+          }),
+        }
+      );
 
       // Store order details in local storage
       const orderDetails = {
@@ -75,10 +78,13 @@ const Cart = ({
         headers["Authorization"] = `Bearer ${cookies.token}`;
       }
 
-      const response = await fetch("http://localhost:3000/clear_cart", {
-        method: "DELETE",
-        headers: headers,
-      });
+      const response = await fetch(
+        "https://ecom-express-backend-production.up.railway.app/clear_cart",
+        {
+          method: "DELETE",
+          headers: headers,
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -113,8 +119,8 @@ const Cart = ({
   const handleRemoveItem = async (productId) => {
     try {
       const url = cookies.token
-        ? `http://localhost:3000/cart/remove_auth/${productId}`
-        : `http://localhost:3000/cart/remove_guest/${productId}`;
+        ? `https://ecom-express-backend-production.up.railway.app/cart/remove_auth/${productId}`
+        : `https://ecom-express-backend-production.up.railway.app/cart/remove_guest/${productId}`;
 
       const headers = {
         "Content-Type": "application/json",
@@ -168,7 +174,7 @@ const Cart = ({
               <div className="flex items-center mb-2 justify-between">
                 <div className="flex items-center">
                   <img
-                    src={`http://localhost:3000/images/${item.product.image}`}
+                    src={`https://ecom-express-backend-production.up.railway.app/images/${item.product.image}`}
                     alt=""
                     className="w-10 h-10 mr-2"
                   />

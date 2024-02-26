@@ -23,13 +23,16 @@ const ForgotPassword = () => {
     } else {
       try {
         // Send a request to your backend for the forgot password functionality
-        const response = await fetch("http://localhost:3000/forgot-password", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        });
+        const response = await fetch(
+          "https://ecom-express-backend-production.up.railway.app/forgot-password",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+          }
+        );
 
         if (response.ok) {
           // Reset the email input and display a success message

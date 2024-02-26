@@ -14,12 +14,15 @@ const OrderDetails = () => {
   // Function to get order details
   const handleOrderDetails = async (orderId) => {
     try {
-      const response = await fetch(`http://localhost:3000/order/${orderId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/order/${orderId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -69,7 +72,7 @@ const OrderDetails = () => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/delete_order/${orderId}`,
+        `https://ecom-express-backend-production.up.railway.app/delete_order/${orderId}`,
         {
           method: "DELETE",
           headers: {
@@ -126,7 +129,7 @@ const OrderDetails = () => {
                         className="mb-2 flex items-center hover:bg-gray-100 p-1 rounded-lg"
                       >
                         <img
-                          src={`http://localhost:3000/images/${item.product.image}`}
+                          src={`https://ecom-express-backend-production.up.railway.app/images/${item.product.image}`}
                           alt=""
                           className="w-8 h-8 mr-2"
                         />

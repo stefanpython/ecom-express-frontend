@@ -8,11 +8,14 @@ const Review = () => {
   // Fetch reviews for a specific product or user
   const fetchReviews = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/reviews_list`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/reviews_list`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -33,12 +36,15 @@ const Review = () => {
   // Delete a review
   const deleteReview = async (reviewId) => {
     try {
-      const response = await fetch(`http://localhost:3000/review/${reviewId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/review/${reviewId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

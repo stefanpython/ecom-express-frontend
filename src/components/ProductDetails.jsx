@@ -31,7 +31,7 @@ const ProductDetails = ({ refreshSearch, handleAddToCart }) => {
   const getProductDetails = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/product/${productId}`,
+        `https://ecom-express-backend-production.up.railway.app/product/${productId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const ProductDetails = ({ refreshSearch, handleAddToCart }) => {
         }
 
         const response = await fetch(
-          `http://localhost:3000/review/create/${productId}`,
+          `https://ecom-express-backend-production.up.railway.app/review/create/${productId}`,
           {
             method: "POST",
             headers: {
@@ -126,7 +126,7 @@ const ProductDetails = ({ refreshSearch, handleAddToCart }) => {
   const getProductReviews = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/review/product/${productId}`,
+        `https://ecom-express-backend-production.up.railway.app/review/product/${productId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -186,7 +186,7 @@ const ProductDetails = ({ refreshSearch, handleAddToCart }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-6 pt-6 bg-slate-100 px-4 sm:-mb-96 border ">
           <img
             className="border rounded-lg max-h-96"
-            src={`http://localhost:3000/images/${productDetails?.image}`}
+            src={`https://ecom-express-backend-production.up.railway.app/images/${productDetails?.image}`}
             alt=""
           />
 

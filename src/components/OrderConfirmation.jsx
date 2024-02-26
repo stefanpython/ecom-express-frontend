@@ -28,7 +28,7 @@ const OrderConfirmation = () => {
   const getOrderDetails = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/user/${userId}/orders`,
+        `https://ecom-express-backend-production.up.railway.app/user/${userId}/orders`,
         {
           headers: {
             "Content-Type": "application/json",

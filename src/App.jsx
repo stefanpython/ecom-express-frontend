@@ -68,12 +68,15 @@ function App() {
         return;
       }
 
-      const response = await fetch(`http://localhost:3000/user/${userId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/user/${userId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
 
       // Check if response is unauthorized
       if (response.status === 401) {
@@ -107,8 +110,8 @@ function App() {
   const handleAddToCart = async (productId, quantity) => {
     try {
       const url = cookies.token
-        ? "http://localhost:3000/add_cart_auth"
-        : "http://localhost:3000/add_cart_guest";
+        ? "https://ecom-express-backend-production.up.railway.app/add_cart_auth"
+        : "https://ecom-express-backend-production.up.railway.app/add_cart_guest";
 
       const headers = {
         "Content-Type": "application/json",

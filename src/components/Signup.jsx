@@ -72,19 +72,22 @@ const Signup = () => {
     // Perform signup logic
     try {
       // Make API request to singup endpoint
-      const response = await fetch("http://localhost:3000/sign-up", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          firstName,
-          lastName,
-          password,
-          confirmPassword,
-        }),
-      });
+      const response = await fetch(
+        "https://ecom-express-backend-production.up.railway.app/sign-up",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            firstName,
+            lastName,
+            password,
+            confirmPassword,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

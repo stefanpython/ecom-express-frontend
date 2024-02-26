@@ -30,11 +30,14 @@ const AddProduct = () => {
   // Fetch a list of all categories
   const fetchCategoryList = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/category_list`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/category_list`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -66,13 +69,16 @@ const AddProduct = () => {
     formData.append("category", productDetails.category);
 
     try {
-      const response = await fetch(`http://localhost:3000/create_product`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/create_product`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

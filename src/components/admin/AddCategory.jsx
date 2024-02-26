@@ -13,17 +13,20 @@ const AddCategory = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/create_category`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
-        body: JSON.stringify({
-          name: categoryName,
-          description: categoryDescription,
-        }),
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/create_category`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          body: JSON.stringify({
+            name: categoryName,
+            description: categoryDescription,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

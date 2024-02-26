@@ -17,7 +17,7 @@ const Address = ({ userInfo }) => {
   const handleAddressDetails = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/user/addresses/${userInfo.userId}`,
+        `https://ecom-express-backend-production.up.railway.app/user/addresses/${userInfo.userId}`,
         {
           method: "GET",
           headers: {
@@ -63,18 +63,21 @@ const Address = ({ userInfo }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/address`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
-        body: JSON.stringify({
-          addressLine,
-          postalCode,
-          phone,
-        }),
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/address`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          body: JSON.stringify({
+            addressLine,
+            postalCode,
+            phone,
+          }),
+        }
+      );
 
       // Check if response is ok
       if (!response.ok) {

@@ -24,7 +24,7 @@ const EditForm = () => {
   const fetchProductDetails = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/product/${productId}`,
+        `https://ecom-express-backend-production.up.railway.app/product/${productId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const EditForm = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/update_product/${productId}`,
+        `https://ecom-express-backend-production.up.railway.app/update_product/${productId}`,
         {
           method: "PUT",
           headers: {
@@ -115,11 +115,14 @@ const EditForm = () => {
   // Fetch a list of all categories
   const fetchCategoryList = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/category_list`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://ecom-express-backend-production.up.railway.app/category_list`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -141,7 +144,7 @@ const EditForm = () => {
   const handleDeleteItem = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/delete_product/${productId}`,
+        `https://ecom-express-backend-production.up.railway.app/delete_product/${productId}`,
         {
           method: "DELETE",
           headers: {

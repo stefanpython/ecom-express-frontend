@@ -9,7 +9,9 @@ const EditProduct = () => {
   // Function to fetch all products
   const fetchAllProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3000/product_list");
+      const response = await fetch(
+        "https://ecom-express-backend-production.up.railway.app/product_list"
+      );
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message);

@@ -36,7 +36,9 @@ const Navbar = ({
   // Fetch all products
   const fetchAllProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3000/product_list");
+      const response = await fetch(
+        "https://ecom-express-backend-production.up.railway.app/product_list"
+      );
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message);
@@ -71,13 +73,16 @@ const Navbar = ({
   const handleSignOut = async () => {
     try {
       // Send a request to the server to invalidate the session or token
-      const response = await fetch("http://localhost:3000/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
-      });
+      const response = await fetch(
+        "https://ecom-express-backend-production.up.railway.app/logout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         // Clear the token from client-side storage
@@ -129,8 +134,8 @@ const Navbar = ({
   const getCartDetails = async () => {
     try {
       const url = cookies.token
-        ? `http://localhost:3000/cart_user`
-        : `http://localhost:3000/cart_guest`;
+        ? `https://ecom-express-backend-production.up.railway.app/cart_user`
+        : `https://ecom-express-backend-production.up.railway.app/cart_guest`;
 
       const headers = {
         "Content-Type": "application/json",
@@ -209,7 +214,9 @@ const Navbar = ({
   // Fetch category list
   const fetchCategoryList = async () => {
     try {
-      const response = await fetch("http://localhost:3000/category_list");
+      const response = await fetch(
+        "https://ecom-express-backend-production.up.railway.app/category_list"
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -230,7 +237,7 @@ const Navbar = ({
   const deleteEmptyCart = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/cart/${userInfo?.userId}`,
+        `https://ecom-express-backend-production.up.railway.app/cart/${userInfo?.userId}`,
         {
           method: "DELETE",
           headers: {
@@ -291,7 +298,7 @@ const Navbar = ({
                   <div className="flex items-center hover:bg-gray-100 pb-3">
                     <img
                       className="w-10 mr-2"
-                      src={`http://localhost:3000/images/${result.image}`}
+                      src={`https://ecom-express-backend-production.up.railway.app/images/${result.image}`}
                       alt="product image"
                     />
                     <p className="text-left">{result.name}</p>

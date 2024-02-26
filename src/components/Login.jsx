@@ -38,16 +38,19 @@ const Login = ({ refreshLogin, setRefreshLogin }) => {
 
     // Perform login logic if both email and password are provided
     try {
-      const response = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "https://ecom-express-backend-production.up.railway.app/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
       // Check if response is ok
       if (!response.ok) {
@@ -74,7 +77,7 @@ const Login = ({ refreshLogin, setRefreshLogin }) => {
 
         // Send the pending order to the server
         const orderResponse = await fetch(
-          "http://localhost:3000/create_order",
+          "https://ecom-express-backend-production.up.railway.app/create_order",
           {
             method: "POST",
             headers: {

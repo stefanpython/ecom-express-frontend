@@ -121,7 +121,10 @@ const OrderDetails = () => {
                 {orderItems?.items &&
                   orderItems.items.map((item) => (
                     <Link to={`/products/${item.product._id}`}>
-                      <li key={item._id} className="mb-2 flex items-center">
+                      <li
+                        key={item._id}
+                        className="mb-2 flex items-center hover:bg-gray-100 p-1 rounded-lg"
+                      >
                         <img
                           src={`http://localhost:3000/images/${item.product.image}`}
                           alt=""

@@ -2,6 +2,8 @@
 
 Ecom Express is a full stack online shopping platform that offers a wide range of products to customers. This project aims to provide a seamless shopping experience for users and a platform for vendors to showcase and sell their products.
 
+Live demo [HERE](https://stefanpython.github.io/ecom-express-frontend/)
+
 ## Features
 
 - **Product Listings:** Browse through a variety of products available on the platform.

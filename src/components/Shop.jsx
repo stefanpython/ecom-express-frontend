@@ -97,7 +97,7 @@ const Shop = ({ handleAddToCart }) => {
         <select
           value={sortBy}
           onChange={handleSortChange}
-          className="px-4 py-2 border rounded bg-white"
+          className="py-2 border rounded bg-white"
         >
           <option value="">Sort by</option>
           <option value="lowToHigh">Price Low to High</option>
@@ -106,11 +106,11 @@ const Shop = ({ handleAddToCart }) => {
       </div>
 
       <div className="flex justify-center w-fit">
-        <div className="grid grid-cols-1 sm:grid-cols-4 sm:grid-rows-2 gap-6 ">
+        <div className="grid grid-cols-1 sm:grid-cols-4 sm:grid-rows-2 gap-6">
           {currentProducts.map((product) => (
             <div
               key={product._id}
-              className="border p-4 items-center shadow-custom hover:scale-110"
+              className="border p-4 items-center shadow-custom hover:scale-110 w-60 -ml-7 sm:ml-0"
             >
               <Link to={`/products/${product._id}`}>
                 <img

@@ -392,7 +392,7 @@ const Navbar = ({
           </div>
 
           <div className="link-text relative dropdown-container flex items-center">
-            Welcome back,
+            <p className="hidden sm:block">Welcome back,</p>
             <button
               onClick={handleDropdownToggle}
               className="text-black cursor-pointer flex items-center relative ml-1 hover-underline"

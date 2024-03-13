@@ -41,7 +41,7 @@ Live demo [HERE](https://stefanpython.github.io/ecom-express-frontend/)
 3. Start the development server:
 
    ```bash
-   npm start
+   npm run dev
    ```
 
 4. Open http://localhost:5173 in your browser to view the application.

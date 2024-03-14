@@ -110,7 +110,7 @@ const Shop = ({ handleAddToCart }) => {
           {currentProducts.map((product) => (
             <div
               key={product._id}
-              className="border p-4 items-center shadow-custom hover:scale-110 w-60 -ml-7 sm:ml-0"
+              className="border p-4 items-center shadow-custom hover:scale-110 w-60 sm:w-full -ml-7 sm:ml-0"
             >
               <Link to={`/products/${product._id}`}>
                 <img

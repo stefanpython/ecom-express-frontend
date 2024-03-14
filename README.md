@@ -1,8 +1,17 @@
 # Ecom Express
 
 Ecom Express is a full stack online shopping platform that offers a wide range of products to customers. This project aims to provide a seamless shopping experience for users and a platform for vendors to showcase and sell their products.
+The application also has an admin page to easily add, edit and remove reviews/products/categories.
 
 Live demo [HERE](https://stefanpython.github.io/ecom-express-frontend/)
+
+Link to the backend for this project [here](https://github.com/stefanpython/ecom-express-backend)
+
+![Front page](shop.png)
+
+![Admin1](admin1.png)
+
+![Admin2](admin2.png)
 
 ## Features
 
@@ -28,7 +37,7 @@ Live demo [HERE](https://stefanpython.github.io/ecom-express-frontend/)
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/ecom-express.git
+   git clone https://github.com/stefanpython/ecom-express.git
    ```
 
 2. Install dependencies:

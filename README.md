@@ -7,11 +7,11 @@ Live demo [HERE](https://stefanpython.github.io/ecom-express-frontend/)
 
 Link to the backend for this project [here](https://github.com/stefanpython/ecom-express-backend)
 
-![Front page](shop.png)
+![Front page](./public/shop.png)
 
-![Admin1](admin1.png)
+![Admin1](./public/admin1.png)
 
-![Admin2](admin2.png)
+![Admin2](./public/admin2.png)
 
 ## Features
 
